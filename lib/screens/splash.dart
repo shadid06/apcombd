@@ -294,29 +294,95 @@ class _CustomSplashScreenState extends State<CustomSplashScreen> {
   Widget build(BuildContext context) {
     return Directionality(
       textDirection: app_language_rtl.$ ? TextDirection.rtl : TextDirection.ltr,
+      // child: Scaffold(
+      //   body: InkWell(
+      //     onTap: widget.onClick,
+      //     child: Stack(
+      //       fit: StackFit.expand,
+      //       children: <Widget>[
+      //         Container(
+      //           decoration: BoxDecoration(
+      //             image: widget.imageBackground == null
+      //                 ? null
+      //                 : DecorationImage(
+      //                     fit: BoxFit.cover,
+      //                     image: widget.imageBackground,
+      //                   ),
+      //             gradient: widget.gradientBackground,
+      //             color: widget.backgroundColor,
+      //           ),
+      //         ),
+      //         Align(
+      //           alignment: Alignment.bottomCenter,
+      //           child: Column(
+      //             mainAxisAlignment: MainAxisAlignment.start,
+      //             crossAxisAlignment: CrossAxisAlignment.start,
+      //             children: <Widget>[
+      //               CircleAvatar(
+      //                 backgroundColor: Colors.transparent,
+      //                 child: Hero(
+      //                   tag: "backgroundImageInSplash",
+      //                   child: Container(child: widget.backgroundImage),
+      //                 ),
+      //                 radius: widget.backgroundPhotoSize,
+      //               ),
+      //               Column(
+      //                 mainAxisAlignment: MainAxisAlignment.center,
+      //                 crossAxisAlignment: CrossAxisAlignment.center,
+      //                 children: <Widget>[
+      //                   Padding(
+      //                     padding: const EdgeInsets.only(bottom: 0.0),
+      //                     child: CircleAvatar(
+      //                       backgroundColor: Colors.transparent,
+      //                       child: Hero(
+      //                         tag: "splashscreenImage",
+      //                         child: Container(child: widget.image),
+      //                       ),
+      //                       radius: widget.photoSize,
+      //                     ),
+      //                   ),
+      //                   //widget.title,
+
+      //                   Padding(
+      //                     padding: const EdgeInsets.only(top: 0.0),
+      //                   ),
+      //                   //widget.loadingText
+      //                   Text(
+      //                     AppConfig.copyright_text,
+      //                     style: TextStyle(color: Colors.black),
+      //                   )
+      //                 ],
+      //               ),
+      //             ],
+      //           ),
+      //         ),
+      //       ],
+      //     ),
+      //   ),
+      // ),
       child: Scaffold(
-        body: InkWell(
-          onTap: widget.onClick,
-          child: Stack(
-            fit: StackFit.expand,
-            children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                  image: widget.imageBackground == null
-                      ? null
-                      : DecorationImage(
-                          fit: BoxFit.cover,
-                          image: widget.imageBackground,
-                        ),
-                  gradient: widget.gradientBackground,
-                  color: widget.backgroundColor,
+        body: SafeArea(
+          child: Container(
+            width: double.infinity,
+            height: double.infinity,
+            // color: Colors.redAccent,
+            child: Stack(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    image: widget.imageBackground == null
+                        ? null
+                        : DecorationImage(
+                            fit: BoxFit.cover,
+                            image: widget.imageBackground,
+                          ),
+                    gradient: widget.gradientBackground,
+                    color: widget.backgroundColor,
+                  ),
                 ),
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  CircleAvatar(
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: CircleAvatar(
                     backgroundColor: Colors.transparent,
                     child: Hero(
                       tag: "backgroundImageInSplash",
@@ -324,45 +390,81 @@ class _CustomSplashScreenState extends State<CustomSplashScreen> {
                     ),
                     radius: widget.backgroundPhotoSize,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 120.0),
-                    child: Container(
-                        width: double.infinity,
-                        // color: Colors.redAccent,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 46.0),
-                              child: CircleAvatar(
-                                backgroundColor: Colors.transparent,
-                                child: Hero(
-                                  tag: "splashscreenImage",
-                                  child: Container(child: widget.image),
-                                ),
-                                radius: widget.photoSize,
-                              ),
-                            ),
-                            //widget.title,
-
-                            Padding(
-                              padding: const EdgeInsets.only(top: 10.0),
-                            ),
-                            //widget.loadingText
-                            Text(
-                              AppConfig.copyright_text,
-                              style: TextStyle(color: Colors.black),
-                            )
-                          ],
-                        )),
+                ),
+                Center(
+                  child: Column(
+                    //crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      CircleAvatar(
+                        backgroundColor: Colors.transparent,
+                        child: Hero(
+                          tag: "splashscreenImage",
+                          child: Container(child: widget.image),
+                        ),
+                        radius: widget.photoSize,
+                      ),
+                      SizedBox(
+                        height: 80,
+                      ),
+                      Text(
+                        AppConfig.copyright_text,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      )
+                    ],
                   ),
-                ],
-              ),
-            ],
+                )
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 }
+
+//  child: Column(
+//                   mainAxisAlignment: MainAxisAlignment.start,
+//                   crossAxisAlignment: CrossAxisAlignment.start,
+//                   children: <Widget>[
+//                     CircleAvatar(
+//                       backgroundColor: Colors.transparent,
+//                       child: Hero(
+//                         tag: "backgroundImageInSplash",
+//                         child: Container(child: widget.backgroundImage),
+//                       ),
+//                       radius: widget.backgroundPhotoSize,
+//                     ),
+//                     Column(
+//                       mainAxisAlignment: MainAxisAlignment.center,
+//                       crossAxisAlignment: CrossAxisAlignment.center,
+//                       children: <Widget>[
+//                         Padding(
+//                           padding: const EdgeInsets.only(bottom: 0.0),
+//                           child: CircleAvatar(
+//                             backgroundColor: Colors.transparent,
+//                             child: Hero(
+//                               tag: "splashscreenImage",
+//                               child: Container(child: widget.image),
+//                             ),
+//                             radius: widget.photoSize,
+//                           ),
+//                         ),
+//                         //widget.title,
+
+//                         Padding(
+//                           padding: const EdgeInsets.only(top: 0.0),
+//                         ),
+//                         //widget.loadingText
+//                         Text(
+//                           AppConfig.copyright_text,
+//                           style: TextStyle(color: Colors.black),
+//                         )
+//                       ],
+//                     ),
+//                   ],
+//                 ),

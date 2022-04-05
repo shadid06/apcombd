@@ -65,7 +65,8 @@ class _MainState extends State<Main> {
             visible: MediaQuery.of(context).viewInsets.bottom ==
                 0.0, // if the kyeboard is open then hide, else show
             child: FloatingActionButton(
-              //backgroundColor: MyTheme.accent_color,
+              // focusElevation: 1,
+              // backgroundColor: MyTheme.accent_color,
               backgroundColor: Colors.white,
               onPressed: () {},
               tooltip: "start FAB",
@@ -91,7 +92,8 @@ class _MainState extends State<Main> {
           bottomNavigationBar: BottomAppBar(
             shape: CircularNotchedRectangle(),
             notchMargin: 5,
-            color: Colors.transparent,
+            // color: Colors.transparent,
+            color: Color(0xff354f5d),
             clipBehavior: Clip.antiAlias,
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 1.0, sigmaY: 1.0),
@@ -99,7 +101,7 @@ class _MainState extends State<Main> {
                 type: BottomNavigationBarType.fixed,
                 onTap: onTapped,
                 currentIndex: _currentIndex,
-                backgroundColor: Colors.white.withOpacity(0.8),
+                backgroundColor: Colors.white.withOpacity(0.7),
                 fixedColor: Theme.of(context).accentColor,
                 unselectedItemColor: Color.fromRGBO(153, 153, 153, 1),
                 items: [

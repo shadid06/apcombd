@@ -183,7 +183,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
             app_language_rtl.$ ? TextDirection.rtl : TextDirection.ltr,
         child: Scaffold(
             key: _scaffoldKey,
-            backgroundColor: Colors.white,
+            // backgroundColor: Colors.white,
             appBar: buildAppBar(statusBarHeight, context),
             drawer: MainDrawer(),
             body: Stack(
@@ -245,23 +245,30 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                           //         ),
                           //       )
                           //     : Container(),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(
-                              8.0,
-                              16.0,
-                              8.0,
-                              0.0,
+                          Container(
+                            // color: MyTheme.accent_color,
+                            color: Color(0xff354f5d),
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(
+                                8.0,
+                                16.0,
+                                8.0,
+                                0.0,
+                              ),
+                              child: buildHomeCarouselSlider(context),
                             ),
-                            child: buildHomeCarouselSlider(context),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(
-                              8.0,
-                              16.0,
-                              8.0,
-                              0.0,
+                          Container(
+                            color: MyTheme.accent_color,
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(
+                                8.0,
+                                16.0,
+                                8.0,
+                                0.0,
+                              ),
+                              child: buildHomeMenuRow(context),
                             ),
-                            child: buildHomeMenuRow(context),
                           ),
                         ]),
                       ),
@@ -685,14 +692,21 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     if (_isCarouselInitial && _carouselImageList.length == 0) {
       return Padding(
         padding: const EdgeInsets.only(left: 5.0, right: 5.0),
-        child: Shimmer.fromColors(
-          baseColor: MyTheme.shimmer_base,
-          highlightColor: MyTheme.shimmer_highlighted,
-          child: Container(
-            height: 120,
-            width: double.infinity,
-            color: Colors.white,
-          ),
+        // child: Shimmer.fromColors(
+        //   // baseColor: MyTheme.shimmer_base,
+        //   // highlightColor: MyTheme.shimmer_highlighted,
+        //   child: Container(
+        //     height: 120,
+        //     width: double.infinity,
+        //     // color: Colors.white,
+        //     color: MyTheme.accent_color,
+        //   ),
+        // ),
+        child: Container(
+          height: 120,
+          width: double.infinity,
+          // color: Colors.white,
+          color: Color(0xff354f5d),
         ),
       );
     } else if (_carouselImageList.length > 0) {
@@ -774,7 +788,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 
   AppBar buildAppBar(double statusBarHeight, BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
+      backgroundColor: MyTheme.accent_color,
       leading: GestureDetector(
         onTap: () {
           _scaffoldKey.currentState.openDrawer();
