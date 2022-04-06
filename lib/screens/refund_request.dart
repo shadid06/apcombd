@@ -125,7 +125,8 @@ class _RefundRequestState extends State<RefundRequest> {
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
+      backgroundColor: MyTheme.appBarColor,
       centerTitle: true,
       leading: Builder(
         builder: (context) => IconButton(
@@ -135,7 +136,11 @@ class _RefundRequestState extends State<RefundRequest> {
       ),
       title: Text(
         AppLocalizations.of(context).refund_request_screen_refund_status,
-        style: TextStyle(fontSize: 16, color: MyTheme.accent_color),
+        style: TextStyle(
+          fontSize: 16,
+          // color: MyTheme.accent_color
+          color: MyTheme.appBarTextColor,
+        ),
       ),
       elevation: 0.0,
       titleSpacing: 0,

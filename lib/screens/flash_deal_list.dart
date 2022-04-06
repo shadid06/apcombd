@@ -167,8 +167,12 @@ class _FlashDealListState extends State<FlashDealList> {
           return GestureDetector(
             onTap: () {
               if (time == null) {
-                ToastComponent.showDialog(AppLocalizations.of(context).flash_deal_list_screen_flash_deal_has_ended, context,
-                    gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+                ToastComponent.showDialog(
+                    AppLocalizations.of(context)
+                        .flash_deal_list_screen_flash_deal_has_ended,
+                    context,
+                    gravity: Toast.CENTER,
+                    duration: Toast.LENGTH_LONG);
               } else {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return FlashDealProducts(
@@ -215,7 +219,8 @@ class _FlashDealListState extends State<FlashDealList> {
                   child: Center(
                       child: time == null
                           ? Text(
-                        AppLocalizations.of(context).flash_deal_list_screen_ended,
+                              AppLocalizations.of(context)
+                                  .flash_deal_list_screen_ended,
                               style: TextStyle(
                                   color: MyTheme.accent_color,
                                   fontSize: 16.0,
@@ -299,7 +304,8 @@ class _FlashDealListState extends State<FlashDealList> {
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
+      backgroundColor: MyTheme.appBarColor,
       centerTitle: true,
       leading: Builder(
         builder: (context) => IconButton(
@@ -309,7 +315,11 @@ class _FlashDealListState extends State<FlashDealList> {
       ),
       title: Text(
         AppLocalizations.of(context).flash_deal_list_flash_deals,
-        style: TextStyle(fontSize: 16, color: MyTheme.accent_color),
+        style: TextStyle(
+          fontSize: 16,
+          //  color: MyTheme.accent_color
+          color: MyTheme.appBarTextColor,
+        ),
       ),
       elevation: 0.0,
       titleSpacing: 0,

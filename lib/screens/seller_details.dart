@@ -494,7 +494,8 @@ class _SellerDetailsState extends State<SellerDetails> {
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
+      backgroundColor: MyTheme.appBarColor,
       toolbarHeight: 75,
       leading: Builder(
         builder: (context) => IconButton(
@@ -610,7 +611,8 @@ class _SellerDetailsState extends State<SellerDetails> {
                 overflow: TextOverflow.ellipsis,
                 maxLines: 2,
                 style: TextStyle(
-                    color: MyTheme.font_grey,
+                    // color: MyTheme.font_grey,
+                    color: MyTheme.appBarTextColor,
                     fontSize: 14,
                     height: 1.6,
                     fontWeight: FontWeight.w600),

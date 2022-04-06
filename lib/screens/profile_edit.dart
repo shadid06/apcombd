@@ -37,7 +37,8 @@ class _ProfileEditState extends State<ProfileEdit> {
       showDialog(
           context: context,
           builder: (BuildContext context) => CupertinoAlertDialog(
-                title: Text(AppLocalizations.of(context).common_photo_permission),
+                title:
+                    Text(AppLocalizations.of(context).common_photo_permission),
                 content: Text(
                     AppLocalizations.of(context).common_app_needs_permission),
                 actions: <Widget>[
@@ -53,16 +54,15 @@ class _ProfileEditState extends State<ProfileEdit> {
               ));
     } else if (status.isRestricted) {
       ToastComponent.showDialog(
-          AppLocalizations.of(context).common_give_photo_permission,
-          context,
-          gravity: Toast.CENTER,
-          duration: Toast.LENGTH_LONG);
+          AppLocalizations.of(context).common_give_photo_permission, context,
+          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
     } else if (status.isGranted) {
       //file = await ImagePicker.pickImage(source: ImageSource.camera);
       _file = await _picker.pickImage(source: ImageSource.gallery);
 
       if (_file == null) {
-        ToastComponent.showDialog(AppLocalizations.of(context).common_no_file_chosen, context,
+        ToastComponent.showDialog(
+            AppLocalizations.of(context).common_no_file_chosen, context,
             gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
         return;
       }
@@ -103,29 +103,46 @@ class _ProfileEditState extends State<ProfileEdit> {
             ""; // if both fields are empty we will not change user's password
 
     if (name == "") {
-      ToastComponent.showDialog(AppLocalizations.of(context).profile_edit_screen_name_warning, context,
-          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+      ToastComponent.showDialog(
+          AppLocalizations.of(context).profile_edit_screen_name_warning,
+          context,
+          gravity: Toast.CENTER,
+          duration: Toast.LENGTH_LONG);
       return;
     }
     if (change_password && password == "") {
-      ToastComponent.showDialog(AppLocalizations.of(context).profile_edit_screen_password_warning, context,
-          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+      ToastComponent.showDialog(
+          AppLocalizations.of(context).profile_edit_screen_password_warning,
+          context,
+          gravity: Toast.CENTER,
+          duration: Toast.LENGTH_LONG);
       return;
     }
     if (change_password && password_confirm == "") {
-      ToastComponent.showDialog(AppLocalizations.of(context).profile_edit_screen_password_confirm_warning, context,
-          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+      ToastComponent.showDialog(
+          AppLocalizations.of(context)
+              .profile_edit_screen_password_confirm_warning,
+          context,
+          gravity: Toast.CENTER,
+          duration: Toast.LENGTH_LONG);
       return;
     }
     if (change_password && password.length < 6) {
       ToastComponent.showDialog(
-          AppLocalizations.of(context).password_otp_screen_password_length_warning, context,
-          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+          AppLocalizations.of(context)
+              .password_otp_screen_password_length_warning,
+          context,
+          gravity: Toast.CENTER,
+          duration: Toast.LENGTH_LONG);
       return;
     }
     if (change_password && password != password_confirm) {
-      ToastComponent.showDialog(AppLocalizations.of(context).profile_edit_screen_password_match_warning, context,
-          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+      ToastComponent.showDialog(
+          AppLocalizations.of(context)
+              .profile_edit_screen_password_match_warning,
+          context,
+          gravity: Toast.CENTER,
+          duration: Toast.LENGTH_LONG);
       return;
     }
 
@@ -161,7 +178,8 @@ class _ProfileEditState extends State<ProfileEdit> {
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
-backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
+      backgroundColor: MyTheme.appBarColor,
       centerTitle: true,
       leading: Builder(
         builder: (context) => IconButton(
@@ -171,7 +189,11 @@ backgroundColor: Colors.white,
       ),
       title: Text(
         AppLocalizations.of(context).profile_edit_screen_edit_profile,
-        style: TextStyle(fontSize: 16, color: MyTheme.accent_color),
+        style: TextStyle(
+          fontSize: 16,
+          //  color: MyTheme.accent_color
+          color: MyTheme.appBarTextColor,
+        ),
       ),
       elevation: 0.0,
       titleSpacing: 0,
@@ -184,7 +206,7 @@ backgroundColor: Colors.white,
           height: 100,
           child: Center(
               child: Text(
-                AppLocalizations.of(context).profile_edit_screen_login_warning,
+            AppLocalizations.of(context).profile_edit_screen_login_warning,
             style: TextStyle(color: MyTheme.font_grey),
           )));
     } else {
@@ -283,7 +305,8 @@ backgroundColor: Colors.white,
             Padding(
               padding: const EdgeInsets.only(bottom: 8.0),
               child: Text(
-                AppLocalizations.of(context).profile_edit_screen_basic_information,
+                AppLocalizations.of(context)
+                    .profile_edit_screen_basic_information,
                 style: TextStyle(
                     color: MyTheme.grey_153,
                     fontWeight: FontWeight.w600,
@@ -336,7 +359,8 @@ backgroundColor: Colors.white,
                     ),
                   ),
                   Text(
-                    AppLocalizations.of(context).profile_edit_screen_password_length_recommendation,
+                    AppLocalizations.of(context)
+                        .profile_edit_screen_password_length_recommendation,
                     style: TextStyle(
                         color: MyTheme.textfield_grey,
                         fontStyle: FontStyle.italic),
@@ -347,7 +371,8 @@ backgroundColor: Colors.white,
             Padding(
               padding: const EdgeInsets.only(bottom: 4.0),
               child: Text(
-                  AppLocalizations.of(context).profile_edit_screen_retype_password,
+                AppLocalizations.of(context)
+                    .profile_edit_screen_retype_password,
                 style: TextStyle(
                     color: MyTheme.accent_color, fontWeight: FontWeight.w600),
               ),
@@ -388,7 +413,8 @@ backgroundColor: Colors.white,
                           borderRadius:
                               const BorderRadius.all(Radius.circular(8.0))),
                       child: Text(
-                        AppLocalizations.of(context).profile_edit_screen_btn_update_profile,
+                        AppLocalizations.of(context)
+                            .profile_edit_screen_btn_update_profile,
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 14,

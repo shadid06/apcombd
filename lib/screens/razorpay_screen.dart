@@ -175,7 +175,8 @@ class _RazorpayScreenState extends State<RazorpayScreen> {
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
-backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
+      backgroundColor: MyTheme.appBarColor,
       centerTitle: true,
       leading: Builder(
         builder: (context) => IconButton(
@@ -185,7 +186,11 @@ backgroundColor: Colors.white,
       ),
       title: Text(
         AppLocalizations.of(context).razorpay_screen_pay_with_razorpay,
-        style: TextStyle(fontSize: 16, color: MyTheme.accent_color),
+        style: TextStyle(
+          fontSize: 16,
+          //  color: MyTheme.accent_color
+          color: MyTheme.appBarTextColor,
+        ),
       ),
       elevation: 0.0,
       titleSpacing: 0,

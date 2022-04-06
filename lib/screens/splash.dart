@@ -396,23 +396,24 @@ class _CustomSplashScreenState extends State<CustomSplashScreen> {
                     //crossAxisAlignment: CrossAxisAlignment.end,
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      CircleAvatar(
-                        backgroundColor: Colors.transparent,
-                        child: Hero(
-                          tag: "splashscreenImage",
-                          child: Container(child: widget.image),
-                        ),
-                        radius: widget.photoSize,
-                      ),
-                      SizedBox(
-                        height: 80,
+                      // CircleAvatar(
+                      //   backgroundColor: Colors.transparent,
+                      //   child: Hero(
+                      //     tag: "splashscreenImage",
+                      //     child: Container(child: widget.image),
+                      //   ),
+                      //   radius: widget.photoSize,
+                      // ),
+                      Container(
+                        width: 130,
+                        child: widget.image,
                       ),
                       Text(
                         AppConfig.copyright_text,
                         style: TextStyle(
                           color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
+                          // fontWeight: FontWeight.bold,
+                          fontSize: 12,
                         ),
                       )
                     ],

@@ -6,7 +6,6 @@ import 'package:active_ecommerce_flutter/helpers/shimmer_helper.dart';
 import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 class TodaysDealProducts extends StatefulWidget {
   @override
   _TodaysDealProductsState createState() => _TodaysDealProductsState();
@@ -29,7 +28,8 @@ class _TodaysDealProductsState extends State<TodaysDealProducts> {
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
+      backgroundColor: MyTheme.appBarColor,
       centerTitle: true,
       leading: Builder(
         builder: (context) => IconButton(
@@ -39,7 +39,11 @@ class _TodaysDealProductsState extends State<TodaysDealProducts> {
       ),
       title: Text(
         AppLocalizations.of(context).todays_deal_products_screen_todays_deal,
-        style: TextStyle(fontSize: 16, color: MyTheme.accent_color),
+        style: TextStyle(
+          fontSize: 16,
+          //  color: MyTheme.accent_color
+          color: MyTheme.appBarTextColor,
+        ),
       ),
       elevation: 0.0,
       titleSpacing: 0,

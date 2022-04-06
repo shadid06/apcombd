@@ -111,7 +111,8 @@ class _CategoryProductsState extends State<CategoryProducts> {
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
+      backgroundColor: MyTheme.appBarColor,
       toolbarHeight: 75,
       /*bottom: PreferredSize(
           child: Container(
@@ -127,6 +128,7 @@ class _CategoryProductsState extends State<CategoryProducts> {
       ),
       title: Container(
           width: 250,
+          height: 50,
           child: TextField(
             controller: _searchController,
             onTap: () {},
@@ -142,6 +144,7 @@ class _CategoryProductsState extends State<CategoryProducts> {
             },
             autofocus: false,
             decoration: InputDecoration(
+                // contentPadding: EdgeInsets.symmetric(horizontal: 8),
                 hintText:
                     "${AppLocalizations.of(context).category_products_screen_search_products_from} : " +
                         widget.category_name,
@@ -153,7 +156,7 @@ class _CategoryProductsState extends State<CategoryProducts> {
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: MyTheme.white, width: 0.0),
                 ),
-                contentPadding: EdgeInsets.all(0.0)),
+                contentPadding: EdgeInsets.symmetric(horizontal: 8)),
           )),
       elevation: 0.0,
       titleSpacing: 0,

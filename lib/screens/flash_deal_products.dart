@@ -7,7 +7,6 @@ import 'package:active_ecommerce_flutter/helpers/string_helper.dart';
 import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 class FlashDealProducts extends StatefulWidget {
   FlashDealProducts({Key key, this.flash_deal_id, this.flash_deal_name})
       : super(key: key);
@@ -80,7 +79,8 @@ class _FlashDealProductsState extends State<FlashDealProducts> {
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
-backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
+      backgroundColor: MyTheme.appBarColor,
       toolbarHeight: 75,
       /*bottom: PreferredSize(
           child: Container(
@@ -107,7 +107,9 @@ backgroundColor: Colors.white,
             onTap: () {},
             autofocus: true,
             decoration: InputDecoration(
-                hintText: "${AppLocalizations.of(context).flash_deal_products_screen_search_products_from} : " + widget.flash_deal_name,
+                hintText:
+                    "${AppLocalizations.of(context).flash_deal_products_screen_search_products_from} : " +
+                        widget.flash_deal_name,
                 hintStyle:
                     TextStyle(fontSize: 14.0, color: MyTheme.textfield_grey),
                 enabledBorder: OutlineInputBorder(

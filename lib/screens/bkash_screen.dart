@@ -50,7 +50,7 @@ class _BkashScreenState extends State<BkashScreen> {
 
   createOrder() async {
     var orderCreateResponse = await PaymentRepository()
-        .getOrderCreateResponse( widget.payment_method_key);
+        .getOrderCreateResponse(widget.payment_method_key);
 
     if (orderCreateResponse.result == false) {
       ToastComponent.showDialog(orderCreateResponse.message, context,
@@ -79,7 +79,6 @@ class _BkashScreenState extends State<BkashScreen> {
 
     _initial_url = bkashUrlResponse.url;
     _initial_url_fetched = true;
-
 
     setState(() {});
 
@@ -114,12 +113,13 @@ class _BkashScreenState extends State<BkashScreen> {
       }
     });
   }
-  onPaymentSuccess(payment_details) async{
 
-    var bkashPaymentProcessResponse = await PaymentRepository().getBkashPaymentProcessResponse(widget.payment_type, widget.amount,_combined_order_id, payment_details);
+  onPaymentSuccess(payment_details) async {
+    var bkashPaymentProcessResponse = await PaymentRepository()
+        .getBkashPaymentProcessResponse(widget.payment_type, widget.amount,
+            _combined_order_id, payment_details);
 
-    if(bkashPaymentProcessResponse.result == false ){
-
+    if (bkashPaymentProcessResponse.result == false) {
       Toast.show(bkashPaymentProcessResponse.message, context,
           duration: Toast.LENGTH_LONG, gravity: Toast.CENTER);
       Navigator.pop(context);
@@ -137,10 +137,7 @@ class _BkashScreenState extends State<BkashScreen> {
         return Wallet(from_recharge: true);
       }));
     }
-
-
   }
-  
 
   buildBody() {
     if (_order_init == false &&
@@ -154,7 +151,8 @@ class _BkashScreenState extends State<BkashScreen> {
     } else if (_initial_url_fetched == false) {
       return Container(
         child: Center(
-          child: Text(AppLocalizations.of(context).bkash_screen_fetching_bkash_url),
+          child: Text(
+              AppLocalizations.of(context).bkash_screen_fetching_bkash_url),
         ),
       );
     } else {
@@ -190,7 +188,8 @@ class _BkashScreenState extends State<BkashScreen> {
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
-backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
+      backgroundColor: MyTheme.appBarColor,
       centerTitle: true,
       leading: Builder(
         builder: (context) => IconButton(
@@ -200,7 +199,11 @@ backgroundColor: Colors.white,
       ),
       title: Text(
         AppLocalizations.of(context).bkash_screen_pay_with_bkash,
-        style: TextStyle(fontSize: 16, color: MyTheme.accent_color),
+        style: TextStyle(
+          fontSize: 16,
+          //  color: MyTheme.accent_color
+          color: MyTheme.appBarTextColor,
+        ),
       ),
       elevation: 0.0,
       titleSpacing: 0,

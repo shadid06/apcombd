@@ -647,7 +647,8 @@ class _ProfileState extends State<Profile> {
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
+      backgroundColor: MyTheme.appBarColor,
       centerTitle: true,
       leading: GestureDetector(
         child: widget.show_back_button
@@ -678,7 +679,11 @@ class _ProfileState extends State<Profile> {
       ),
       title: Text(
         AppLocalizations.of(context).profile_screen_account,
-        style: TextStyle(fontSize: 16, color: MyTheme.accent_color),
+        style: TextStyle(
+          fontSize: 16,
+          // color: MyTheme.accent_color
+          color: MyTheme.appBarTextColor,
+        ),
       ),
       elevation: 0.0,
       titleSpacing: 0,

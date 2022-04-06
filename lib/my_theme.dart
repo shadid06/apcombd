@@ -4,6 +4,7 @@ class MyTheme {
   /*configurable colors stars*/
   // static Color accent_color = Color.fromRGBO(230, 46, 4, 1);
   static Color accent_color = Color(0xff022335);
+
   static Color soft_accent_color = Color.fromRGBO(247, 189, 168, 1);
   // static Color soft_accent_color = Color(0xffDD2400);
   static Color splash_screen_color = Colors.white24;
@@ -23,7 +24,9 @@ class MyTheme {
   static Color golden = Color(0xffDD2400);
   static Color shimmer_base = Colors.grey.shade50;
   static Color shimmer_highlighted = Colors.grey.shade200;
-
+  static Color sliderBackgroundColor = Color(0xff354f5d);
+  static Color appBarColor = Color(0xff022335);
+  static Color appBarTextColor = Color.fromRGBO(255, 255, 255, 1);
   //testing shimmer
   /*static Color shimmer_base = Colors.redAccent;
   static Color shimmer_highlighted = Colors.yellow;*/

@@ -110,7 +110,8 @@ class _BrandProductsState extends State<BrandProducts> {
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
+      backgroundColor: MyTheme.appBarColor,
       leading: Builder(
         builder: (context) => IconButton(
           icon: Icon(Icons.arrow_back, color: MyTheme.dark_grey),

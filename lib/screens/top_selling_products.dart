@@ -28,7 +28,8 @@ class _TopSellingProductsState extends State<TopSellingProducts> {
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
+      backgroundColor: MyTheme.appBarColor,
       centerTitle: true,
       leading: Builder(
         builder: (context) => IconButton(
@@ -37,8 +38,13 @@ class _TopSellingProductsState extends State<TopSellingProducts> {
         ),
       ),
       title: Text(
-        AppLocalizations.of(context).top_selling_products_screen_top_selling_products,
-        style: TextStyle(fontSize: 16, color: MyTheme.accent_color),
+        AppLocalizations.of(context)
+            .top_selling_products_screen_top_selling_products,
+        style: TextStyle(
+          fontSize: 16,
+          //  color: MyTheme.accent_color
+          color: MyTheme.appBarTextColor,
+        ),
       ),
       elevation: 0.0,
       titleSpacing: 0,

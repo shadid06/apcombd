@@ -66,7 +66,8 @@ class _CategoryListState extends State<CategoryList> {
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
+      backgroundColor: MyTheme.appBarColor,
       centerTitle: true,
       leading: widget.is_base_category
           ? GestureDetector(
@@ -95,7 +96,11 @@ class _CategoryListState extends State<CategoryList> {
             ),
       title: Text(
         getAppBarTitle(),
-        style: TextStyle(fontSize: 16, color: MyTheme.accent_color),
+        style: TextStyle(
+          fontSize: 16,
+          // color: MyTheme.accent_color
+          color: MyTheme.appBarTextColor,
+        ),
       ),
       elevation: 0.0,
       titleSpacing: 0,

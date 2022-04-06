@@ -71,6 +71,12 @@ class _MainState extends State<Main> {
               onPressed: () {},
               tooltip: "start FAB",
               child: Container(
+                  // decoration: BoxDecoration(
+                  //     border: Border.all(
+                  //   color: Color(0xff354f5d),
+                  //   width: 1,
+                  // )
+                  // ),
                   margin: EdgeInsets.all(0.0),
                   child: IconButton(
                       icon: new Image.asset(
@@ -92,8 +98,9 @@ class _MainState extends State<Main> {
           bottomNavigationBar: BottomAppBar(
             shape: CircularNotchedRectangle(),
             notchMargin: 5,
+
             // color: Colors.transparent,
-            color: Color(0xff354f5d),
+            color: Color(0xffe6e9eb),
             clipBehavior: Clip.antiAlias,
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 1.0, sigmaY: 1.0),

@@ -1,8 +1,10 @@
+import 'package:active_ecommerce_flutter/data_model/product_details_response.dart';
 import 'package:active_ecommerce_flutter/screens/cart.dart';
 import 'package:active_ecommerce_flutter/screens/common_webview_screen.dart';
 import 'package:active_ecommerce_flutter/screens/product_reviews.dart';
 import 'package:active_ecommerce_flutter/ui_elements/list_product_card.dart';
 import 'package:active_ecommerce_flutter/ui_elements/mini_product_card.dart';
+import 'package:active_ecommerce_flutter/ui_elements/product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:active_ecommerce_flutter/my_theme.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -48,7 +50,7 @@ class _ProductDetailsState extends State<ProductDetails> {
   ScrollController _imageScrollController = ScrollController();
   TextEditingController sellerChatTitleController = TextEditingController();
   TextEditingController sellerChatMessageController = TextEditingController();
-
+  ScrollController _scrollController;
   //init values
   bool _isInWishList = false;
   var _productDetailsFetched = false;
@@ -64,6 +66,7 @@ class _ProductDetailsState extends State<ProductDetails> {
   var _singlePriceString;
   int _quantity = 1;
   int _stock = 0;
+  String shortDescription;
 
   List<dynamic> _relatedProducts = [];
   bool _relatedProductInit = false;
@@ -97,7 +100,9 @@ class _ProductDetailsState extends State<ProductDetails> {
   fetchProductDetails() async {
     var productDetailsResponse =
         await ProductRepository().getProductDetails(id: widget.id);
-
+    shortDescription =
+        productDetailsResponse.detailed_products[0].shortDescription;
+    print("short description: ${shortDescription}");
     if (productDetailsResponse.detailed_products.length > 0) {
       _productDetails = productDetailsResponse.detailed_products[0];
       sellerChatTitleController.text =
@@ -907,6 +912,44 @@ class _ProductDetailsState extends State<ProductDetails> {
                 ])),
                 SliverList(
                   delegate: SliverChildListDelegate([
+                    //shamim
+                    // shortDescription != null
+                    //     ? Padding(
+                    //         padding: const EdgeInsets.fromLTRB(
+                    //           16.0,
+                    //           0.0,
+                    //           16.0,
+                    //           0.0,
+                    //         ),
+                    //         child: Text(
+                    //           "Short Description",
+                    //           style: TextStyle(
+                    //               color: MyTheme.font_grey,
+                    //               fontSize: 14,
+                    //               fontWeight: FontWeight.w600),
+                    //         ),
+                    //       )
+                    //     : Text(""),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(
+                        8.0,
+                        0.0,
+                        8.0,
+                        8.0,
+                      ),
+                      child: shortDescription != null
+                          ? buildExpandableshortDescription()
+                          : Text(""),
+                      // : Padding(
+                      //     padding: const EdgeInsets.symmetric(
+                      //         horizontal: 8.0, vertical: 8.0),
+                      //     child: ShimmerHelper().buildBasicShimmer(
+                      //       height: 60.0,
+                      //     )),
+                    ),
+                    Divider(
+                      height: 1,
+                    ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(
                         16.0,
@@ -923,6 +966,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             fontWeight: FontWeight.w600),
                       ),
                     ),
+
                     Padding(
                       padding: const EdgeInsets.fromLTRB(
                         8.0,
@@ -1225,11 +1269,13 @@ class _ProductDetailsState extends State<ProductDetails> {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(
                         16.0,
-                        16.0,
-                        16.0,
+                        2.0,
+                        2.0,
                         0.0,
                       ),
-                      child: buildTopSellingProductList(),
+                      //shamim
+                      // child: buildTopSellingProductList(),
+                      child: buildTopSellingProductList(context),
                     )
                   ]),
                 )
@@ -1385,10 +1431,14 @@ class _ProductDetailsState extends State<ProductDetails> {
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: Text(
-            "(${_stock} ${AppLocalizations.of(context).product_details_screen_available})",
-            style: TextStyle(
-                color: Color.fromRGBO(152, 152, 153, 1), fontSize: 14),
+          child: Container(
+            child: Text(
+              "(${_stock} ${AppLocalizations.of(context).product_details_screen_available})",
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                  color: Color.fromRGBO(152, 152, 153, 1), fontSize: 13),
+            ),
           ),
         ),
       ],
@@ -1743,7 +1793,8 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   AppBar buildAppBar(double statusBarHeight, BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
+      backgroundColor: MyTheme.appBarColor,
       leading: Builder(
         builder: (context) => IconButton(
           icon: Icon(Icons.arrow_back, color: MyTheme.dark_grey),
@@ -1761,7 +1812,11 @@ class _ProductDetailsState extends State<ProductDetails> {
               padding: const EdgeInsets.only(top: 22.0),
               child: Text(
                 _appbarPriceString,
-                style: TextStyle(fontSize: 16, color: MyTheme.font_grey),
+                style: TextStyle(
+                  fontSize: 16,
+                  // color: MyTheme.font_grey
+                  color: MyTheme.appBarTextColor,
+                ),
               ),
             )),
       ),
@@ -1986,58 +2041,146 @@ class _ProductDetailsState extends State<ProductDetails> {
     ));
   }
 
-  buildTopSellingProductList() {
-    if (_topProductInit == false && _topProducts.length == 0) {
-      return Column(
-        children: [
-          Padding(
-              padding: const EdgeInsets.only(top: 8.0),
-              child: ShimmerHelper().buildBasicShimmer(
-                height: 75.0,
-              )),
-          Padding(
-              padding: const EdgeInsets.only(top: 8.0),
-              child: ShimmerHelper().buildBasicShimmer(
-                height: 75.0,
-              )),
-          Padding(
-              padding: const EdgeInsets.only(top: 8.0),
-              child: ShimmerHelper().buildBasicShimmer(
-                height: 75.0,
-              )),
+  //shamim
+
+  ExpandableNotifier buildExpandableshortDescription() {
+    return ExpandableNotifier(
+        child: ScrollOnExpand(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Expandable(
+            collapsed: Container(
+                height: 50,
+                child: Html(data: _productDetails.shortDescription)),
+            expanded:
+                Container(child: Html(data: _productDetails.shortDescription)),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              Builder(
+                builder: (context) {
+                  var controller = ExpandableController.of(context);
+                  return FlatButton(
+                    child: Text(
+                      !controller.expanded
+                          ? AppLocalizations.of(context).common_view_more
+                          : AppLocalizations.of(context).common_show_less,
+                      style: TextStyle(color: MyTheme.font_grey, fontSize: 11),
+                    ),
+                    onPressed: () {
+                      controller.toggle();
+                    },
+                  );
+                },
+              ),
+            ],
+          ),
         ],
-      );
-    } else if (_topProducts.length > 0) {
-      return SingleChildScrollView(
-        child: ListView.builder(
-          itemCount: _topProducts.length,
-          scrollDirection: Axis.vertical,
-          physics: NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.only(bottom: 3.0),
-              child: ListProductCard(
-                  id: _topProducts[index].id,
-                  image: _topProducts[index].thumbnail_image,
-                  name: _topProducts[index].name,
-                  main_price: _topProducts[index].main_price,
-                  stroked_price: _topProducts[index].stroked_price,
-                  has_discount: _topProducts[index].has_discount),
-            );
-          },
-        ),
-      );
-    } else {
-      return Container(
-          height: 100,
-          child: Center(
-              child: Text(
-                  AppLocalizations.of(context)
-                      .product_details_screen_no_top_selling_product,
-                  style: TextStyle(color: MyTheme.font_grey))));
-    }
+      ),
+    ));
   }
+
+  buildTopSellingProductList(context) {
+    return FutureBuilder(
+        future: ProductRepository().getBestSellingProducts(),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            //snapshot.hasError
+            print("product error");
+            print(snapshot.error.toString());
+            return Container();
+          } else if (snapshot.hasData) {
+            var productResponse = snapshot.data;
+            print(productResponse.toString());
+            return SingleChildScrollView(
+              child: GridView.builder(
+                // 2
+                //addAutomaticKeepAlives: true,
+                itemCount: productResponse.products.length,
+                controller: _scrollController,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                    childAspectRatio: 0.618),
+                padding: EdgeInsets.all(2),
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  // 3
+                  return ProductCard(
+                    id: productResponse.products[index].id,
+                    image: productResponse.products[index].thumbnail_image,
+                    name: productResponse.products[index].name,
+                    main_price: productResponse.products[index].main_price,
+                    stroked_price:
+                        productResponse.products[index].stroked_price,
+                    has_discount: productResponse.products[index].has_discount,
+                  );
+                },
+              ),
+            );
+          } else {
+            return ShimmerHelper()
+                .buildProductGridShimmer(scontroller: _scrollController);
+          }
+        });
+  }
+
+  // buildTopSellingProductList() {
+  //   if (_topProductInit == false && _topProducts.length == 0) {
+  //     return Column(
+  //       children: [
+  //         Padding(
+  //             padding: const EdgeInsets.only(top: 8.0),
+  //             child: ShimmerHelper().buildBasicShimmer(
+  //               height: 75.0,
+  //             )),
+  //         Padding(
+  //             padding: const EdgeInsets.only(top: 8.0),
+  //             child: ShimmerHelper().buildBasicShimmer(
+  //               height: 75.0,
+  //             )),
+  //         Padding(
+  //             padding: const EdgeInsets.only(top: 8.0),
+  //             child: ShimmerHelper().buildBasicShimmer(
+  //               height: 75.0,
+  //             )),
+  //       ],
+  //     );
+  //   } else if (_topProducts.length > 0) {
+  //     return SingleChildScrollView(
+  //       child: ListView.builder(
+  //         itemCount: _topProducts.length,
+  //         scrollDirection: Axis.vertical,
+  //         physics: NeverScrollableScrollPhysics(),
+  //         shrinkWrap: true,
+  //         itemBuilder: (context, index) {
+  //           return Padding(
+  //             padding: const EdgeInsets.only(bottom: 3.0),
+  //             child: ListProductCard(
+  //                 id: _topProducts[index].id,
+  //                 image: _topProducts[index].thumbnail_image,
+  //                 name: _topProducts[index].name,
+  //                 main_price: _topProducts[index].main_price,
+  //                 stroked_price: _topProducts[index].stroked_price,
+  //                 has_discount: _topProducts[index].has_discount),
+  //           );
+  //         },
+  //       ),
+  //     );
+  //   } else {
+  //     return Container(
+  //         height: 100,
+  //         child: Center(
+  //             child: Text(
+  //                 AppLocalizations.of(context)
+  //                     .product_details_screen_no_top_selling_product,
+  //                 style: TextStyle(color: MyTheme.font_grey))));
+  //   }
+  // }
 
   buildProductsMayLikeList() {
     if (_relatedProductInit == false && _relatedProducts.length == 0) {
