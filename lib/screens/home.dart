@@ -1,4 +1,6 @@
 import 'package:active_ecommerce_flutter/my_theme.dart';
+import 'package:active_ecommerce_flutter/repositories/top_collection_repository.dart';
+import 'package:active_ecommerce_flutter/screens/collection_products.dart';
 import 'package:active_ecommerce_flutter/screens/filter.dart';
 import 'package:active_ecommerce_flutter/screens/flash_deal_list.dart';
 import 'package:active_ecommerce_flutter/screens/todays_deal_products.dart';
@@ -53,9 +55,11 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   var _carouselImageList = [];
   var _featuredCategoryList = [];
   var _featuredProductList = [];
+  var _topCollectionList = [];
   bool _isProductInitial = true;
   bool _isCategoryInitial = true;
   bool _isCarouselInitial = true;
+  bool _isTopCollectionInitial = true;
   int _totalProductData = 0;
   int _productPage = 1;
   bool _showProductLoadingContainer = false;
@@ -90,6 +94,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     fetchCarouselImages();
     fetchFeaturedCategories();
     fetchFeaturedProducts();
+    fetchTopCollections();
   }
 
   fetchCarouselImages() async {
@@ -105,6 +110,14 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     var categoryResponse = await CategoryRepository().getFeturedCategories();
     _featuredCategoryList.addAll(categoryResponse.categories);
     _isCategoryInitial = false;
+    setState(() {});
+  }
+
+  fetchTopCollections() async {
+    var topCollectionResponse =
+        await TopCollectionRepository().getTopCollectionResponseList();
+    _topCollectionList.addAll(topCollectionResponse.data);
+    _isTopCollectionInitial = false;
     setState(() {});
   }
 
@@ -442,49 +455,82 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   }
 
   buildTopCollection(context) {
-    return ListView.builder(
-      itemCount: 2,
-      shrinkWrap: true,
-      physics: ScrollPhysics(),
-      scrollDirection: Axis.horizontal,
-      itemBuilder: (context, index) {
-        return Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(5),
-          ),
-          child: Container(
-            // height: 60,
-            width: 200,
-            // color: Colors.redAccent,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8),
-              child: Column(
-                children: [
-                  Text("Todays collections",
-                      style:
-                          TextStyle(fontSize: 14, fontWeight: FontWeight.w700)),
-                  Text("3 products",
-                      style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.grey)),
-                  SizedBox(
-                    height: 5,
+    return _topCollectionList.length > 0
+        ? ListView.builder(
+            itemCount: _topCollectionList.length,
+            shrinkWrap: true,
+            physics: ScrollPhysics(),
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (context, index) {
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => CollectionProducts(
+                                collectionId: _topCollectionList[index].id,
+                              )));
+                },
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Container(height: 40, width: 70, color: Colors.redAccent),
-                      Container(height: 40, width: 70, color: Colors.redAccent)
-                    ],
-                  )
-                ],
-              ),
-            ),
-          ),
-        );
-      },
-    );
+                  child: Container(
+                    // height: 60,
+                    width: 200,
+                    // color: Colors.redAccent,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child: Column(
+                        children: [
+                          Text(_topCollectionList[index].name,
+                              style: TextStyle(
+                                  fontSize: 14, fontWeight: FontWeight.w700)),
+                          Text(
+                              _topCollectionList[index]
+                                  .collectionCount
+                                  .toString(),
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.grey)),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Container(
+                                height: 40,
+                                width: 70,
+                                color: Colors.redAccent,
+                                child: Image.network(
+                                  "https://www.apcombd.com/public/" +
+                                      _topCollectionList[index].iconOne,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              Container(
+                                height: 40,
+                                width: 70,
+                                color: Colors.redAccent,
+                                child: Image.network(
+                                  "https://www.apcombd.com/public/" +
+                                      _topCollectionList[index].iconTwo,
+                                  fit: BoxFit.cover,
+                                ),
+                              )
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          )
+        : CircularProgressIndicator();
   }
 
   buildHomeFeaturedCategories(context) {

@@ -13,7 +13,8 @@ class CartRepository {
   Future<List<CartResponse>> getCartResponseList(
     @required int user_id,
   ) async {
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/carts/$user_id");
+    Uri url =
+        Uri.parse("${AppConfig.BASE_URL}/wholesalecart/$user_id?1"); //carts
     final response = await http.post(
       url,
       headers: {
@@ -22,7 +23,9 @@ class CartRepository {
         "App-Language": app_language.$,
       },
     );
-
+    print(user_id);
+    print(access_token.$);
+    print('cart get response: ${response.body}');
     return cartResponseFromJson(response.body);
   }
 
@@ -72,9 +75,10 @@ class CartRepository {
       "cost_matrix": AppConfig.purchase_code
     });
 
-    print(post_body.toString());
+    print('post body: ${post_body.toString()}');
 
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/carts/add");
+    Uri url = Uri.parse(
+        "${AppConfig.BASE_URL}/wholesalecart-addtowholesalecart"); // /carts/add
     final response = await http.post(url,
         headers: {
           "Content-Type": "application/json",
@@ -83,7 +87,7 @@ class CartRepository {
         },
         body: post_body);
 
-    print(response.body.toString());
+    print('response body: ${response.body.toString()}');
     return cartAddResponseFromJson(response.body);
   }
 

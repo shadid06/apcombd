@@ -12,7 +12,6 @@ import 'package:flutter/foundation.dart';
 import 'dart:convert';
 import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
 
-
 class AuthRepository {
   Future<LoginResponse> getLoginResponse(
       @required String email, @required String password) async {
@@ -30,16 +29,16 @@ class AuthRepository {
           "App-Language": app_language.$,
         },
         body: post_body);
-
+    print(response.body);
     return loginResponseFromJson(response.body);
   }
 
   Future<LoginResponse> getSocialLoginResponse(@required String name,
       @required String email, @required String provider) async {
-     email = email==("null")?"":email;
+    email = email == ("null") ? "" : email;
 
     var post_body = jsonEncode(
-        {"name": "${name}", "email":email, "provider": "$provider"});
+        {"name": "${name}", "email": email, "provider": "$provider"});
 
     Uri url = Uri.parse("${AppConfig.BASE_URL}/auth/social-login");
     final response = await http.post(url,
@@ -185,8 +184,8 @@ class AuthRepository {
         headers: {
           "Content-Type": "application/json",
           "App-Language": app_language.$,
-        },body: post_body);
-
+        },
+        body: post_body);
 
     return userByTokenResponseFromJson(response.body);
   }
