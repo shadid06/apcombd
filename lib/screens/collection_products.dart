@@ -117,7 +117,7 @@ class _CollectionProductsState extends State<CollectionProducts> {
             // 3
             return ProductCard(
                 id: _productList[index].id,
-                image: AppConfig.BASE_PATH + _productList[index].thumbnailImg,
+                image: _productList[index].thumbnailImg,
                 name: _productList[index].name,
                 main_price: _productList[index].unitPrice,
                 stroked_price: _productList[index].purchasePrice,

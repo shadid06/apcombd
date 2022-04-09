@@ -14,7 +14,6 @@ final SharedValue<int> user_id = SharedValue(
   value: 0, // initial value
   key: "user_id", // disk storage key for shared_preferences
 );
-
 final SharedValue<String> avatar_original = SharedValue(
   value: "", // initial value
   key: "avatar_original", // disk storage key for shared_preferences
@@ -33,6 +32,10 @@ final SharedValue<String> user_email = SharedValue(
 final SharedValue<String> user_phone = SharedValue(
   value: "", // initial value
   key: "user_phone", // disk storage key for shared_preferences
+);
+final SharedValue<String> is_wholesale = SharedValue(
+  value: "", // initial value
+  key: "is_wholesale", // disk storage key for shared_preferences
 );
 final SharedValue<String> app_language = SharedValue(
   value: "en", // initial value

@@ -10,19 +10,28 @@ import 'package:active_ecommerce_flutter/data_model/cart_summary_response.dart';
 import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
 
 class CartRepository {
+  String endPoint;
   Future<List<CartResponse>> getCartResponseList(
     @required int user_id,
   ) async {
+    // if (is_wholesale.$ == "1") {
+    //   endPoint = "wholesalecart";
+    // } else {
+    //   endPoint = "carts";
+    // }
     Uri url =
-        Uri.parse("${AppConfig.BASE_URL}/wholesalecart/$user_id?1"); //carts
+        Uri.parse("${AppConfig.BASE_URL}/wholesalecart/$user_id"); //carts ?1
     final response = await http.post(
       url,
       headers: {
         "Content-Type": "application/json",
+        "Accept": "application/json",
         "Authorization": "Bearer ${access_token.$}",
         "App-Language": app_language.$,
       },
     );
+    print(url);
+
     print(user_id);
     print(access_token.$);
     print('cart get response: ${response.body}');

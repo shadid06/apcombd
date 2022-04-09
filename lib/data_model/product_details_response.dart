@@ -163,7 +163,7 @@ class DetailedProduct {
         "video_link": video_link,
         "link": link,
         "brand": brand.toJson(),
-        "short_description": description,
+        "short_description": shortDescription,
         "is_short_description": isShortDescription
       };
 }

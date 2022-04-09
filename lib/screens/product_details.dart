@@ -51,6 +51,7 @@ class _ProductDetailsState extends State<ProductDetails> {
   TextEditingController sellerChatTitleController = TextEditingController();
   TextEditingController sellerChatMessageController = TextEditingController();
   ScrollController _scrollController;
+  ProductDetailsResponse productDetailsResponse;
   //init values
   bool _isInWishList = false;
   var _productDetailsFetched = false;
@@ -99,6 +100,8 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   fetchProductDetails() async {
     var productDetailsResponse =
+        await ProductRepository().getProductDetails(id: widget.id);
+    productDetailsResponse =
         await ProductRepository().getProductDetails(id: widget.id);
     shortDescription =
         productDetailsResponse.detailed_products[0].shortDescription;
@@ -937,7 +940,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         8.0,
                         8.0,
                       ),
-                      child: shortDescription != null
+                      child: _productDetails != null
                           ? buildExpandableshortDescription()
                           : Text(""),
                       // : Padding(
@@ -1088,9 +1091,10 @@ class _ProductDetailsState extends State<ProductDetails> {
                             MaterialPageRoute(builder: (context) {
                           return CommonWebviewScreen(
                             url:
-                                "${AppConfig.RAW_BASE_URL}/mobile-page/sellerpolicy",
-                            page_name: AppLocalizations.of(context)
-                                .product_details_screen_seller_policy,
+                                "${AppConfig.RAW_BASE_URL}/privacy-policy-page",
+                            // page_name: AppLocalizations.of(context)
+                            //     .product_details_screen_seller_policy,
+                            page_name: "Privacy Policy",
                           );
                         }));
                       },
@@ -1106,8 +1110,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                           child: Row(
                             children: [
                               Text(
-                                AppLocalizations.of(context)
-                                    .product_details_screen_seller_policy,
+                                "Privacy Policy",
                                 style: TextStyle(
                                     color: MyTheme.font_grey,
                                     fontSize: 14,
@@ -1132,8 +1135,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
                           return CommonWebviewScreen(
-                            url:
-                                "${AppConfig.RAW_BASE_URL}/mobile-page/returnpolicy",
+                            url: "${AppConfig.RAW_BASE_URL}/return-refund-page",
                             page_name: AppLocalizations.of(context)
                                 .product_details_screen_return_policy,
                           );
@@ -1178,7 +1180,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             MaterialPageRoute(builder: (context) {
                           return CommonWebviewScreen(
                             url:
-                                "${AppConfig.RAW_BASE_URL}/mobile-page/supportpolicy",
+                                "${AppConfig.RAW_BASE_URL}/support-policy-page",
                             page_name: AppLocalizations.of(context)
                                 .product_details_screen_support_policy,
                           );
@@ -2052,31 +2054,40 @@ class _ProductDetailsState extends State<ProductDetails> {
           Expandable(
             collapsed: Container(
                 height: 50,
-                child: Html(data: _productDetails.shortDescription)),
-            expanded:
-                Container(child: Html(data: _productDetails.shortDescription)),
+                child: Html(
+                    data: _productDetails.shortDescription != null
+                        ? _productDetails.shortDescription
+                        : "")),
+            expanded: Container(
+                child: Html(
+                    data: _productDetails.shortDescription != null
+                        ? _productDetails.shortDescription
+                        : "")),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              Builder(
-                builder: (context) {
-                  var controller = ExpandableController.of(context);
-                  return FlatButton(
-                    child: Text(
-                      !controller.expanded
-                          ? AppLocalizations.of(context).common_view_more
-                          : AppLocalizations.of(context).common_show_less,
-                      style: TextStyle(color: MyTheme.font_grey, fontSize: 11),
+          _productDetails.shortDescription != null
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    Builder(
+                      builder: (context) {
+                        var controller = ExpandableController.of(context);
+                        return FlatButton(
+                          child: Text(
+                            !controller.expanded
+                                ? AppLocalizations.of(context).common_view_more
+                                : AppLocalizations.of(context).common_show_less,
+                            style: TextStyle(
+                                color: MyTheme.font_grey, fontSize: 11),
+                          ),
+                          onPressed: () {
+                            controller.toggle();
+                          },
+                        );
+                      },
                     ),
-                    onPressed: () {
-                      controller.toggle();
-                    },
-                  );
-                },
-              ),
-            ],
-          ),
+                  ],
+                )
+              : Text(''),
         ],
       ),
     ));

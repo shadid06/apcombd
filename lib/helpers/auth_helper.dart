@@ -16,28 +16,31 @@ class AuthHelper {
       user_email.save();
       user_phone.$ = loginResponse.user.phone;
       user_phone.save();
+      is_wholesale.$ = loginResponse.user.isWholeSale;
+      is_wholesale.save();
       avatar_original.$ = loginResponse.user.avatar_original;
       avatar_original.save();
     }
   }
 
   clearUserData() {
-      is_logged_in.$ = false;
-      is_logged_in.save();
-      access_token.$ = "";
-      access_token.save();
-      user_id.$ = 0;
-      user_id.save();
-      user_name.$ = "";
-      user_name.save();
-      user_email.$ = "";
-      user_email.save();
-      user_phone.$ = "";
-      user_phone.save();
-      avatar_original.$ = "";
-      avatar_original.save();
+    is_logged_in.$ = false;
+    is_logged_in.save();
+    access_token.$ = "";
+    access_token.save();
+    user_id.$ = 0;
+    user_id.save();
+    user_name.$ = "";
+    user_name.save();
+    user_email.$ = "";
+    user_email.save();
+    user_phone.$ = "";
+    user_phone.save();
+    is_wholesale.$ = "";
+    is_wholesale.save();
+    avatar_original.$ = "";
+    avatar_original.save();
   }
-
 
   fetch_and_set() async {
     var userByTokenResponse = await AuthRepository().getUserByTokenResponse();
@@ -55,7 +58,9 @@ class AuthHelper {
       user_phone.save();
       avatar_original.$ = userByTokenResponse.avatar_original;
       avatar_original.save();
-    }else{
+      is_wholesale.$ = is_wholesale.$;
+      is_wholesale.save();
+    } else {
       is_logged_in.$ = false;
       is_logged_in.save();
       user_id.$ = 0;
@@ -68,6 +73,8 @@ class AuthHelper {
       user_phone.save();
       avatar_original.$ = "";
       avatar_original.save();
+      is_wholesale.$ = "";
+      is_wholesale.save();
     }
   }
 }

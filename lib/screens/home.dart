@@ -503,9 +503,10 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                               Container(
                                 height: 40,
                                 width: 70,
-                                color: Colors.redAccent,
-                                child: Image.network(
-                                  "https://www.apcombd.com/public/" +
+                                // color: Colors.redAccent,
+                                child: FadeInImage.assetNetwork(
+                                  placeholder: 'assets/placeholder.png',
+                                  image: AppConfig.BASE_PATH +
                                       _topCollectionList[index].iconOne,
                                   fit: BoxFit.cover,
                                 ),
@@ -513,11 +514,17 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                               Container(
                                 height: 40,
                                 width: 70,
-                                color: Colors.redAccent,
-                                child: Image.network(
-                                  "https://www.apcombd.com/public/" +
+                                // color: Colors.redAccent,
+                                // child: Image.network(
+
+                                //   "https://www.apcombd.com/public/" +
+                                //       _topCollectionList[index].iconTwo,
+                                //   fit: BoxFit.cover,
+                                // ),
+                                child: FadeInImage.assetNetwork(
+                                  placeholder: 'assets/placeholder.png',
+                                  image: AppConfig.BASE_PATH +
                                       _topCollectionList[index].iconTwo,
-                                  fit: BoxFit.cover,
                                 ),
                               )
                             ],
@@ -530,7 +537,25 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               );
             },
           )
-        : CircularProgressIndicator();
+        : Row(
+            children: [
+              Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: ShimmerHelper().buildBasicShimmer(
+                      height: 120.0,
+                      width: (MediaQuery.of(context).size.width - 32) / 3)),
+              Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: ShimmerHelper().buildBasicShimmer(
+                      height: 120.0,
+                      width: (MediaQuery.of(context).size.width - 32) / 3)),
+              // Padding(
+              //     padding: const EdgeInsets.only(right: 0.0),
+              //     child: ShimmerHelper().buildBasicShimmer(
+              //         height: 120.0,
+              //         width: (MediaQuery.of(context).size.width - 32) / 3)),
+            ],
+          );
   }
 
   buildHomeFeaturedCategories(context) {

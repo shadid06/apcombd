@@ -1,4 +1,6 @@
 import 'package:active_ecommerce_flutter/screens/change_language.dart';
+import 'package:active_ecommerce_flutter/screens/common_webview_screen.dart';
+import 'package:active_ecommerce_flutter/screens/terms_and_conditions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -251,6 +253,66 @@ class _MainDrawerState extends State<MainDrawer> {
                             }));
                           })
                       : Container(),
+                  ListTile(
+                      visualDensity:
+                          VisualDensity(horizontal: -4, vertical: -4),
+                      leading: Image.asset("assets/success.png",
+                          height: 16, color: Color.fromRGBO(153, 153, 153, 1)),
+                      title: Text("Career",
+                          style: TextStyle(
+                              // color: Color.fromRGBO(153, 153, 153, 1),
+                              color: Colors.black,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14)),
+                      onTap: () {
+                        // onTapLogout(context);
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return CommonWebviewScreen(
+                            url: "${AppConfig.RAW_BASE_URL}/career",
+                            page_name: "Career",
+                          );
+                        }));
+                      }),
+                  ListTile(
+                      visualDensity:
+                          VisualDensity(horizontal: -4, vertical: -4),
+                      leading: Image.asset("assets/support.png",
+                          height: 16, color: Color.fromRGBO(153, 153, 153, 1)),
+                      title: Text("Customer Support",
+                          style: TextStyle(
+                              // color: Color.fromRGBO(153, 153, 153, 1),
+                              color: Colors.black,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14)),
+                      onTap: () {
+                        // onTapLogout(context);
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return CommonWebviewScreen(
+                            url: "${AppConfig.RAW_BASE_URL}/customer-care",
+                            page_name: "Customer Support",
+                          );
+                        }));
+                      }),
+                  ListTile(
+                      visualDensity:
+                          VisualDensity(horizontal: -4, vertical: -4),
+                      leading: Image.asset("assets/contract.png",
+                          height: 16, color: Color.fromRGBO(153, 153, 153, 1)),
+                      title: Text("Terms and Conditions",
+                          style: TextStyle(
+                              // color: Color.fromRGBO(153, 153, 153, 1),
+                              color: Colors.black,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14)),
+                      onTap: () {
+                        // onTapLogout(context);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => TermsAndConditions()));
+                      }),
                   is_logged_in.$ == true
                       ? ListTile(
                           visualDensity:

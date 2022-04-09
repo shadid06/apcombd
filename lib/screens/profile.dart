@@ -39,7 +39,9 @@ class _ProfileState extends State<Profile> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
+    print('is wholesale: ${is_wholesale.$}');
+    print(user_id.$);
+    print(is_logged_in.$);
     if (is_logged_in.$ == true) {
       fetchAll();
     }
@@ -593,6 +595,7 @@ class _ProfileState extends State<Profile> {
                 )),
           ),
         ),
+        //  ${is_wholesale.$}
         Padding(
           padding: const EdgeInsets.only(top: 8.0),
           child: Text(
