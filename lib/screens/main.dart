@@ -41,6 +41,8 @@ class _MainState extends State<Main> {
   void initState() {
     // TODO: implement initState
     //re appear statusbar in case it was not there in the previous page
+    is_wholesale.$;
+    setState(() {});
     SystemChrome.setEnabledSystemUIOverlays(
         [SystemUiOverlay.top, SystemUiOverlay.bottom]);
     super.initState();
@@ -162,8 +164,10 @@ class _MainState extends State<Main> {
                       title: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          AppLocalizations.of(context)
-                              .main_screen_bottom_navigation_cart,
+                          is_wholesale.$ == "1"
+                              ? "WSale Cart"
+                              : AppLocalizations.of(context)
+                                  .main_screen_bottom_navigation_cart,
                           style: TextStyle(fontSize: 12),
                         ),
                       )),

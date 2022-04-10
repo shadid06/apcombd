@@ -8,6 +8,7 @@ import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
 import 'package:active_ecommerce_flutter/helpers/shimmer_helper.dart';
 import 'package:active_ecommerce_flutter/app_config.dart';
 import 'package:active_ecommerce_flutter/custom/toast_component.dart';
+import 'package:flutter_html/shims/dart_ui_real.dart';
 import 'package:toast/toast.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -290,10 +291,14 @@ class _CartState extends State<Cart> {
                   ],
                 ),
               ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: buildBottomContainer(),
-              )
+
+              //have to check here ask for quation active or inactive
+              is_wholesale.$ == "1"
+                  ? Container()
+                  : Align(
+                      alignment: Alignment.bottomCenter,
+                      child: buildBottomContainer(),
+                    )
             ],
           )),
     );
@@ -526,30 +531,34 @@ class _CartState extends State<Cart> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 0.0, top: 16.0),
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: Text(
-                            _shopList[index].name,
-                            style: TextStyle(color: MyTheme.font_grey),
-                          ),
-                        ),
-                        Spacer(),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: Text(
-                            partialTotalString(index),
-                            style: TextStyle(
-                                color: MyTheme.accent_color, fontSize: 14),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(bottom: 0.0, top: 16.0),
+                  //   child: Row(
+                  //     children: [
+                  //       Padding(
+                  //         padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  //         child: Text(
+                  //           _shopList[index].name,
+                  //           style: TextStyle(color: MyTheme.font_grey),
+                  //         ),
+                  //       ),
+                  //       Spacer(),
+                  //       Padding(
+                  //         padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  //         child: Text(
+                  //           partialTotalString(index),
+                  //           style: TextStyle(
+                  //               color: MyTheme.accent_color, fontSize: 14),
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                   buildCartSellerItemList(index),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  is_wholesale.$ == "1" ? buildQuotation() : Container(),
                 ],
               ),
             );
@@ -577,7 +586,11 @@ class _CartState extends State<Cart> {
         itemBuilder: (context, index) {
           return Padding(
             padding: const EdgeInsets.only(bottom: 8.0),
-            child: buildCartSellerItemCard(seller_index, index),
+            child: Column(
+              children: [
+                buildCartSellerItemCard(seller_index, index),
+              ],
+            ),
           );
         },
       ),
@@ -591,152 +604,228 @@ class _CartState extends State<Cart> {
         borderRadius: BorderRadius.circular(8.0),
       ),
       elevation: 0.0,
-      child: Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
-        Container(
-            width: 100,
-            height: 100,
-            child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: FadeInImage.assetNetwork(
-                  placeholder: 'assets/placeholder.png',
-                  image: AppConfig.BASE_PATH +
-                      _shopList[seller_index]
-                          .cart_items[item_index]
-                          .product_thumbnail_image,
-                  fit: BoxFit.fitWidth,
-                ))),
-        Container(
-          width: 170,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(left: 8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      _shopList[seller_index]
-                          .cart_items[item_index]
-                          .product_name,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
-                      style: TextStyle(
-                          color: MyTheme.font_grey,
-                          fontSize: 14,
-                          height: 1.6,
-                          fontWeight: FontWeight.w400),
-                    ),
-                    Row(
+      child: Column(
+        children: [
+          Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
+            Container(
+                width: 100,
+                height: 100,
+                child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: FadeInImage.assetNetwork(
+                      placeholder: 'assets/placeholder.png',
+                      image: AppConfig.BASE_PATH +
+                          _shopList[seller_index]
+                              .cart_items[item_index]
+                              .product_thumbnail_image,
+                      fit: BoxFit.fitWidth,
+                    ))),
+            Container(
+              width: 160,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(left: 8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8.0),
-                          child: Text(
-                            _shopList[seller_index]
-                                    .cart_items[item_index]
-                                    .currency_symbol +
-                                (_shopList[seller_index]
-                                            .cart_items[item_index]
-                                            .price *
-                                        _shopList[seller_index]
-                                            .cart_items[item_index]
-                                            .quantity)
-                                    .toString(),
-                            textAlign: TextAlign.left,
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 2,
-                            style: TextStyle(
-                                color: MyTheme.accent_color,
-                                fontSize: 14,
-                                height: 1.6,
-                                fontWeight: FontWeight.w600),
-                          ),
+                        Text(
+                          _shopList[seller_index]
+                              .cart_items[item_index]
+                              .product_name,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                          style: TextStyle(
+                              color: MyTheme.font_grey,
+                              fontSize: 14,
+                              height: 1.6,
+                              fontWeight: FontWeight.w400),
                         ),
-                        Spacer(),
-                        SizedBox(
-                          height: 28,
-                          child: InkWell(
-                            onTap: () {},
-                            child: IconButton(
-                              onPressed: () {
-                                onPressDelete(_shopList[seller_index]
-                                    .cart_items[item_index]
-                                    .id);
-                              },
-                              icon: Icon(
-                                Icons.delete_forever_outlined,
-                                color: MyTheme.medium_grey,
-                                size: 24,
+                        Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(top: 8.0),
+                              child: Text(
+                                _shopList[seller_index]
+                                        .cart_items[item_index]
+                                        .currency_symbol +
+                                    (_shopList[seller_index]
+                                                .cart_items[item_index]
+                                                .price *
+                                            _shopList[seller_index]
+                                                .cart_items[item_index]
+                                                .quantity)
+                                        .toString(),
+                                textAlign: TextAlign.left,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
+                                style: TextStyle(
+                                    color: MyTheme.accent_color,
+                                    fontSize: 14,
+                                    height: 1.6,
+                                    fontWeight: FontWeight.w600),
                               ),
                             ),
-                          ),
-                        )
+                            Spacer(),
+                            SizedBox(
+                              height: 28,
+                              child: InkWell(
+                                onTap: () {},
+                                child: IconButton(
+                                  onPressed: () {
+                                    print("tap");
+                                    print(_shopList[seller_index]
+                                        .cart_items[item_index]
+                                        .id);
+                                    onPressDelete(_shopList[seller_index]
+                                        .cart_items[item_index]
+                                        .id);
+                                  },
+                                  icon: Icon(
+                                    Icons.delete_forever_outlined,
+                                    color: MyTheme.medium_grey,
+                                    size: 24,
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
                       ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+            Spacer(),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                children: [
+                  SizedBox(
+                    width: 28,
+                    height: 28,
+                    child: FlatButton(
+                      padding: EdgeInsets.all(0),
+                      child: Icon(
+                        Icons.add,
+                        color: MyTheme.accent_color,
+                        size: 18,
+                      ),
+                      shape: CircleBorder(
+                        side: new BorderSide(
+                            color: MyTheme.light_grey, width: 1.0),
+                      ),
+                      color: Colors.white,
+                      onPressed: () {
+                        onQuantityIncrease(seller_index, item_index);
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                    child: Text(
+                      _shopList[seller_index]
+                          .cart_items[item_index]
+                          .quantity
+                          .toString(),
+                      style:
+                          TextStyle(color: MyTheme.accent_color, fontSize: 16),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 28,
+                    height: 28,
+                    child: FlatButton(
+                      padding: EdgeInsets.all(0),
+                      child: Icon(
+                        Icons.remove,
+                        color: MyTheme.accent_color,
+                        size: 18,
+                      ),
+                      height: 30,
+                      shape: CircleBorder(
+                        side: new BorderSide(
+                            color: MyTheme.light_grey, width: 1.0),
+                      ),
+                      color: Colors.white,
+                      onPressed: () {
+                        onQuantityDecrease(seller_index, item_index);
+                      },
+                    ),
+                  )
+                ],
+              ),
+            )
+          ]),
+          // is_wholesale.$ == "1"
+          //     ? RaisedButton(
+          //         color: MyTheme.golden,
+          //         onPressed: () {},
+          //         child: Text(
+          //           "Ask for Quotation",
+          //           style: TextStyle(color: Colors.white),
+          //         ),
+          //       )
+          //     : Text('')
+        ],
+      ),
+    );
+  }
+
+  Widget buildQuotation() {
+    return Container(
+      width: double.infinity,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: Column(
+          children: [
+            Divider(
+              height: 1,
+              color: MyTheme.medium_grey,
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "SubTotal",
+                  style: TextStyle(
+                      color: MyTheme.accent_color,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14),
+                ),
+                Text(
+                  "Ask for quotation first",
+                  style: TextStyle(
+                      color: MyTheme.accent_color,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                RaisedButton(
+                  color: MyTheme.golden,
+                  onPressed: () {},
+                  child: Text(
+                    "Ask for Quotation",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ],
+            )
+          ],
         ),
-        Spacer(),
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              SizedBox(
-                width: 28,
-                height: 28,
-                child: FlatButton(
-                  padding: EdgeInsets.all(0),
-                  child: Icon(
-                    Icons.add,
-                    color: MyTheme.accent_color,
-                    size: 18,
-                  ),
-                  shape: CircleBorder(
-                    side: new BorderSide(color: MyTheme.light_grey, width: 1.0),
-                  ),
-                  color: Colors.white,
-                  onPressed: () {
-                    onQuantityIncrease(seller_index, item_index);
-                  },
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                child: Text(
-                  _shopList[seller_index]
-                      .cart_items[item_index]
-                      .quantity
-                      .toString(),
-                  style: TextStyle(color: MyTheme.accent_color, fontSize: 16),
-                ),
-              ),
-              SizedBox(
-                width: 28,
-                height: 28,
-                child: FlatButton(
-                  padding: EdgeInsets.all(0),
-                  child: Icon(
-                    Icons.remove,
-                    color: MyTheme.accent_color,
-                    size: 18,
-                  ),
-                  height: 30,
-                  shape: CircleBorder(
-                    side: new BorderSide(color: MyTheme.light_grey, width: 1.0),
-                  ),
-                  color: Colors.white,
-                  onPressed: () {
-                    onQuantityDecrease(seller_index, item_index);
-                  },
-                ),
-              )
-            ],
-          ),
-        )
-      ]),
+      ),
     );
   }
 }

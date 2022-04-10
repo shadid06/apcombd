@@ -44,6 +44,7 @@ class AuthHelper {
 
   fetch_and_set() async {
     var userByTokenResponse = await AuthRepository().getUserByTokenResponse();
+    print('whole after reload: ${userByTokenResponse.isWholesale}');
 
     if (userByTokenResponse.result == true) {
       is_logged_in.$ = true;
@@ -58,7 +59,7 @@ class AuthHelper {
       user_phone.save();
       avatar_original.$ = userByTokenResponse.avatar_original;
       avatar_original.save();
-      is_wholesale.$ = is_wholesale.$;
+      is_wholesale.$ = userByTokenResponse.isWholesale;
       is_wholesale.save();
     } else {
       is_logged_in.$ = false;

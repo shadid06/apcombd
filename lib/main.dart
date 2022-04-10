@@ -2,6 +2,7 @@ import 'package:active_ecommerce_flutter/helpers/addons_helper.dart';
 import 'package:active_ecommerce_flutter/helpers/auth_helper.dart';
 import 'package:active_ecommerce_flutter/helpers/business_setting_helper.dart';
 import 'package:active_ecommerce_flutter/other_config.dart';
+import 'package:active_ecommerce_flutter/repositories/auth_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -30,7 +31,6 @@ main() async {
     DeviceOrientation.portraitDown,
   ]);
 
-
   AddonsHelper().setAddonsData();
   BusinessSettingHelper().setBusinessSettingData();
   app_language.load();
@@ -40,6 +40,8 @@ main() async {
   access_token.load().whenComplete(() {
     AuthHelper().fetch_and_set();
   });
+  // var userByTokenResponse = await AuthRepository().getUserByTokenResponse();
+  // AuthHelper().setUserData(userByTokenResponse);
 
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,

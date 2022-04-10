@@ -14,13 +14,12 @@ class CartRepository {
   Future<List<CartResponse>> getCartResponseList(
     @required int user_id,
   ) async {
-    // if (is_wholesale.$ == "1") {
-    //   endPoint = "wholesalecart";
-    // } else {
-    //   endPoint = "carts";
-    // }
-    Uri url =
-        Uri.parse("${AppConfig.BASE_URL}/wholesalecart/$user_id"); //carts ?1
+    if (is_wholesale.$ == "1") {
+      endPoint = "wholesalecart";
+    } else {
+      endPoint = "carts";
+    }
+    Uri url = Uri.parse("${AppConfig.BASE_URL}/$endPoint/$user_id"); //carts ?1
     final response = await http.post(
       url,
       headers: {
@@ -41,11 +40,18 @@ class CartRepository {
   Future<CartDeleteResponse> getCartDeleteResponse(
     @required int cart_id,
   ) async {
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/carts/$cart_id");
-    final response = await http.delete(
+    if (is_wholesale.$ == "1") {
+      endPoint = "wholesalecart-remove";
+    } else {
+      endPoint = "carts";
+    }
+    Uri url = Uri.parse("${AppConfig.BASE_URL}/$endPoint/$cart_id"); //carts
+    final response = await http.get(
+      //http.delete
       url,
       headers: {
         "Content-Type": "application/json",
+        "Accept": "application/json",
         "Authorization": "Bearer ${access_token.$}",
         "App-Language": app_language.$
       },
@@ -76,6 +82,12 @@ class CartRepository {
       @required String variant,
       @required int user_id,
       @required int quantity) async {
+    if (is_wholesale.$ == "1") {
+      endPoint = "wholesalecart-addtowholesalecart";
+    } else {
+      endPoint = "carts/add";
+    }
+
     var post_body = jsonEncode({
       "id": "${id}",
       "variant": "$variant",
@@ -86,8 +98,7 @@ class CartRepository {
 
     print('post body: ${post_body.toString()}');
 
-    Uri url = Uri.parse(
-        "${AppConfig.BASE_URL}/wholesalecart-addtowholesalecart"); // /carts/add
+    Uri url = Uri.parse("${AppConfig.BASE_URL}/$endPoint"); // /carts/add
     final response = await http.post(url,
         headers: {
           "Content-Type": "application/json",
@@ -101,7 +112,13 @@ class CartRepository {
   }
 
   Future<CartSummaryResponse> getCartSummaryResponse() async {
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/cart-summary/${user_id.$}");
+    if (is_wholesale.$ == "1") {
+      endPoint = "wholesalecart-summary";
+    } else {
+      endPoint = "cart-summary";
+    }
+    Uri url = Uri.parse(
+        "${AppConfig.BASE_URL}/$endPoint/${user_id.$}"); //cart-summary
     final response = await http.get(
       url,
       headers: {
@@ -111,7 +128,7 @@ class CartRepository {
       },
     );
 
-    print("${AppConfig.BASE_URL}/cart-summary/${user_id.$}");
+    print("${AppConfig.BASE_URL}/$endPoint/${user_id.$}"); //cart-summary
     return cartSummaryResponseFromJson(response.body);
   }
 }
