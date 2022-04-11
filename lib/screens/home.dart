@@ -867,7 +867,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     } else if (_carouselImageList.length > 0) {
       return CarouselSlider(
         options: CarouselOptions(
-            aspectRatio: 2.67,
+            // aspectRatio: 2.67,
+            aspectRatio: 3.5,
             viewportFraction: 1,
             initialPage: 0,
             enableInfiniteScroll: true,
@@ -890,35 +891,35 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                 children: <Widget>[
                   Container(
                       width: double.infinity,
-                      margin: EdgeInsets.symmetric(horizontal: 5.0),
+                      // margin: EdgeInsets.symmetric(horizontal: 5.0),
                       child: ClipRRect(
-                          borderRadius: BorderRadius.all(Radius.circular(8)),
+                          // borderRadius: BorderRadius.all(Radius.circular(8)),
                           child: FadeInImage.assetNetwork(
-                            placeholder: 'assets/placeholder_rectangle.png',
-                            image: AppConfig.BASE_PATH + i,
-                            fit: BoxFit.fill,
-                          ))),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: _carouselImageList.map((url) {
-                        int index = _carouselImageList.indexOf(url);
-                        return Container(
-                          width: 7.0,
-                          height: 7.0,
-                          margin: EdgeInsets.symmetric(
-                              vertical: 10.0, horizontal: 4.0),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: _current_slider == index
-                                ? MyTheme.white
-                                : Color.fromRGBO(112, 112, 112, .3),
-                          ),
-                        );
-                      }).toList(),
-                    ),
-                  ),
+                        placeholder: 'assets/placeholder_rectangle.png',
+                        image: AppConfig.BASE_PATH + i,
+                        fit: BoxFit.fill,
+                      ))),
+                  // Align(
+                  //   alignment: Alignment.bottomCenter,
+                  //   child: Row(
+                  //     mainAxisAlignment: MainAxisAlignment.center,
+                  //     children: _carouselImageList.map((url) {
+                  //       int index = _carouselImageList.indexOf(url);
+                  //       return Container(
+                  //         width: 7.0,
+                  //         height: 7.0,
+                  //         margin: EdgeInsets.symmetric(
+                  //             vertical: 10.0, horizontal: 4.0),
+                  //         decoration: BoxDecoration(
+                  //           shape: BoxShape.circle,
+                  //           color: _current_slider == index
+                  //               ? MyTheme.white
+                  //               : Color.fromRGBO(112, 112, 112, .3),
+                  //         ),
+                  //       );
+                  //     }).toList(),
+                  //   ),
+                  // ),
                 ],
               );
             },

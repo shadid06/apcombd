@@ -60,6 +60,27 @@ class CartRepository {
     return cartDeleteResponseFromJson(response.body);
   }
 
+  //ask for quotation
+
+  Future<CartDeleteResponse> quotationResponse(
+    @required int cart_id,
+  ) async {
+    Uri url = Uri.parse(
+        "${AppConfig.BASE_URL}/wholesalecart-askforquotation"); //carts
+    final response = await http.post(
+      //http.delete
+      url,
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Authorization": "Bearer ${access_token.$}",
+        "App-Language": app_language.$
+      },
+    );
+
+    return cartDeleteResponseFromJson(response.body);
+  }
+
   Future<CartProcessResponse> getCartProcessResponse(
       @required String cart_ids, @required String cart_quantities) async {
     var post_body = jsonEncode(

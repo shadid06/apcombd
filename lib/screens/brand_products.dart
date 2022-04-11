@@ -146,7 +146,7 @@ class _BrandProductsState extends State<BrandProducts> {
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: MyTheme.white, width: 0.0),
                 ),
-                contentPadding: EdgeInsets.all(0.0)),
+                contentPadding: EdgeInsets.symmetric(horizontal: 8)),
           )),
       elevation: 0.0,
       titleSpacing: 0,

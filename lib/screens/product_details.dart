@@ -1435,7 +1435,9 @@ class _ProductDetailsState extends State<ProductDetails> {
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: Container(
             child: Text(
-              "(${_stock} ${AppLocalizations.of(context).product_details_screen_available})",
+              _stock > 0
+                  ? "In Stock"
+                  : "Out Of Stock", //(${_stock} ${AppLocalizations.of(context).product_details_screen_available})
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
@@ -2228,11 +2230,11 @@ class _ProductDetailsState extends State<ProductDetails> {
     } else if (_relatedProducts.length > 0) {
       return SingleChildScrollView(
         child: SizedBox(
-          height: 175,
+          height: 180,
           child: ListView.builder(
             itemCount: _relatedProducts.length,
             scrollDirection: Axis.horizontal,
-            itemExtent: 120,
+            itemExtent: 125,
             itemBuilder: (context, index) {
               return Padding(
                 padding: const EdgeInsets.only(right: 3.0),

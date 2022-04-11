@@ -286,14 +286,14 @@ class _MainDrawerState extends State<MainDrawer> {
                               fontWeight: FontWeight.w600,
                               fontSize: 14)),
                       onTap: () {
-                        // onTapLogout(context);
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return CommonWebviewScreen(
-                            url: "${AppConfig.RAW_BASE_URL}/customer-care",
-                            page_name: "Customer Support",
-                          );
-                        }));
+                        onTapLogout(context);
+                        // Navigator.push(context,
+                        //     MaterialPageRoute(builder: (context) {
+                        //   return CommonWebviewScreen(
+                        //     url: "${AppConfig.RAW_BASE_URL}/customer-care",
+                        //     page_name: "Customer Support",
+                        //   );
+                        // }));
                       }),
                   ListTile(
                       visualDensity:

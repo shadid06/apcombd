@@ -41,7 +41,7 @@ class _MainState extends State<Main> {
   void initState() {
     // TODO: implement initState
     //re appear statusbar in case it was not there in the previous page
-    is_wholesale.$;
+    is_wholesale.load();
     setState(() {});
     SystemChrome.setEnabledSystemUIOverlays(
         [SystemUiOverlay.top, SystemUiOverlay.bottom]);

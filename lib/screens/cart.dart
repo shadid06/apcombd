@@ -23,6 +23,7 @@ class Cart extends StatefulWidget {
 class _CartState extends State<Cart> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   ScrollController _mainScrollController = ScrollController();
+  TextEditingController quatityController = TextEditingController();
   var _shopList = [];
   bool _isInitial = true;
   var _cartTotal = 0.00;
@@ -699,11 +700,12 @@ class _CartState extends State<Cart> {
               ),
             ),
             Spacer(),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: [
-                  SizedBox(
+            Column(
+              children: [
+                Padding(
+                  padding:
+                      const EdgeInsets.only(left: 16.0, top: 16, right: 16),
+                  child: SizedBox(
                     width: 28,
                     height: 28,
                     child: FlatButton(
@@ -723,18 +725,53 @@ class _CartState extends State<Cart> {
                       },
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                    child: Text(
-                      _shopList[seller_index]
-                          .cart_items[item_index]
-                          .quantity
-                          .toString(),
-                      style:
-                          TextStyle(color: MyTheme.accent_color, fontSize: 16),
-                    ),
-                  ),
-                  SizedBox(
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                  // child: Text(
+                  // _shopList[seller_index]
+                  //     .cart_items[item_index]
+                  //     .quantity
+                  //     .toString(),
+                  //   style:
+                  //       TextStyle(color: MyTheme.accent_color, fontSize: 16),
+                  // ),
+                  child: is_wholesale.$ == "1"
+                      ? Container(
+                          width: 46,
+                          child: TextFormField(
+                            controller: quatityController,
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              contentPadding: EdgeInsets.only(left: 16),
+                              hintText: _shopList[seller_index]
+                                  .cart_items[item_index]
+                                  .quantity
+                                  .toString(),
+                            ),
+                            onChanged: (value) {
+                              quatityController.text = value;
+                              _shopList[seller_index]
+                                  .cart_items[item_index]
+                                  .quantity = quatityController.text;
+                              getSetCartTotal();
+                              setState(() {});
+                            },
+                          ),
+                        )
+                      : Text(
+                          _shopList[seller_index]
+                              .cart_items[item_index]
+                              .quantity
+                              .toString(),
+                          style: TextStyle(
+                              color: MyTheme.accent_color, fontSize: 16),
+                        ),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.only(left: 16.0, bottom: 16, right: 16),
+                  child: SizedBox(
                     width: 28,
                     height: 28,
                     child: FlatButton(
@@ -754,9 +791,9 @@ class _CartState extends State<Cart> {
                         onQuantityDecrease(seller_index, item_index);
                       },
                     ),
-                  )
-                ],
-              ),
+                  ),
+                )
+              ],
             )
           ]),
           // is_wholesale.$ == "1"
