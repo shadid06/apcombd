@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:active_ecommerce_flutter/my_theme.dart';
 import 'package:active_ecommerce_flutter/screens/cart.dart';
 import 'package:active_ecommerce_flutter/screens/category_list.dart';
@@ -52,6 +54,14 @@ class _MainState extends State<Main> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
+        if (_currentIndex != 0) {
+          setState(() {
+            _currentIndex = 0;
+          });
+          return false;
+        } else {
+          showExitPopup(context);
+        }
         return widget.go_back;
       },
       child: Directionality(
@@ -194,5 +204,52 @@ class _MainState extends State<Main> {
         ),
       ),
     );
+  }
+
+  Future<bool> showExitPopup(context) async {
+    return await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            content: Container(
+              height: 90,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Do you want to exit?"),
+                  SizedBox(height: 20),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () {
+                            print('yes selected');
+                            exit(0);
+                          },
+                          child: Text("Yes"),
+                          style: ElevatedButton.styleFrom(
+                              primary: Colors.red.shade800),
+                        ),
+                      ),
+                      SizedBox(width: 15),
+                      Expanded(
+                          child: ElevatedButton(
+                        onPressed: () {
+                          print('no selected');
+                          Navigator.of(context).pop();
+                        },
+                        child:
+                            Text("No", style: TextStyle(color: Colors.black)),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.white,
+                        ),
+                      ))
+                    ],
+                  )
+                ],
+              ),
+            ),
+          );
+        });
   }
 }

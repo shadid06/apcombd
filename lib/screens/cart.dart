@@ -1,3 +1,4 @@
+import 'package:active_ecommerce_flutter/helpers/value_checker_helper.dart';
 import 'package:active_ecommerce_flutter/screens/shipping_info.dart';
 import 'package:flutter/material.dart';
 import 'package:active_ecommerce_flutter/my_theme.dart';
@@ -28,6 +29,9 @@ class _CartState extends State<Cart> {
   bool _isInitial = true;
   var _cartTotal = 0.00;
   var _cartTotalString = ". . .";
+  var cartIndexPrice;
+  var cartIndexPriceBeforeAskQuotation;
+  var cartPressCheck = 0;
 
   @override
   void initState() {
@@ -39,6 +43,8 @@ class _CartState extends State<Cart> {
     print(access_token.value);
     print(user_id.$);
     print(user_name.$);*/
+    // cartIndexPriceBeforeAskQuotation.load();
+    // print(cartIndexPriceBeforeAskQuotation.$);
 
     if (is_logged_in.$ == true) {
       fetchData();
@@ -599,6 +605,9 @@ class _CartState extends State<Cart> {
   }
 
   buildCartSellerItemCard(seller_index, item_index) {
+    cartIndexPrice = (_shopList[seller_index].cart_items[item_index].price *
+        _shopList[seller_index].cart_items[item_index].quantity);
+    print("$cartIndexPrice " "!=" "$cartIndexPriceBeforeAskQuotation");
     return Card(
       shape: RoundedRectangleBorder(
         side: BorderSide(color: MyTheme.light_grey, width: 1.0),
@@ -852,7 +861,11 @@ class _CartState extends State<Cart> {
               children: [
                 RaisedButton(
                   color: MyTheme.golden,
-                  onPressed: () {},
+                  onPressed: () {
+                    cartIndexPriceBeforeAskQuotation = cartIndexPrice;
+                    ValueCheckerHelper().saveCartPreviousPrice(
+                        cartIndexPriceBeforeAskQuotation);
+                  },
                   child: Text(
                     "Ask for Quotation",
                     style: TextStyle(color: Colors.white),

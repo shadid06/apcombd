@@ -92,3 +92,9 @@ final SharedValue<bool> pick_up_status = SharedValue(
   value: false, // initial value
   key: "pick_up_status", // disk storage key for shared_preferences
 );
+
+final SharedValue<dynamic> cartIndexPriceBeforeAskQuotation = SharedValue(
+  value: 0, // initial value
+  key:
+      "cartIndexPriceBeforeAskQuotation", // disk storage key for shared_preferences
+);
