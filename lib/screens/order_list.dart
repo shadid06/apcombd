@@ -266,7 +266,7 @@ class _OrderListState extends State<OrderList> {
                     vertical: BorderSide(color: MyTheme.light_grey, width: .5),
                     horizontal:
                         BorderSide(color: MyTheme.light_grey, width: 1))),
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 5),
             height: 36,
             width: MediaQuery.of(context).size.width * .3,
             child: new DropdownButton<PaymentStatus>(
@@ -318,7 +318,7 @@ class _OrderListState extends State<OrderList> {
                     vertical: BorderSide(color: MyTheme.light_grey, width: .5),
                     horizontal:
                         BorderSide(color: MyTheme.light_grey, width: 1))),
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 5),
             height: 36,
             width: MediaQuery.of(context).size.width * .35,
             child: new DropdownButton<DeliveryStatus>(

@@ -11,4 +11,15 @@ class ValueCheckerHelper {
     cartIndexPriceBeforeAskQuotation.$ = 0;
     cartIndexPriceBeforeAskQuotation.save();
   }
+
+  saveAskQuotationCounter(counter) {
+    askQuotationCounter_saved.$ = counter;
+    askQuotationCounter_saved.save();
+    print(askQuotationCounter_saved.$);
+  }
+
+  clearAskQuotationCounter() {
+    askQuotationCounter_saved.$ = 0;
+    askQuotationCounter_saved.save();
+  }
 }

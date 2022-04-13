@@ -1,3 +1,4 @@
+import 'package:active_ecommerce_flutter/data_model/ask_quotation_response.dart';
 import 'package:active_ecommerce_flutter/helpers/value_checker_helper.dart';
 import 'package:active_ecommerce_flutter/screens/shipping_info.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +33,8 @@ class _CartState extends State<Cart> {
   var cartIndexPrice;
   var cartIndexPriceBeforeAskQuotation;
   var cartPressCheck = 0;
+  AskQuotationResponse quotationResponse;
+  var askQuotationCounter = 0;
 
   @override
   void initState() {
@@ -45,7 +48,8 @@ class _CartState extends State<Cart> {
     print(user_name.$);*/
     // cartIndexPriceBeforeAskQuotation.load();
     // print(cartIndexPriceBeforeAskQuotation.$);
-
+    askQuotationCounter_saved.load();
+    print(askQuotationCounter_saved.$);
     if (is_logged_in.$ == true) {
       fetchData();
     }
@@ -185,6 +189,22 @@ class _CartState extends State<Cart> {
     }
   }
 
+  sendQuotation() async {
+    quotationResponse = await CartRepository().askQuotation();
+
+    if (quotationResponse.result == true) {
+      ToastComponent.showDialog(quotationResponse.message, context,
+          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+
+      reset();
+      fetchData();
+    } else {
+      ToastComponent.showDialog(quotationResponse.message, context,
+          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+    }
+    askQuotationCounter_saved.load();
+  }
+
   onPressUpdate() {
     process(mode: "update");
   }
@@ -300,12 +320,14 @@ class _CartState extends State<Cart> {
               ),
 
               //have to check here ask for quation active or inactive
-              is_wholesale.$ == "1"
-                  ? Container()
-                  : Align(
-                      alignment: Alignment.bottomCenter,
-                      child: buildBottomContainer(),
-                    )
+              // is_wholesale.$ == "1"
+              //     ? Container()
+              //     :
+
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: buildBottomContainer(),
+              )
             ],
           )),
     );
@@ -347,11 +369,20 @@ class _CartState extends State<Cart> {
                     Spacer(),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Text("$_cartTotalString",
-                          style: TextStyle(
-                              color: MyTheme.accent_color,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600)),
+                      child: is_wholesale.$ == "1"
+                          ? Text(
+                              askQuotationCounter_saved.$ != 1
+                                  ? "Ask for Quotation"
+                                  : "Successfully Asked",
+                              style: TextStyle(
+                                  color: MyTheme.accent_color,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600))
+                          : Text("$_cartTotalString",
+                              style: TextStyle(
+                                  color: MyTheme.accent_color,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600)),
                     ),
                   ],
                 ),
@@ -656,26 +687,31 @@ class _CartState extends State<Cart> {
                           children: [
                             Padding(
                               padding: const EdgeInsets.only(top: 8.0),
-                              child: Text(
-                                _shopList[seller_index]
-                                        .cart_items[item_index]
-                                        .currency_symbol +
-                                    (_shopList[seller_index]
-                                                .cart_items[item_index]
-                                                .price *
-                                            _shopList[seller_index]
-                                                .cart_items[item_index]
-                                                .quantity)
-                                        .toString(),
-                                textAlign: TextAlign.left,
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 2,
-                                style: TextStyle(
-                                    color: MyTheme.accent_color,
-                                    fontSize: 14,
-                                    height: 1.6,
-                                    fontWeight: FontWeight.w600),
-                              ),
+                              child: is_wholesale.$ == "1"
+                                  ? Text(is_wholesale.$ == "1" &&
+                                          askQuotationCounter_saved.$ != 1
+                                      ? "Ask for Quotation"
+                                      : "Successfully Asked")
+                                  : Text(
+                                      _shopList[seller_index]
+                                              .cart_items[item_index]
+                                              .currency_symbol +
+                                          (_shopList[seller_index]
+                                                      .cart_items[item_index]
+                                                      .price *
+                                                  _shopList[seller_index]
+                                                      .cart_items[item_index]
+                                                      .quantity)
+                                              .toString(),
+                                      textAlign: TextAlign.left,
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 2,
+                                      style: TextStyle(
+                                          color: MyTheme.accent_color,
+                                          fontSize: 14,
+                                          height: 1.6,
+                                          fontWeight: FontWeight.w600),
+                                    ),
                             ),
                             Spacer(),
                             SizedBox(
@@ -683,15 +719,23 @@ class _CartState extends State<Cart> {
                               child: InkWell(
                                 onTap: () {},
                                 child: IconButton(
-                                  onPressed: () {
-                                    print("tap");
-                                    print(_shopList[seller_index]
-                                        .cart_items[item_index]
-                                        .id);
-                                    onPressDelete(_shopList[seller_index]
-                                        .cart_items[item_index]
-                                        .id);
-                                  },
+                                  onPressed: askQuotationCounter_saved.$ == 1
+                                      ? () {
+                                          ToastComponent.showDialog(
+                                              "quotation is asked already, you can not perform",
+                                              context,
+                                              gravity: Toast.CENTER,
+                                              duration: Toast.LENGTH_LONG);
+                                        }
+                                      : () {
+                                          print("tap");
+                                          print(_shopList[seller_index]
+                                              .cart_items[item_index]
+                                              .id);
+                                          onPressDelete(_shopList[seller_index]
+                                              .cart_items[item_index]
+                                              .id);
+                                        },
                                   icon: Icon(
                                     Icons.delete_forever_outlined,
                                     color: MyTheme.medium_grey,
@@ -729,9 +773,17 @@ class _CartState extends State<Cart> {
                             color: MyTheme.light_grey, width: 1.0),
                       ),
                       color: Colors.white,
-                      onPressed: () {
-                        onQuantityIncrease(seller_index, item_index);
-                      },
+                      onPressed: askQuotationCounter_saved.$ == 1
+                          ? () {
+                              ToastComponent.showDialog(
+                                  "quotation is asked already, you can not perform",
+                                  context,
+                                  gravity: Toast.CENTER,
+                                  duration: Toast.LENGTH_LONG);
+                            }
+                          : () {
+                              onQuantityIncrease(seller_index, item_index);
+                            },
                     ),
                   ),
                 ),
@@ -745,37 +797,38 @@ class _CartState extends State<Cart> {
                   //   style:
                   //       TextStyle(color: MyTheme.accent_color, fontSize: 16),
                   // ),
-                  child: is_wholesale.$ == "1"
-                      ? Container(
-                          width: 46,
-                          child: TextFormField(
-                            controller: quatityController,
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              contentPadding: EdgeInsets.only(left: 16),
-                              hintText: _shopList[seller_index]
+                  child:
+                      is_wholesale.$ == "1" && askQuotationCounter_saved.$ != 1
+                          ? Container(
+                              width: 46,
+                              child: TextFormField(
+                                controller: quatityController,
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  contentPadding: EdgeInsets.only(left: 16),
+                                  hintText: _shopList[seller_index]
+                                      .cart_items[item_index]
+                                      .quantity
+                                      .toString(),
+                                ),
+                                onChanged: (value) {
+                                  quatityController.text = value;
+                                  _shopList[seller_index]
+                                      .cart_items[item_index]
+                                      .quantity = quatityController.text;
+                                  getSetCartTotal();
+                                  setState(() {});
+                                },
+                              ),
+                            )
+                          : Text(
+                              _shopList[seller_index]
                                   .cart_items[item_index]
                                   .quantity
                                   .toString(),
+                              style: TextStyle(
+                                  color: MyTheme.accent_color, fontSize: 16),
                             ),
-                            onChanged: (value) {
-                              quatityController.text = value;
-                              _shopList[seller_index]
-                                  .cart_items[item_index]
-                                  .quantity = quatityController.text;
-                              getSetCartTotal();
-                              setState(() {});
-                            },
-                          ),
-                        )
-                      : Text(
-                          _shopList[seller_index]
-                              .cart_items[item_index]
-                              .quantity
-                              .toString(),
-                          style: TextStyle(
-                              color: MyTheme.accent_color, fontSize: 16),
-                        ),
                 ),
                 Padding(
                   padding:
@@ -796,9 +849,17 @@ class _CartState extends State<Cart> {
                             color: MyTheme.light_grey, width: 1.0),
                       ),
                       color: Colors.white,
-                      onPressed: () {
-                        onQuantityDecrease(seller_index, item_index);
-                      },
+                      onPressed: askQuotationCounter_saved.$ == 1
+                          ? () {
+                              ToastComponent.showDialog(
+                                  "quotation is asked already, you can not perform",
+                                  context,
+                                  gravity: Toast.CENTER,
+                                  duration: Toast.LENGTH_LONG);
+                            }
+                          : () {
+                              onQuantityDecrease(seller_index, item_index);
+                            },
                     ),
                   ),
                 )
@@ -845,7 +906,9 @@ class _CartState extends State<Cart> {
                       fontSize: 14),
                 ),
                 Text(
-                  "Ask for quotation first",
+                  askQuotationCounter_saved.$ == 1
+                      ? "Successfully Asked"
+                      : "Ask for quotation first",
                   style: TextStyle(
                       color: MyTheme.accent_color,
                       fontWeight: FontWeight.w500,
@@ -856,23 +919,30 @@ class _CartState extends State<Cart> {
             SizedBox(
               height: 5,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                RaisedButton(
-                  color: MyTheme.golden,
-                  onPressed: () {
-                    cartIndexPriceBeforeAskQuotation = cartIndexPrice;
-                    ValueCheckerHelper().saveCartPreviousPrice(
-                        cartIndexPriceBeforeAskQuotation);
-                  },
-                  child: Text(
-                    "Ask for Quotation",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-              ],
-            )
+            askQuotationCounter_saved.$ == 1
+                ? Container()
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      RaisedButton(
+                        color: MyTheme.golden,
+                        onPressed: () {
+                          // cartIndexPriceBeforeAskQuotation = cartIndexPrice;
+                          // ValueCheckerHelper().saveCartPreviousPrice(
+                          // cartIndexPriceBeforeAskQuotation);
+                          askQuotationCounter++;
+                          setState(() {});
+                          ValueCheckerHelper()
+                              .saveAskQuotationCounter(askQuotationCounter);
+                          sendQuotation();
+                        },
+                        child: Text(
+                          "Ask for Quotation",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ],
+                  )
           ],
         ),
       ),

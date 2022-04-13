@@ -1,4 +1,5 @@
 import 'package:active_ecommerce_flutter/app_config.dart';
+import 'package:active_ecommerce_flutter/data_model/ask_quotation_response.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
 import 'dart:convert';
@@ -62,12 +63,29 @@ class CartRepository {
 
   //ask for quotation
 
-  Future<CartDeleteResponse> quotationResponse(
-    @required int cart_id,
-  ) async {
+  // Future<CartDeleteResponse> quotationResponse(
+  //   @required int cart_id,
+  // ) async {
+  //   Uri url = Uri.parse(
+  //       "${AppConfig.BASE_URL}/wholesalecart-askforquotation"); //carts
+  //   final response = await http.post(
+  //     //http.delete
+  //     url,
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       "Accept": "application/json",
+  //       "Authorization": "Bearer ${access_token.$}",
+  //       "App-Language": app_language.$
+  //     },
+  //   );
+
+  //   return cartDeleteResponseFromJson(response.body);
+  // }
+
+  Future<AskQuotationResponse> askQuotation() async {
     Uri url = Uri.parse(
-        "${AppConfig.BASE_URL}/wholesalecart-askforquotation"); //carts
-    final response = await http.post(
+        "${AppConfig.BASE_URL}/wholesalecart/askforquotation"); //carts
+    final response = await http.get(
       //http.delete
       url,
       headers: {
@@ -77,8 +95,8 @@ class CartRepository {
         "App-Language": app_language.$
       },
     );
-
-    return cartDeleteResponseFromJson(response.body);
+    print(response.body);
+    return askQuotationResponseFromJson(response.body);
   }
 
   Future<CartProcessResponse> getCartProcessResponse(

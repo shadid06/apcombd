@@ -664,7 +664,8 @@ class _OrderDetailsState extends State<OrderDetails> {
                   ),
                   Spacer(),
                   Padding(
-                    padding: const EdgeInsets.all(16.0),
+                    padding: const EdgeInsets.only(
+                        left: 13, right: 16, top: 16, bottom: 16),
                     child: Text(
                       AppLocalizations.of(context)
                           .order_details_screen_timeline_tile_order_placed,

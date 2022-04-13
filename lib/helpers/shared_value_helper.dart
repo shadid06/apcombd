@@ -98,3 +98,8 @@ final SharedValue<dynamic> cartIndexPriceBeforeAskQuotation = SharedValue(
   key:
       "cartIndexPriceBeforeAskQuotation", // disk storage key for shared_preferences
 );
+
+final SharedValue<dynamic> askQuotationCounter_saved = SharedValue(
+  value: 0, // initial value
+  key: "askQuotationCounter", // disk storage key for shared_preferences
+);

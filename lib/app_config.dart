@@ -14,7 +14,7 @@ class AppConfig {
 
   //configure this
   // static const DOMAIN_PATH = "www.apcombd.com"; //localhost
-  static const DOMAIN_PATH = "www.matinz.com";
+  static const DOMAIN_PATH = "www.dev.matinz.com";
 
   //static const DOMAIN_PATH = "demo.activeitzone.com/ecommerce_flutter_demo"; //inside a folder
   //static const DOMAIN_PATH = "mydomain.com"; // directly inside the public folder
