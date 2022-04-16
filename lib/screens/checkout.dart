@@ -50,7 +50,7 @@ class _CheckoutState extends State<Checkout> {
   var _paymentTypeList = [];
   bool _isInitial = true;
   var _totalString = ". . .";
-  var _grandTotalValue = 0.00;
+  dynamic _grandTotalValue = 0.00;
   var _subTotalString = ". . .";
   var _taxString = ". . .";
   var _shippingCostString = ". . .";
@@ -102,15 +102,15 @@ class _CheckoutState extends State<Checkout> {
     var cartSummaryResponse = await CartRepository().getCartSummaryResponse();
 
     if (cartSummaryResponse != null) {
-      _subTotalString = cartSummaryResponse.sub_total;
+      _subTotalString = cartSummaryResponse.subTotal;
       _taxString = cartSummaryResponse.tax;
-      _shippingCostString = cartSummaryResponse.shipping_cost;
+      _shippingCostString = cartSummaryResponse.shippingCost;
       _discountString = cartSummaryResponse.discount;
-      _totalString = cartSummaryResponse.grand_total;
-      _grandTotalValue = cartSummaryResponse.grand_total_value;
-      _used_coupon_code = cartSummaryResponse.coupon_code;
+      _totalString = cartSummaryResponse.grandTotal;
+      _grandTotalValue = cartSummaryResponse.grandTotalValue;
+      _used_coupon_code = cartSummaryResponse.couponCode;
       _couponController.text = _used_coupon_code;
-      _coupon_applied = cartSummaryResponse.coupon_applied;
+      _coupon_applied = cartSummaryResponse.couponApplied;
       setState(() {});
     }
   }

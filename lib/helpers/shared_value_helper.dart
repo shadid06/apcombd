@@ -103,3 +103,8 @@ final SharedValue<dynamic> askQuotationCounter_saved = SharedValue(
   value: 0, // initial value
   key: "askQuotationCounter", // disk storage key for shared_preferences
 );
+
+final SharedValue<dynamic> previousTotalSaved = SharedValue(
+  value: 0, // initial value
+  key: "previousTotoal", // disk storage key for shared_preferences
+);

@@ -35,6 +35,10 @@ class _CartState extends State<Cart> {
   var cartPressCheck = 0;
   AskQuotationResponse quotationResponse;
   var askQuotationCounter = 0;
+  var shippingCounter = 1;
+  var previousTotoal;
+  var totalPriceDIfferenceCounter = 0;
+  bool isQuotationReceived = false;
 
   @override
   void initState() {
@@ -70,7 +74,29 @@ class _CartState extends State<Cart> {
     }
     _isInitial = false;
     getSetCartTotal();
+    // if (askQuotationCounter_saved.$ == "1") {
+    //   if (previousTotalSaved.$ != _cartTotal) {
+    //     totalPriceDIfferenceCounter++;
+    //     shippingCounter--;
+    //     //ValueCheckerHelper().clearAskQuotationCounter();
+    //   }
+    // }
+    if (askQuotationCounter_saved.$ == 1) {
+      fetchSummary();
+    }
     setState(() {});
+    // print(totalPriceDIfferenceCounter);
+    // print(shippingCounter);
+  }
+
+  fetchSummary() async {
+    var cartSummaryResponse = await CartRepository().getCartSummaryResponse();
+
+    if (cartSummaryResponse != null) {
+      isQuotationReceived = cartSummaryResponse.status;
+      // ValueCheckerHelper().clearAskQuotationCounter();
+      setState(() {});
+    }
   }
 
   getSetCartTotal() {
@@ -86,6 +112,7 @@ class _CartState extends State<Cart> {
         }
       });
     }
+    print('cart total: $_cartTotal');
 
     setState(() {});
   }
@@ -203,6 +230,7 @@ class _CartState extends State<Cart> {
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
     }
     askQuotationCounter_saved.load();
+    previousTotalSaved.load();
   }
 
   onPressUpdate() {
@@ -373,7 +401,10 @@ class _CartState extends State<Cart> {
                           ? Text(
                               askQuotationCounter_saved.$ != 1
                                   ? "Ask for Quotation"
-                                  : "Successfully Asked",
+                                  : askQuotationCounter_saved.$ != 1 &&
+                                          isQuotationReceived == true
+                                      ? _cartTotalString
+                                      : "Successfully Asked",
                               style: TextStyle(
                                   color: MyTheme.accent_color,
                                   fontSize: 14,
@@ -493,9 +524,17 @@ class _CartState extends State<Cart> {
                             fontSize: 13,
                             fontWeight: FontWeight.w600),
                       ),
-                      onPressed: () {
-                        onPressProceedToShipping();
-                      },
+                      onPressed: isQuotationReceived == false
+                          ? () {
+                              ToastComponent.showDialog(
+                                  "you can ship only after getting quotation",
+                                  context,
+                                  gravity: Toast.CENTER,
+                                  duration: Toast.LENGTH_LONG);
+                            }
+                          : () {
+                              onPressProceedToShipping();
+                            },
                     ),
                   ),
                 ),
@@ -638,7 +677,7 @@ class _CartState extends State<Cart> {
   buildCartSellerItemCard(seller_index, item_index) {
     cartIndexPrice = (_shopList[seller_index].cart_items[item_index].price *
         _shopList[seller_index].cart_items[item_index].quantity);
-    print("$cartIndexPrice " "!=" "$cartIndexPriceBeforeAskQuotation");
+    print("$cartIndexPrice " "!=" "${previousTotalSaved.$}");
     return Card(
       shape: RoundedRectangleBorder(
         side: BorderSide(color: MyTheme.light_grey, width: 1.0),
@@ -691,7 +730,21 @@ class _CartState extends State<Cart> {
                                   ? Text(is_wholesale.$ == "1" &&
                                           askQuotationCounter_saved.$ != 1
                                       ? "Ask for Quotation"
-                                      : "Successfully Asked")
+                                      : is_wholesale.$ == "1" &&
+                                              isQuotationReceived == true
+                                          ? _shopList[seller_index]
+                                                  .cart_items[item_index]
+                                                  .currency_symbol +
+                                              (_shopList[seller_index]
+                                                          .cart_items[
+                                                              item_index]
+                                                          .price *
+                                                      _shopList[seller_index]
+                                                          .cart_items[
+                                                              item_index]
+                                                          .quantity)
+                                                  .toString()
+                                          : "Successfully Asked")
                                   : Text(
                                       _shopList[seller_index]
                                               .cart_items[item_index]
@@ -908,7 +961,9 @@ class _CartState extends State<Cart> {
                 Text(
                   askQuotationCounter_saved.$ == 1
                       ? "Successfully Asked"
-                      : "Ask for quotation first",
+                      : isQuotationReceived == true
+                          ? _cartTotalString
+                          : "Ask for quotation first",
                   style: TextStyle(
                       color: MyTheme.accent_color,
                       fontWeight: FontWeight.w500,
@@ -931,9 +986,12 @@ class _CartState extends State<Cart> {
                           // ValueCheckerHelper().saveCartPreviousPrice(
                           // cartIndexPriceBeforeAskQuotation);
                           askQuotationCounter++;
+                          // previousTotoal = _cartTotal;
                           setState(() {});
                           ValueCheckerHelper()
                               .saveAskQuotationCounter(askQuotationCounter);
+                          // ValueCheckerHelper()
+                          //     .saveCartPreviousTotal(previousTotoal);
                           sendQuotation();
                         },
                         child: Text(

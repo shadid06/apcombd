@@ -22,4 +22,15 @@ class ValueCheckerHelper {
     askQuotationCounter_saved.$ = 0;
     askQuotationCounter_saved.save();
   }
+
+  saveCartPreviousTotal(total) {
+    previousTotalSaved.$ = total;
+    previousTotalSaved.save();
+    print(previousTotalSaved.$);
+  }
+
+  clearCartPreviousTotal() {
+    previousTotalSaved.$ = 0;
+    previousTotalSaved.save();
+  }
 }

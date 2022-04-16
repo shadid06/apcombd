@@ -101,10 +101,15 @@ class CartRepository {
 
   Future<CartProcessResponse> getCartProcessResponse(
       @required String cart_ids, @required String cart_quantities) async {
+    if (is_wholesale.$ == "1") {
+      endPoint = "wholesalecart/process";
+    } else {
+      endPoint = "carts/process";
+    }
     var post_body = jsonEncode(
         {"cart_ids": "${cart_ids}", "cart_quantities": "$cart_quantities"});
 
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/carts/process");
+    Uri url = Uri.parse("${AppConfig.BASE_URL}/$endPoint");
     final response = await http.post(url,
         headers: {
           "Content-Type": "application/json",
@@ -152,7 +157,7 @@ class CartRepository {
 
   Future<CartSummaryResponse> getCartSummaryResponse() async {
     if (is_wholesale.$ == "1") {
-      endPoint = "wholesalecart-summary";
+      endPoint = "wholesalecart-status";
     } else {
       endPoint = "cart-summary";
     }
@@ -168,6 +173,7 @@ class CartRepository {
     );
 
     print("${AppConfig.BASE_URL}/$endPoint/${user_id.$}"); //cart-summary
+    print(response.body);
     return cartSummaryResponseFromJson(response.body);
   }
 }

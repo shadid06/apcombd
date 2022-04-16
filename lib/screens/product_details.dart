@@ -1864,9 +1864,17 @@ class _ProductDetailsState extends State<ProductDetails> {
                       fontSize: 16,
                       fontWeight: FontWeight.w600),
                 ),
-                onPressed: () {
-                  onPressAddToCart(context, _addedToCartSnackbar);
-                },
+                onPressed: askQuotationCounter_saved.$ == "1"
+                    ? () {
+                        ToastComponent.showDialog(
+                            "After Asking for Quotation you can not add product to cart",
+                            context,
+                            gravity: Toast.CENTER,
+                            duration: Toast.LENGTH_LONG);
+                      }
+                    : () {
+                        onPressAddToCart(context, _addedToCartSnackbar);
+                      },
               ),
               SizedBox(
                 width: 1,
