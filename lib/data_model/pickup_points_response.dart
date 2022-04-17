@@ -100,7 +100,7 @@ class PickupPointTranslation {
   });
 
   int id;
-  int pickupPointId;
+  String pickupPointId; // int silo
   String name;
   String address;
   String lang;

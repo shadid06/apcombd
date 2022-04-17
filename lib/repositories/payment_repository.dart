@@ -18,6 +18,7 @@ import 'package:active_ecommerce_flutter/data_model/nagad_payment_process_respon
 import 'package:active_ecommerce_flutter/data_model/sslcommerz_begin_response.dart';
 
 class PaymentRepository {
+  String endPoint;
   Future<List<PaymentTypeResponse>> getPaymentResponseList(
       {mode = "", list = "both"}) async {
     Uri url = Uri.parse(
@@ -99,20 +100,29 @@ class PaymentRepository {
   }
 
   Future<OrderCreateResponse> getOrderCreateResponseFromCod(
-      @required payment_method) async {
-    var post_body = jsonEncode(
-        {"user_id": "${user_id.$}", "payment_type": "${payment_method}"});
+      @required payment_method, dynamic reffer) async {
+    if (is_wholesale.$ == "1") {
+      endPoint = "wholesalepayments";
+    } else {
+      endPoint = "payments";
+    }
+    var post_body = jsonEncode({
+      "user_id": "${user_id.$}",
+      "payment_type": "${payment_method}",
+      "reffer": "$reffer"
+    });
 
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/payments/pay/cod");
+    Uri url = Uri.parse("${AppConfig.BASE_URL}/$endPoint/pay/cod");
 
     final response = await http.post(url,
         headers: {
+          "Accept": "application/json",
           "Content-Type": "application/json",
           "Authorization": "Bearer ${access_token.$}"
         },
         body: post_body);
 
-    //print(response.body.toString());
+    print(response.body);
     return orderCreateResponseFromJson(response.body);
   }
 

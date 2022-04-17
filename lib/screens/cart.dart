@@ -95,6 +95,8 @@ class _CartState extends State<Cart> {
     if (cartSummaryResponse != null) {
       isQuotationReceived = cartSummaryResponse.status;
       // ValueCheckerHelper().clearAskQuotationCounter();
+      // ToastComponent.showDialog(cartSummaryResponse.message, context,
+      //     gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
       setState(() {});
     }
   }
@@ -401,7 +403,7 @@ class _CartState extends State<Cart> {
                           ? Text(
                               askQuotationCounter_saved.$ != 1
                                   ? "Ask for Quotation"
-                                  : askQuotationCounter_saved.$ != 1 &&
+                                  : askQuotationCounter_saved.$ == 1 &&
                                           isQuotationReceived == true
                                       ? _cartTotalString
                                       : "Successfully Asked",
@@ -524,17 +526,18 @@ class _CartState extends State<Cart> {
                             fontSize: 13,
                             fontWeight: FontWeight.w600),
                       ),
-                      onPressed: isQuotationReceived == false
-                          ? () {
-                              ToastComponent.showDialog(
-                                  "you can ship only after getting quotation",
-                                  context,
-                                  gravity: Toast.CENTER,
-                                  duration: Toast.LENGTH_LONG);
-                            }
-                          : () {
-                              onPressProceedToShipping();
-                            },
+                      onPressed:
+                          is_wholesale.$ == "1" && isQuotationReceived == false
+                              ? () {
+                                  ToastComponent.showDialog(
+                                      "you can ship only after getting quotation",
+                                      context,
+                                      gravity: Toast.CENTER,
+                                      duration: Toast.LENGTH_LONG);
+                                }
+                              : () {
+                                  onPressProceedToShipping();
+                                },
                     ),
                   ),
                 ),
@@ -959,11 +962,12 @@ class _CartState extends State<Cart> {
                       fontSize: 14),
                 ),
                 Text(
-                  askQuotationCounter_saved.$ == 1
-                      ? "Successfully Asked"
-                      : isQuotationReceived == true
+                  askQuotationCounter_saved.$ != 1
+                      ? "Ask for quotation first"
+                      : askQuotationCounter_saved.$ == 1 &&
+                              isQuotationReceived == true
                           ? _cartTotalString
-                          : "Ask for quotation first",
+                          : "Successfully Asked",
                   style: TextStyle(
                       color: MyTheme.accent_color,
                       fontWeight: FontWeight.w500,

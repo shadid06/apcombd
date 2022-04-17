@@ -1,3 +1,5 @@
+import 'package:active_ecommerce_flutter/helpers/value_checker_helper.dart';
+import 'package:active_ecommerce_flutter/repositories/reffer_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:active_ecommerce_flutter/my_theme.dart';
 import 'package:active_ecommerce_flutter/screens/order_list.dart';
@@ -44,6 +46,7 @@ class _CheckoutState extends State<Checkout> {
   var _selected_payment_method_index = 0;
   var _selected_payment_method = "";
   var _selected_payment_method_key = "";
+  var refferList = [];
 
   ScrollController _mainScrollController = ScrollController();
   TextEditingController _couponController = TextEditingController();
@@ -57,6 +60,7 @@ class _CheckoutState extends State<Checkout> {
   var _discountString = ". . .";
   var _used_coupon_code = "";
   var _coupon_applied = false;
+  var selectedReffer;
 
   @override
   void initState() {
@@ -80,6 +84,7 @@ class _CheckoutState extends State<Checkout> {
 
   fetchAll() {
     fetchList();
+    fetchRefferList();
 
     if (is_logged_in.$ == true) {
       fetchSummary();
@@ -94,6 +99,14 @@ class _CheckoutState extends State<Checkout> {
       _selected_payment_method = _paymentTypeList[0].payment_type;
       _selected_payment_method_key = _paymentTypeList[0].payment_type_key;
     }
+    _isInitial = false;
+    setState(() {});
+  }
+
+  fetchRefferList() async {
+    var refferResponse = await RefferRepository().getRefferList();
+    refferList.addAll(refferResponse.data);
+
     _isInitial = false;
     setState(() {});
   }
@@ -407,13 +420,16 @@ class _CheckoutState extends State<Checkout> {
 
   pay_by_cod() async {
     var orderCreateResponse = await PaymentRepository()
-        .getOrderCreateResponseFromCod(_selected_payment_method_key);
+        .getOrderCreateResponseFromCod(
+            _selected_payment_method_key, selectedReffer);
 
     if (orderCreateResponse.result == false) {
       ToastComponent.showDialog(orderCreateResponse.message, context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
       Navigator.of(context).pop();
       return;
+    } else {
+      ValueCheckerHelper().clearAskQuotationCounter();
     }
 
     Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -664,7 +680,9 @@ class _CheckoutState extends State<Checkout> {
                         widget.manual_payment_from_order_details == false
                             ? Padding(
                                 padding: const EdgeInsets.only(bottom: 16.0),
-                                child: buildApplyCouponRow(context),
+                                child: is_wholesale.$ == "1"
+                                    ? buildRefferDropDown()
+                                    : buildApplyCouponRow(context),
                               )
                             : Container(),
                         Container(
@@ -837,6 +855,66 @@ class _CheckoutState extends State<Checkout> {
     );
   }
 
+  buildRefferDropDown() {
+    if (_isInitial && refferList.length == 0) {
+      ShimmerHelper().buildListShimmer(item_count: 1, item_height: 100.0);
+    } else if (refferList.length > 0) {
+      return Container(
+        // height: 50,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: Colors.grey,
+            width: 1,
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: DropdownButton<dynamic>(
+            value: selectedReffer,
+            // alignment: AlignmentDirectional.center,
+            hint: Text(
+              'Select Refferer',
+              style: TextStyle(
+                color: Colors.grey,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            isExpanded: true,
+            underline: SizedBox(),
+            // decoration: InputDecoration(
+            //     enabledBorder: OutlineInputBorder(
+            //         borderRadius: BorderRadius.circular(12),
+            //         borderSide:
+            //             BorderSide(width: 2, color: MyTheme.accent_color))),
+            // icon: const Icon(Icons.arrow_downward),
+            // iconSize: 24,
+            // elevation: 16,
+            // style: const TextStyle(color: Colors.black),
+            // underline: Container(
+            //   height: 2,
+            //   width: double.infinity,
+            //   color: Colors.deepPurpleAccent,
+            // ),
+            onChanged: (dynamic newValue) {
+              setState(() {
+                selectedReffer = newValue;
+                print(selectedReffer);
+              });
+            },
+            items: refferList.map<DropdownMenuItem<dynamic>>((dynamic value) {
+              return DropdownMenuItem<dynamic>(
+                value: value.name,
+                child: Text(value.name),
+              );
+            }).toList(),
+          ),
+        ),
+      );
+    }
+  }
+
   buildPaymentMethodList() {
     if (_isInitial && _paymentTypeList.length == 0) {
       return SingleChildScrollView(
@@ -983,6 +1061,7 @@ class _CheckoutState extends State<Checkout> {
                     fontWeight: FontWeight.w600),
               ),
               onPressed: () {
+                // ValueCheckerHelper().clearAskQuotationCounter();
                 onPressPlaceOrderOrProceed();
               },
             )
