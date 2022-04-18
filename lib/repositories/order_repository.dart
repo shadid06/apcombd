@@ -13,9 +13,9 @@ class OrderRepository {
         "${user_id.$}" +
         "?page=${page}&payment_status=${payment_status}&delivery_status=${delivery_status}");
 
-    final response = await http.get(url,headers: {
-          "App-Language": app_language.$,
-        });
+    final response = await http.get(url, headers: {
+      "App-Language": app_language.$,
+    });
     //print("url:" +url.toString());
     return orderMiniResponseFromJson(response.body);
   }
@@ -24,20 +24,20 @@ class OrderRepository {
     Uri url = Uri.parse(
         "${AppConfig.BASE_URL}/purchase-history-details/" + id.toString());
 
-    final response = await http.get(url,headers: {
-          "App-Language": app_language.$,
-        });
-    //print("url:" +url.toString());
-    //print(response.body);
+    final response = await http.get(url, headers: {
+      "App-Language": app_language.$,
+    });
+    print("url:" + url.toString());
+    print(response.body);
     return orderDetailResponseFromJson(response.body);
   }
 
   Future<OrderItemResponse> getOrderItems({@required int id = 0}) async {
     Uri url = Uri.parse(
         "${AppConfig.BASE_URL}/purchase-history-items/" + id.toString());
-    final response = await http.get(url,headers: {
-          "App-Language": app_language.$,
-        });
+    final response = await http.get(url, headers: {
+      "App-Language": app_language.$,
+    });
     //print("url:" +url.toString());
     return orderItemlResponseFromJson(response.body);
   }

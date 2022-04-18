@@ -1,5 +1,7 @@
+import 'package:active_ecommerce_flutter/data_model/reffer_response.dart';
 import 'package:active_ecommerce_flutter/helpers/value_checker_helper.dart';
 import 'package:active_ecommerce_flutter/repositories/reffer_repository.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:active_ecommerce_flutter/my_theme.dart';
 import 'package:active_ecommerce_flutter/screens/order_list.dart';
@@ -61,6 +63,11 @@ class _CheckoutState extends State<Checkout> {
   var _used_coupon_code = "";
   var _coupon_applied = false;
   var selectedReffer;
+  List<Datum> referrs = [];
+  Future<List<Datum>> referrsdropList;
+  Datum selectedReferr;
+  var selectedReferrId;
+  Future referrData;
 
   @override
   void initState() {
@@ -106,10 +113,15 @@ class _CheckoutState extends State<Checkout> {
   fetchRefferList() async {
     var refferResponse = await RefferRepository().getRefferList();
     refferList.addAll(refferResponse.data);
+    referrs.addAll(refferResponse.data);
 
     _isInitial = false;
     setState(() {});
   }
+
+  // fetchDatas() async {
+  //   referrsdropList = await Datum();
+  // }
 
   fetchSummary() async {
     var cartSummaryResponse = await CartRepository().getCartSummaryResponse();
@@ -421,7 +433,7 @@ class _CheckoutState extends State<Checkout> {
   pay_by_cod() async {
     var orderCreateResponse = await PaymentRepository()
         .getOrderCreateResponseFromCod(
-            _selected_payment_method_key, selectedReffer);
+            _selected_payment_method_key, selectedReferrId);
 
     if (orderCreateResponse.result == false) {
       ToastComponent.showDialog(orderCreateResponse.message, context,
@@ -680,10 +692,12 @@ class _CheckoutState extends State<Checkout> {
                         widget.manual_payment_from_order_details == false
                             ? Padding(
                                 padding: const EdgeInsets.only(bottom: 16.0),
-                                child: is_wholesale.$ == "1"
-                                    ? buildRefferDropDown()
-                                    : buildApplyCouponRow(context),
-                              )
+                                child:
+                                    // is_wholesale.$ == "1"?
+
+                                    buildRefferDropDown()
+                                // : buildApplyCouponRow(context),
+                                )
                             : Container(),
                         Container(
                           height: 40,
@@ -855,6 +869,53 @@ class _CheckoutState extends State<Checkout> {
     );
   }
 
+  buildDropDownseaarchReferrer() {
+    if (_isInitial && refferList.length == 0) {
+      ShimmerHelper().buildListShimmer(item_count: 1, item_height: 100.0);
+    } else if (refferList.length > 0) {
+      return DropdownSearch<Datum>(
+        itemAsString: (Datum p) => p.name,
+        // maxHeight: deviceHeight * .80,
+        maxHeight: 300,
+        selectedItem: selectedReferr,
+        showClearButton: true,
+        //showSelectedItems: true,
+        onFind: (String filter) => referrs as Future<List<Datum>>,
+        //items: viewModelProvider?.categoryListProvider,
+        clearButton: IconButton(
+          onPressed: () {
+            setState(() {
+              selectedReferr = null;
+              selectedReferrId = null;
+              print("tap");
+            });
+          },
+          icon: Icon(Icons.close_outlined),
+        ),
+        label: "Referr",
+        //selectedItem: widget.singleCategore,
+        onChanged: (Datum data) {
+          // print(data.toJson()),
+          // setState(() {
+          //   categoryModel = data;
+          // });
+
+          // setState(() {
+          //   subDistrict = null;
+          // });
+          // _subDistricts = APIService.fetchSubDistricts(data.id);
+          setState(() {
+            selectedReferr = data;
+            selectedReferrId = data.id;
+            // categoryId = data!.id;
+            // print(categoryId);
+          });
+        },
+        showSearchBox: true,
+      );
+    }
+  }
+
   buildRefferDropDown() {
     if (_isInitial && refferList.length == 0) {
       ShimmerHelper().buildListShimmer(item_count: 1, item_height: 100.0);
@@ -871,7 +932,7 @@ class _CheckoutState extends State<Checkout> {
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: DropdownButton<dynamic>(
+          child: DropdownButton<Datum>(
             value: selectedReffer,
             // alignment: AlignmentDirectional.center,
             hint: Text(
@@ -897,15 +958,16 @@ class _CheckoutState extends State<Checkout> {
             //   width: double.infinity,
             //   color: Colors.deepPurpleAccent,
             // ),
-            onChanged: (dynamic newValue) {
+            onChanged: (Datum newValue) {
               setState(() {
                 selectedReffer = newValue;
-                print(selectedReffer);
+                selectedReferrId = newValue.id;
+                print(selectedReferrId);
               });
             },
-            items: refferList.map<DropdownMenuItem<dynamic>>((dynamic value) {
-              return DropdownMenuItem<dynamic>(
-                value: value.name,
+            items: refferList.map<DropdownMenuItem<Datum>>((dynamic value) {
+              return DropdownMenuItem<Datum>(
+                value: value,
                 child: Text(value.name),
               );
             }).toList(),

@@ -28,7 +28,7 @@ class AddressRepository {
         "App-Language": app_language.$,
       },
     );
-    //print(response.body.toString());
+    print(response.body.toString());
 
     return addressResponseFromJson(response.body);
   }

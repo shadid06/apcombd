@@ -100,7 +100,7 @@ class PaymentRepository {
   }
 
   Future<OrderCreateResponse> getOrderCreateResponseFromCod(
-      @required payment_method, dynamic reffer) async {
+      @required payment_method, dynamic id) async {
     if (is_wholesale.$ == "1") {
       endPoint = "wholesalepayments";
     } else {
@@ -109,7 +109,7 @@ class PaymentRepository {
     var post_body = jsonEncode({
       "user_id": "${user_id.$}",
       "payment_type": "${payment_method}",
-      "reffer": "$reffer"
+      "referrer": "$id"
     });
 
     Uri url = Uri.parse("${AppConfig.BASE_URL}/$endPoint/pay/cod");
