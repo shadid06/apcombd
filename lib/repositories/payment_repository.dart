@@ -109,7 +109,8 @@ class PaymentRepository {
     var post_body = jsonEncode({
       "user_id": "${user_id.$}",
       "payment_type": "${payment_method}",
-      "referrer": "$id"
+      "referrer": "$id",
+      // "shipping_type": "pickup_points" //pickup_points //home_delivery
     });
 
     Uri url = Uri.parse("${AppConfig.BASE_URL}/$endPoint/pay/cod");

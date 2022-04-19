@@ -93,7 +93,7 @@ class _CartState extends State<Cart> {
     var cartSummaryResponse = await CartRepository().getCartSummaryResponse();
 
     if (cartSummaryResponse != null) {
-      isQuotationReceived = cartSummaryResponse.status;
+      isQuotationReceived = cartSummaryResponse.result;
       // ValueCheckerHelper().clearAskQuotationCounter();
       // ToastComponent.showDialog(cartSummaryResponse.message, context,
       //     gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
@@ -775,10 +775,10 @@ class _CartState extends State<Cart> {
                               child: InkWell(
                                 onTap: () {},
                                 child: IconButton(
-                                  onPressed: askQuotationCounter_saved.$ == 1
+                                  onPressed: isQuotationReceived == false
                                       ? () {
                                           ToastComponent.showDialog(
-                                              "quotation is asked already, you can not perform",
+                                              "you can delete after receving quotation",
                                               context,
                                               gravity: Toast.CENTER,
                                               duration: Toast.LENGTH_LONG);

@@ -665,7 +665,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                   Spacer(),
                   Padding(
                     padding: const EdgeInsets.only(
-                        left: 13, right: 16, top: 16, bottom: 16),
+                        left: 13, right: 10, top: 16, bottom: 16),
                     child: Text(
                       AppLocalizations.of(context)
                           .order_details_screen_timeline_tile_order_placed,
@@ -1073,104 +1073,104 @@ class _OrderDetailsState extends State<OrderDetails> {
               child: Row(
                 children: [
                   Container(
-                      width: (MediaQuery.of(context).size.width - (32.0)) / 2,
-                      // (total_screen_width - padding)/2
-                      child: _orderDetails.shipping_address != null
-                          ? Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                _orderDetails.shipping_address.name != null
-                                    ? Text(
-                                        "${AppLocalizations.of(context).order_details_screen_name}: ${_orderDetails.shipping_address.name}",
-                                        maxLines: 3,
-                                        style: TextStyle(
-                                          color: MyTheme.grey_153,
-                                        ),
-                                      )
-                                    : Container(),
-                                _orderDetails.shipping_address.email != null
-                                    ? Text(
-                                        "${AppLocalizations.of(context).order_details_screen_email}: ${_orderDetails.shipping_address.email}",
-                                        maxLines: 3,
-                                        style: TextStyle(
-                                          color: MyTheme.grey_153,
-                                        ),
-                                      )
-                                    : Container(),
-                                Text(
-                                  "${AppLocalizations.of(context).order_details_screen_address}: ${_orderDetails.shipping_address.address}",
-                                  maxLines: 3,
-                                  style: TextStyle(
-                                    color: MyTheme.grey_153,
-                                  ),
+                    width: (MediaQuery.of(context).size.width - (32.0)) / 2,
+                    // (total_screen_width - padding)/2
+                    child: _orderDetails.shipping_address != null
+                        ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              _orderDetails.shipping_address.name != null
+                                  ? Text(
+                                      "${AppLocalizations.of(context).order_details_screen_name}: ${_orderDetails.shipping_address.name}",
+                                      maxLines: 3,
+                                      style: TextStyle(
+                                        color: MyTheme.grey_153,
+                                      ),
+                                    )
+                                  : Container(),
+                              _orderDetails.shipping_address.email != null
+                                  ? Text(
+                                      "${AppLocalizations.of(context).order_details_screen_email}: ${_orderDetails.shipping_address.email}",
+                                      maxLines: 3,
+                                      style: TextStyle(
+                                        color: MyTheme.grey_153,
+                                      ),
+                                    )
+                                  : Container(),
+                              Text(
+                                "${AppLocalizations.of(context).order_details_screen_address}: ${_orderDetails.shipping_address.address}",
+                                maxLines: 3,
+                                style: TextStyle(
+                                  color: MyTheme.grey_153,
                                 ),
-                                Text(
-                                  "${AppLocalizations.of(context).order_details_screen_city}: ${_orderDetails.shipping_address.city}",
-                                  maxLines: 3,
-                                  style: TextStyle(
-                                    color: MyTheme.grey_153,
-                                  ),
+                              ),
+                              Text(
+                                "${AppLocalizations.of(context).order_details_screen_city}: ${_orderDetails.shipping_address.city}",
+                                maxLines: 3,
+                                style: TextStyle(
+                                  color: MyTheme.grey_153,
                                 ),
-                                Text(
-                                  "${AppLocalizations.of(context).order_details_screen_country}: ${_orderDetails.shipping_address.country}",
-                                  maxLines: 3,
-                                  style: TextStyle(
-                                    color: MyTheme.grey_153,
-                                  ),
+                              ),
+                              Text(
+                                "${AppLocalizations.of(context).order_details_screen_country}: ${_orderDetails.shipping_address.country}",
+                                maxLines: 3,
+                                style: TextStyle(
+                                  color: MyTheme.grey_153,
                                 ),
-                                Text(
-                                  "${AppLocalizations.of(context).order_details_screen_state}: ${_orderDetails.shipping_address.state}",
-                                  maxLines: 3,
-                                  style: TextStyle(
-                                    color: MyTheme.grey_153,
-                                  ),
+                              ),
+                              Text(
+                                "${AppLocalizations.of(context).order_details_screen_state}: ${_orderDetails.shipping_address.state}",
+                                maxLines: 3,
+                                style: TextStyle(
+                                  color: MyTheme.grey_153,
                                 ),
-                                Text(
-                                  "${AppLocalizations.of(context).order_details_screen_phone}: ${_orderDetails.shipping_address.phone}",
-                                  maxLines: 3,
-                                  style: TextStyle(
-                                    color: MyTheme.grey_153,
-                                  ),
+                              ),
+                              Text(
+                                "${AppLocalizations.of(context).order_details_screen_phone}: ${_orderDetails.shipping_address.phone}",
+                                maxLines: 3,
+                                style: TextStyle(
+                                  color: MyTheme.grey_153,
                                 ),
-                                Text(
-                                  "${AppLocalizations.of(context).order_details_screen_postal_code}: ${_orderDetails.shipping_address.postal_code}",
-                                  maxLines: 3,
-                                  style: TextStyle(
-                                    color: MyTheme.grey_153,
-                                  ),
+                              ),
+                              Text(
+                                "${AppLocalizations.of(context).order_details_screen_postal_code}: ${_orderDetails.shipping_address.postal_code}",
+                                maxLines: 3,
+                                style: TextStyle(
+                                  color: MyTheme.grey_153,
                                 ),
-                              ],
-                            )
-                          : Text('')
-                      // : Column(
-                      //     crossAxisAlignment: CrossAxisAlignment.start,
-                      //     children: [
-                      //       _orderDetails.pickupPoint.name != null
-                      //           ? Text(
-                      //               "${AppLocalizations.of(context).order_details_screen_name}: ${_orderDetails.pickupPoint.name}",
-                      //               maxLines: 3,
-                      //               style: TextStyle(
-                      //                 color: MyTheme.grey_153,
-                      //               ),
-                      //             )
-                      //           : Container(),
-                      //       Text(
-                      //         "${AppLocalizations.of(context).order_details_screen_address}: ${_orderDetails.pickupPoint.address}",
-                      //         maxLines: 3,
-                      //         style: TextStyle(
-                      //           color: MyTheme.grey_153,
-                      //         ),
-                      //       ),
-                      //       Text(
-                      //         "${AppLocalizations.of(context).address_screen_phone}: ${_orderDetails.pickupPoint.phone}",
-                      //         maxLines: 3,
-                      //         style: TextStyle(
-                      //           color: MyTheme.grey_153,
-                      //         ),
-                      //       ),
-                      //     ],
-                      //   ),
-                      ),
+                              ),
+                            ],
+                          )
+                        // : Text('')
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              _orderDetails.pickupPoint.name != null
+                                  ? Text(
+                                      "${AppLocalizations.of(context).order_details_screen_name}: ${_orderDetails.pickupPoint.name}",
+                                      maxLines: 3,
+                                      style: TextStyle(
+                                        color: MyTheme.grey_153,
+                                      ),
+                                    )
+                                  : Container(),
+                              Text(
+                                "${AppLocalizations.of(context).order_details_screen_address}: ${_orderDetails.pickupPoint.address}",
+                                maxLines: 3,
+                                style: TextStyle(
+                                  color: MyTheme.grey_153,
+                                ),
+                              ),
+                              Text(
+                                "${AppLocalizations.of(context).address_screen_phone}: ${_orderDetails.pickupPoint.phone}",
+                                maxLines: 3,
+                                style: TextStyle(
+                                  color: MyTheme.grey_153,
+                                ),
+                              ),
+                            ],
+                          ),
+                  ),
                   Spacer(),
                   Text(
                     _orderDetails.grand_total,

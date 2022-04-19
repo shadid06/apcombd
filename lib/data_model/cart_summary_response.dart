@@ -75,7 +75,7 @@ class CartSummaryResponse {
     this.couponCode,
     this.couponApplied,
     this.message,
-    this.status,
+    this.result,
   });
 
   String subTotal;
@@ -87,7 +87,7 @@ class CartSummaryResponse {
   dynamic couponCode;
   bool couponApplied;
   String message;
-  bool status;
+  bool result;
 
   factory CartSummaryResponse.fromJson(Map<String, dynamic> json) =>
       CartSummaryResponse(
@@ -100,7 +100,7 @@ class CartSummaryResponse {
         couponCode: json["coupon_code"],
         couponApplied: json["coupon_applied"],
         message: json["message"],
-        status: json["status"],
+        result: json["result"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -113,6 +113,6 @@ class CartSummaryResponse {
         "coupon_code": couponCode,
         "coupon_applied": couponApplied,
         "message": message,
-        "status": status,
+        "result": result,
       };
 }

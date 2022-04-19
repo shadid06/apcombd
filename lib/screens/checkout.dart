@@ -692,12 +692,10 @@ class _CheckoutState extends State<Checkout> {
                         widget.manual_payment_from_order_details == false
                             ? Padding(
                                 padding: const EdgeInsets.only(bottom: 16.0),
-                                child:
-                                    // is_wholesale.$ == "1"?
-
-                                    buildRefferDropDown()
-                                // : buildApplyCouponRow(context),
-                                )
+                                child: is_wholesale.$ == "1"
+                                    ? buildRefferDropDown()
+                                    : buildApplyCouponRow(context),
+                              )
                             : Container(),
                         Container(
                           height: 40,
