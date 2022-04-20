@@ -39,6 +39,7 @@ class _CartState extends State<Cart> {
   var previousTotoal;
   var totalPriceDIfferenceCounter = 0;
   bool isQuotationReceived = false;
+  String quantityByTextFeind;
 
   @override
   void initState() {
@@ -81,6 +82,13 @@ class _CartState extends State<Cart> {
     //     //ValueCheckerHelper().clearAskQuotationCounter();
     //   }
     // }
+
+    if (is_wholesale.$ == "1" &&
+        askQuotationCounter_saved.$ == 1 &&
+        cartResponseList.length == 0) {
+      ValueCheckerHelper().clearAskQuotationCounter();
+      setState(() {});
+    }
     if (askQuotationCounter_saved.$ == 1) {
       fetchSummary();
     }
@@ -136,6 +144,23 @@ class _CartState extends State<Cart> {
     if (_shopList[seller_index].cart_items[item_index].quantity <
         _shopList[seller_index].cart_items[item_index].upper_limit) {
       _shopList[seller_index].cart_items[item_index].quantity++;
+      getSetCartTotal();
+      setState(() {});
+    } else {
+      ToastComponent.showDialog(
+          "${AppLocalizations.of(context).cart_screen_cannot_order_more_than} ${_shopList[seller_index].cart_items[item_index].upper_limit} ${AppLocalizations.of(context).cart_screen_items_of_this}",
+          context,
+          gravity: Toast.CENTER,
+          duration: Toast.LENGTH_LONG);
+    }
+  }
+
+  onQuantityTextFeild(seller_index, item_index, String controller) {
+    setState(() {});
+    if (_shopList[seller_index].cart_items[item_index].quantity <
+        _shopList[seller_index].cart_items[item_index].upper_limit) {
+      _shopList[seller_index].cart_items[item_index].quantity =
+          int.parse(controller);
       getSetCartTotal();
       setState(() {});
     } else {
@@ -869,11 +894,19 @@ class _CartState extends State<Cart> {
                                 ),
                                 onChanged: (value) {
                                   quatityController.text = value;
-                                  _shopList[seller_index]
-                                      .cart_items[item_index]
-                                      .quantity = quatityController.text;
-                                  getSetCartTotal();
+                                  print(quatityController.text);
+                                  quantityByTextFeind = quatityController.text;
+                                  print(quantityByTextFeind);
+
                                   setState(() {});
+                                  onQuantityTextFeild(seller_index, item_index,
+                                      quantityByTextFeind);
+                                  setState(() {});
+                                  // _shopList[seller_index]
+                                  //     .cart_items[item_index]
+                                  //     .quantity = quatityController.text;
+                                  // getSetCartTotal();
+                                  // setState(() {});
                                 },
                               ),
                             )

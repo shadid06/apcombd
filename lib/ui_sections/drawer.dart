@@ -1,3 +1,4 @@
+import 'package:active_ecommerce_flutter/screens/career.dart';
 import 'package:active_ecommerce_flutter/screens/change_language.dart';
 import 'package:active_ecommerce_flutter/screens/common_webview_screen.dart';
 import 'package:active_ecommerce_flutter/screens/terms_and_conditions.dart';
@@ -266,34 +267,36 @@ class _MainDrawerState extends State<MainDrawer> {
                               fontSize: 14)),
                       onTap: () {
                         // onTapLogout(context);
+                        // Navigator.push(context,
+                        //     MaterialPageRoute(builder: (context) {
+                        //   return CommonWebviewScreen(
+                        //     url: "${AppConfig.RAW_BASE_URL}/career-page",
+                        //     page_name: "Career",
+                        //   );
+                        // }));
                         Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return CommonWebviewScreen(
-                            url: "${AppConfig.RAW_BASE_URL}/career",
-                            page_name: "Career",
-                          );
-                        }));
+                            MaterialPageRoute(builder: (context) => Career()));
                       }),
                   ListTile(
                       visualDensity:
                           VisualDensity(horizontal: -4, vertical: -4),
                       leading: Image.asset("assets/support.png",
                           height: 16, color: Color.fromRGBO(153, 153, 153, 1)),
-                      title: Text("Customer Support",
+                      title: Text("Customer Care",
                           style: TextStyle(
                               // color: Color.fromRGBO(153, 153, 153, 1),
                               color: Colors.black,
                               fontWeight: FontWeight.w600,
                               fontSize: 14)),
                       onTap: () {
-                        onTapLogout(context);
-                        // Navigator.push(context,
-                        //     MaterialPageRoute(builder: (context) {
-                        //   return CommonWebviewScreen(
-                        //     url: "${AppConfig.RAW_BASE_URL}/customer-care",
-                        //     page_name: "Customer Support",
-                        //   );
-                        // }));
+                        // onTapLogout(context);
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return CommonWebviewScreen(
+                            url: "${AppConfig.RAW_BASE_URL}/customer-care-page",
+                            page_name: "Customer Care",
+                          );
+                        }));
                       }),
                   ListTile(
                       visualDensity:

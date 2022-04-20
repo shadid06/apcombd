@@ -42,7 +42,7 @@ class CartRepository {
     @required int cart_id,
   ) async {
     if (is_wholesale.$ == "1") {
-      endPoint = "wholesalecart-remove";
+      endPoint = "wholesalecart_remove";
     } else {
       endPoint = "carts";
     }
@@ -57,7 +57,8 @@ class CartRepository {
         "App-Language": app_language.$
       },
     );
-
+    print(url);
+    print(response.body);
     return cartDeleteResponseFromJson(response.body);
   }
 
