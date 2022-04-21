@@ -39,7 +39,7 @@ class WhichFilter {
 class Filter extends StatefulWidget {
   Filter({
     Key key,
-    this.selected_filter = "product",
+    this.selected_filter, // ="product"
   }) : super(key: key);
 
   final String selected_filter;
@@ -134,7 +134,7 @@ class _FilterState extends State<Filter> {
   }
 
   init() {
-    _givenSelectedFilterOptionKey = "Product";
+    _givenSelectedFilterOptionKey = widget.selected_filter; //"Product"
     print(_givenSelectedFilterOptionKey);
 
     _dropdownWhichFilterItems =
@@ -146,6 +146,8 @@ class _FilterState extends State<Filter> {
       if (_dropdownWhichFilterItems[x].value.option_key ==
           _givenSelectedFilterOptionKey) {
         _selectedFilter = _dropdownWhichFilterItems[x].value;
+      } else {
+        _selectedFilter = _dropdownWhichFilterItems[0].value;
       }
     }
 
