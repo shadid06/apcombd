@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:active_ecommerce_flutter/my_theme.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
@@ -18,14 +19,16 @@ class CommonWebviewScreen extends StatefulWidget {
 }
 
 class _CommonWebviewScreenState extends State<CommonWebviewScreen> {
-  WebViewController _webViewController;
-  final Completer<WebViewController> _controller =
-      Completer<WebViewController>();
-  bool isLoading = true;
+  // WebViewController _webViewController;
+  // final Completer<WebViewController> _controller =
+  //     Completer<WebViewController>();
+  // bool isLoading = true;
+  InAppWebViewController _webViewController;
+  double _progress = 0.0;
   @override
   void initState() {
     super.initState();
-    WebView.platform = AndroidWebView();
+    // WebView.platform = AndroidWebView();
   }
 
   @override
@@ -35,32 +38,59 @@ class _CommonWebviewScreenState extends State<CommonWebviewScreen> {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: buildAppBar(context),
-        body: buildBody(),
+        body: buildBodyNew(),
       ),
     );
   }
 
-  buildBody() {
+  // buildBody() {
+  //   return SizedBox.expand(
+  //     child: ModalProgressHUD(
+  //       inAsyncCall: isLoading,
+  //       child: WebView(
+  //         debuggingEnabled: false,
+  //         javascriptMode: JavascriptMode.unrestricted,
+  //         onWebViewCreated: (controller) {
+  //           _webViewController = controller;
+  //           _webViewController.loadUrl(widget.url);
+  //         },
+  //         onWebResourceError: (error) {},
+  //         onPageFinished: (page) {
+  //           //print(page.toString());
+  //           setState(() {
+  //             isLoading = false;
+  //           });
+  //         },
+  //       ),
+  //     ),
+  //   );
+  // }
+
+  buildBodyNew() {
     return SizedBox.expand(
-      child: ModalProgressHUD(
-        inAsyncCall: isLoading,
-        child: WebView(
-          debuggingEnabled: false,
-          javascriptMode: JavascriptMode.unrestricted,
-          onWebViewCreated: (controller) {
+        child: Stack(
+      children: [
+        InAppWebView(
+          initialUrlRequest: URLRequest(url: Uri.parse(widget.url)),
+          onWebViewCreated: (InAppWebViewController controller) {
             _webViewController = controller;
-            _webViewController.loadUrl(widget.url);
           },
-          onWebResourceError: (error) {},
-          onPageFinished: (page) {
-            //print(page.toString());
+          onProgressChanged: (InAppWebViewController controller, int progress) {
             setState(() {
-              isLoading = false;
+              _progress = progress / 100;
             });
           },
         ),
-      ),
-    );
+        _progress < 1.0
+            ? Center(
+                child: CircularProgressIndicator(
+                  value: _progress,
+                  color: MyTheme.accent_color,
+                ),
+              )
+            : SizedBox()
+      ],
+    ));
   }
 
   AppBar buildAppBar(BuildContext context) {

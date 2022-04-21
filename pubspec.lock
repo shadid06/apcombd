@@ -454,6 +454,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0"
+  flutter_inappwebview:
+    dependency: "direct main"
+    description:
+      name: flutter_inappwebview
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "5.4.0+2"
   flutter_keyboard_visibility:
     dependency: transitive
     description:
@@ -539,15 +546,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_webview_plugin:
-    dependency: "direct main"
-    description:
-      path: "."
-      ref: HEAD
-      resolved-ref: f85db45aedefeab4c1df75cfc4c35f62d3c1c629
-      url: "https://github.com/nuc134r/flutter_webview_plugin.git"
-    source: git
-    version: "0.3.11"
   frontend_server_client:
     dependency: transitive
     description:
