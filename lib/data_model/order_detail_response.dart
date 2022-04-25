@@ -214,11 +214,13 @@ class PickupPoint {
   });
 
   int id;
-  String staffId; //int silo
+  // String staffId; //int silo
+  int staffId;
   String name;
   String address;
   String phone;
-  String pickUpStatus; // int silo
+  // String pickUpStatus; // int silo
+  int pickUpStatus;
   dynamic cashOnPickupStatus;
   DateTime createdAt;
   DateTime updatedAt;

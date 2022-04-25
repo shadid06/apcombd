@@ -33,8 +33,8 @@ final SharedValue<String> user_phone = SharedValue(
   value: "", // initial value
   key: "user_phone", // disk storage key for shared_preferences
 );
-final SharedValue<String> is_wholesale = SharedValue(
-  value: "", // initial value
+final SharedValue<dynamic> is_wholesale = SharedValue(
+  value: 0, // initial value
   key: "is_wholesale", // disk storage key for shared_preferences
 );
 final SharedValue<String> app_language = SharedValue(

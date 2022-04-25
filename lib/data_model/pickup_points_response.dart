@@ -48,11 +48,13 @@ class PickupPoint {
   });
 
   int id;
-  String staffId; //int silo
+  int staffId;
+  // String staffId; //int silo
   String name;
   String address;
   String phone;
-  String pickUpStatus; //int silo
+  // String pickUpStatus; //int silo
+  int pickUpStatus;
   dynamic cashOnPickupStatus;
   DateTime createdAt;
   DateTime updatedAt;
@@ -100,7 +102,8 @@ class PickupPointTranslation {
   });
 
   int id;
-  String pickupPointId; // int silo
+  // String pickupPointId; // int silo
+  int pickupPointId;
   String name;
   String address;
   String lang;

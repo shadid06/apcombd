@@ -50,7 +50,8 @@ class Datum {
   String mobile;
   String email;
   String notes;
-  String addedBy;
+  // String addedBy;
+  int addedBy;
   DateTime createdAt;
   DateTime updatedAt;
 

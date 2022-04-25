@@ -83,7 +83,7 @@ class _CartState extends State<Cart> {
     //   }
     // }
 
-    if (is_wholesale.$ == "1" &&
+    if (is_wholesale.$ == 1 &&
         askQuotationCounter_saved.$ == 1 &&
         cartResponseList.length == 0) {
       ValueCheckerHelper().clearAskQuotationCounter();
@@ -424,7 +424,7 @@ class _CartState extends State<Cart> {
                     Spacer(),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: is_wholesale.$ == "1"
+                      child: is_wholesale.$ == 1
                           ? Text(
                               askQuotationCounter_saved.$ != 1
                                   ? "Ask for Quotation"
@@ -552,7 +552,7 @@ class _CartState extends State<Cart> {
                             fontWeight: FontWeight.w600),
                       ),
                       onPressed:
-                          is_wholesale.$ == "1" && isQuotationReceived == false
+                          is_wholesale.$ == 1 && isQuotationReceived == false
                               ? () {
                                   ToastComponent.showDialog(
                                       "you can ship only after getting quotation",
@@ -663,7 +663,7 @@ class _CartState extends State<Cart> {
                   SizedBox(
                     height: 5,
                   ),
-                  is_wholesale.$ == "1" ? buildQuotation() : Container(),
+                  is_wholesale.$ == 1 ? buildQuotation() : Container(),
                 ],
               ),
             );
@@ -754,11 +754,11 @@ class _CartState extends State<Cart> {
                           children: [
                             Padding(
                               padding: const EdgeInsets.only(top: 8.0),
-                              child: is_wholesale.$ == "1"
-                                  ? Text(is_wholesale.$ == "1" &&
+                              child: is_wholesale.$ == 1
+                                  ? Text(is_wholesale.$ == 1 &&
                                           askQuotationCounter_saved.$ != 1
                                       ? "Ask for Quotation"
-                                      : is_wholesale.$ == "1" &&
+                                      : is_wholesale.$ == 1 &&
                                               isQuotationReceived == true
                                           ? _shopList[seller_index]
                                                   .cart_items[item_index]
@@ -878,46 +878,45 @@ class _CartState extends State<Cart> {
                   //   style:
                   //       TextStyle(color: MyTheme.accent_color, fontSize: 16),
                   // ),
-                  child:
-                      is_wholesale.$ == "1" && askQuotationCounter_saved.$ != 1
-                          ? Container(
-                              width: 46,
-                              child: TextFormField(
-                                controller: quatityController,
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  contentPadding: EdgeInsets.only(left: 16),
-                                  hintText: _shopList[seller_index]
-                                      .cart_items[item_index]
-                                      .quantity
-                                      .toString(),
-                                ),
-                                onChanged: (value) {
-                                  quatityController.text = value;
-                                  print(quatityController.text);
-                                  quantityByTextFeind = quatityController.text;
-                                  print(quantityByTextFeind);
-
-                                  setState(() {});
-                                  onQuantityTextFeild(seller_index, item_index,
-                                      quantityByTextFeind);
-                                  setState(() {});
-                                  // _shopList[seller_index]
-                                  //     .cart_items[item_index]
-                                  //     .quantity = quatityController.text;
-                                  // getSetCartTotal();
-                                  // setState(() {});
-                                },
-                              ),
-                            )
-                          : Text(
-                              _shopList[seller_index]
+                  child: is_wholesale.$ == 1 && askQuotationCounter_saved.$ != 1
+                      ? Container(
+                          width: 46,
+                          child: TextFormField(
+                            controller: quatityController,
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              contentPadding: EdgeInsets.only(left: 16),
+                              hintText: _shopList[seller_index]
                                   .cart_items[item_index]
                                   .quantity
                                   .toString(),
-                              style: TextStyle(
-                                  color: MyTheme.accent_color, fontSize: 16),
                             ),
+                            onChanged: (value) {
+                              quatityController.text = value;
+                              print(quatityController.text);
+                              quantityByTextFeind = quatityController.text;
+                              print(quantityByTextFeind);
+
+                              setState(() {});
+                              onQuantityTextFeild(seller_index, item_index,
+                                  quantityByTextFeind);
+                              setState(() {});
+                              // _shopList[seller_index]
+                              //     .cart_items[item_index]
+                              //     .quantity = quatityController.text;
+                              // getSetCartTotal();
+                              // setState(() {});
+                            },
+                          ),
+                        )
+                      : Text(
+                          _shopList[seller_index]
+                              .cart_items[item_index]
+                              .quantity
+                              .toString(),
+                          style: TextStyle(
+                              color: MyTheme.accent_color, fontSize: 16),
+                        ),
                 ),
                 Padding(
                   padding:

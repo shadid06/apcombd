@@ -174,7 +174,7 @@ class _MainState extends State<Main> {
                       title: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          is_wholesale.$ == "1"
+                          is_wholesale.$ == 1
                               ? "WSale Cart"
                               : AppLocalizations.of(context)
                                   .main_screen_bottom_navigation_cart,

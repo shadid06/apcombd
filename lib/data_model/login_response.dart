@@ -67,7 +67,7 @@ class User {
   String avatar;
   String avatar_original;
   String phone;
-  String isWholeSale;
+  int isWholeSale; //string silo
 
   factory User.fromJson(Map<String, dynamic> json) => User(
       id: json["id"],

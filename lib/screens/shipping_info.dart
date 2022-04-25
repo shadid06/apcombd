@@ -838,16 +838,19 @@ class _ShippingInfoState extends State<ShippingInfo> {
                             ),
                             FlatButton(
                               padding: EdgeInsets.zero,
-                              onPressed: () {
-                                // setState(() {
-                                //   changeShippingOption(false);
-                                // });
-
-                                ToastComponent.showDialog(
-                                    "Hand Pick Up is not available", context,
-                                    gravity: Toast.CENTER,
-                                    duration: Toast.LENGTH_LONG);
-                              },
+                              onPressed: is_wholesale.$ == 1
+                                  ? () {
+                                      ToastComponent.showDialog(
+                                          "Hand Pick Up is not available",
+                                          context,
+                                          gravity: Toast.CENTER,
+                                          duration: Toast.LENGTH_LONG);
+                                    }
+                                  : () {
+                                      setState(() {
+                                        changeShippingOption(false);
+                                      });
+                                    },
                               child: Container(
                                   color: MyTheme.white,
                                   alignment: Alignment.center,

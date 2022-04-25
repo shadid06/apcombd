@@ -96,8 +96,8 @@ class DetailedProduct {
   String link;
   Brand brand;
   String shortDescription;
-  String isShortDescription;
-  // int isShortDescription;
+  // String isShortDescription;
+  int isShortDescription;
 
   factory DetailedProduct.fromJson(Map<String, dynamic> json) =>
       DetailedProduct(
