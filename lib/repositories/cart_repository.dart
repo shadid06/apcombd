@@ -146,6 +146,7 @@ class CartRepository {
     Uri url = Uri.parse("${AppConfig.BASE_URL}/$endPoint"); // /carts/add
     final response = await http.post(url,
         headers: {
+          "Accept": "application/json",
           "Content-Type": "application/json",
           "Authorization": "Bearer ${access_token.$}",
           "App-Language": app_language.$
