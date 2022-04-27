@@ -101,7 +101,7 @@ class PaymentRepository {
 
   Future<OrderCreateResponse> getOrderCreateResponseFromCod(
       @required payment_method, dynamic id) async {
-    if (is_wholesale.$ == "1") {
+    if (is_wholesale.$ == 1) {
       endPoint = "wholesalepayments";
     } else {
       endPoint = "payments";

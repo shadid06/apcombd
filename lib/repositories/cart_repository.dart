@@ -15,7 +15,7 @@ class CartRepository {
   Future<List<CartResponse>> getCartResponseList(
     @required int user_id,
   ) async {
-    if (is_wholesale.$ == "1") {
+    if (is_wholesale.$ == 1) {
       endPoint = "wholesalecart";
     } else {
       endPoint = "carts";
@@ -41,7 +41,7 @@ class CartRepository {
   Future<CartDeleteResponse> getCartDeleteResponse(
     @required int cart_id,
   ) async {
-    if (is_wholesale.$ == "1") {
+    if (is_wholesale.$ == 1) {
       endPoint = "wholesalecart_remove";
     } else {
       endPoint = "carts";
@@ -102,7 +102,7 @@ class CartRepository {
 
   Future<CartProcessResponse> getCartProcessResponse(
       @required String cart_ids, @required String cart_quantities) async {
-    if (is_wholesale.$ == "1") {
+    if (is_wholesale.$ == 1) {
       endPoint = "wholesalecart/process";
     } else {
       endPoint = "carts/process";
@@ -127,7 +127,7 @@ class CartRepository {
       @required String variant,
       @required int user_id,
       @required int quantity) async {
-    if (is_wholesale.$ == "1") {
+    if (is_wholesale.$ == 1) {
       endPoint = "wholesalecart-addtowholesalecart";
     } else {
       endPoint = "carts/add";
@@ -158,7 +158,7 @@ class CartRepository {
   }
 
   Future<CartSummaryResponse> getCartSummaryResponse() async {
-    if (is_wholesale.$ == "1") {
+    if (is_wholesale.$ == 1) {
       endPoint = "wholesalecart-status";
     } else {
       endPoint = "cart-summary";

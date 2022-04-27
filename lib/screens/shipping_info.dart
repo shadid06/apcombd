@@ -818,7 +818,7 @@ class _ShippingInfoState extends State<ShippingInfo> {
                                   width: (mWidth / 2) - 1,
                                   alignment: Alignment.center,
                                   child: Text(
-                                    is_wholesale.$ == "1"
+                                    is_wholesale.$ == 1
                                         ? "Home Delivery"
                                         : AppLocalizations.of(context)
                                             .address_screen_address,
@@ -857,7 +857,7 @@ class _ShippingInfoState extends State<ShippingInfo> {
                                   height: 50,
                                   width: (mWidth / 2) - 1,
                                   child: Text(
-                                    is_wholesale.$ == "1"
+                                    is_wholesale.$ == 1
                                         ? "Hand Pickup"
                                         : AppLocalizations.of(context)
                                             .pickup_point,
