@@ -1,4 +1,5 @@
 import 'package:active_ecommerce_flutter/screens/career.dart';
+import 'package:active_ecommerce_flutter/screens/cart.dart';
 import 'package:active_ecommerce_flutter/screens/change_language.dart';
 import 'package:active_ecommerce_flutter/screens/common_webview_screen.dart';
 import 'package:active_ecommerce_flutter/screens/terms_and_conditions.dart';
@@ -90,25 +91,25 @@ class _MainDrawerState extends State<MainDrawer> {
                               fontWeight: FontWeight.w600,
                               fontSize: 14)),
                   Divider(),
-                  ListTile(
-                      visualDensity:
-                          VisualDensity(horizontal: -4, vertical: -4),
-                      leading: Image.asset("assets/language.png",
-                          height: 16, color: Color.fromRGBO(153, 153, 153, 1)),
-                      title: Text(
-                          AppLocalizations.of(context)
-                              .main_drawer_change_language,
-                          style: TextStyle(
-                              // color: Color.fromRGBO(153, 153, 153, 1),
-                              color: Colors.black,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 14)),
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return ChangeLanguage();
-                        }));
-                      }),
+                  // ListTile(
+                  //     visualDensity:
+                  //         VisualDensity(horizontal: -4, vertical: -4),
+                  //     leading: Image.asset("assets/language.png",
+                  //         height: 16, color: Color.fromRGBO(153, 153, 153, 1)),
+                  //     title: Text(
+                  //         AppLocalizations.of(context)
+                  //             .main_drawer_change_language,
+                  //         style: TextStyle(
+                  //             // color: Color.fromRGBO(153, 153, 153, 1),
+                  //             color: Colors.black,
+                  //             fontWeight: FontWeight.w600,
+                  //             fontSize: 14)),
+                  //     onTap: () {
+                  //       Navigator.push(context,
+                  //           MaterialPageRoute(builder: (context) {
+                  //         return ChangeLanguage();
+                  //       }));
+                  //     }),
                   ListTile(
                       visualDensity:
                           VisualDensity(horizontal: -4, vertical: -4),
@@ -211,15 +212,37 @@ class _MainDrawerState extends State<MainDrawer> {
                             }));
                           })
                       : Container(),
+                  // is_logged_in.$ == true
+                  //     ? ListTile(
+                  //         visualDensity:
+                  //             VisualDensity(horizontal: -4, vertical: -4),
+                  //         leading: Image.asset("assets/wallet.png",
+                  //             height: 16,
+                  //             color: Color.fromRGBO(153, 153, 153, 1)),
+                  //         title: Text(
+                  //             AppLocalizations.of(context).main_drawer_wallet,
+                  //             style: TextStyle(
+                  //                 // color: Color.fromRGBO(153, 153, 153, 1),
+                  //                 color: Colors.black,
+                  //                 fontWeight: FontWeight.w600,
+                  //                 fontSize: 14)),
+                  //         onTap: () {
+                  //           Navigator.push(context,
+                  //               MaterialPageRoute(builder: (context) {
+                  //             return Wallet();
+                  //           }));
+                  //         })
+                  //     : Container(),
                   is_logged_in.$ == true
                       ? ListTile(
                           visualDensity:
                               VisualDensity(horizontal: -4, vertical: -4),
-                          leading: Image.asset("assets/wallet.png",
+                          leading: Image.asset("assets/cart.png",
                               height: 16,
                               color: Color.fromRGBO(153, 153, 153, 1)),
                           title: Text(
-                              AppLocalizations.of(context).main_drawer_wallet,
+                              // AppLocalizations.of(context).main_drawer_wallet,
+                              "Wholesale Cart",
                               style: TextStyle(
                                   // color: Color.fromRGBO(153, 153, 153, 1),
                                   color: Colors.black,
@@ -228,7 +251,7 @@ class _MainDrawerState extends State<MainDrawer> {
                           onTap: () {
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
-                              return Wallet();
+                              return Cart(has_bottomnav: false);
                             }));
                           })
                       : Container(),

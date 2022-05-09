@@ -373,43 +373,43 @@ class _ProfileState extends State<Profile> {
               ),
             ),
           ),
-          InkWell(
-            onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return OrderList();
-              }));
-            },
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 16.0),
-              child: Row(
-                children: [
-                  Container(
-                      height: 40,
-                      width: 40,
-                      decoration: BoxDecoration(
-                        color: Colors.green,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Icon(
-                          Icons.credit_card_rounded,
-                          color: Colors.white,
-                        ),
-                      )),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Text(
-                      AppLocalizations.of(context)
-                          .profile_screen_purchase_history,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: MyTheme.font_grey, fontSize: 14),
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
+          // InkWell(
+          //   onTap: () {
+          //     Navigator.push(context, MaterialPageRoute(builder: (context) {
+          //       return OrderList();
+          //     }));
+          //   },
+          //   child: Padding(
+          //     padding: const EdgeInsets.only(bottom: 16.0),
+          //     child: Row(
+          //       children: [
+          //         Container(
+          //             height: 40,
+          //             width: 40,
+          //             decoration: BoxDecoration(
+          //               color: Colors.green,
+          //               shape: BoxShape.circle,
+          //             ),
+          //             child: Padding(
+          //               padding: const EdgeInsets.all(8.0),
+          //               child: Icon(
+          //                 Icons.credit_card_rounded,
+          //                 color: Colors.white,
+          //               ),
+          //             )),
+          //         Padding(
+          //           padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          //           child: Text(
+          //             AppLocalizations.of(context)
+          //                 .profile_screen_purchase_history,
+          //             textAlign: TextAlign.center,
+          //             style: TextStyle(color: MyTheme.font_grey, fontSize: 14),
+          //           ),
+          //         )
+          //       ],
+          //     ),
+          //   ),
+          // ),
           club_point_addon_installed.$
               ? InkWell(
                   onTap: () {
@@ -516,7 +516,10 @@ class _ProfileState extends State<Profile> {
             Padding(
                 padding: const EdgeInsets.only(top: 4.0),
                 child: Text(
-                  AppLocalizations.of(context).profile_screen_in_your_cart,
+                  is_wholesale.$ == 1
+                      ? "In W.Cart"
+                      : AppLocalizations.of(context)
+                          .profile_screen_in_your_cart,
                   style: TextStyle(
                     color: MyTheme.medium_grey,
                   ),
@@ -615,35 +618,35 @@ class _ProfileState extends State<Profile> {
                 color: MyTheme.medium_grey,
               ),
             )),
-        Padding(
-          padding: const EdgeInsets.only(top: 16.0),
-          child: Container(
-            height: 24,
-            child: FlatButton(
-              color: Colors.green,
-              // 	rgb(50,205,50)
-              shape: RoundedRectangleBorder(
-                  borderRadius: const BorderRadius.only(
-                topLeft: const Radius.circular(16.0),
-                bottomLeft: const Radius.circular(16.0),
-                topRight: const Radius.circular(16.0),
-                bottomRight: const Radius.circular(16.0),
-              )),
-              child: Text(
-                AppLocalizations.of(context).profile_screen_check_balance,
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 11,
-                    fontWeight: FontWeight.w600),
-              ),
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return Wallet();
-                }));
-              },
-            ),
-          ),
-        ),
+        // Padding(
+        //   padding: const EdgeInsets.only(top: 16.0),
+        //   child: Container(
+        //     height: 24,
+        //     child: FlatButton(
+        //       color: Colors.green,
+        //       // 	rgb(50,205,50)
+        //       shape: RoundedRectangleBorder(
+        //           borderRadius: const BorderRadius.only(
+        //         topLeft: const Radius.circular(16.0),
+        //         bottomLeft: const Radius.circular(16.0),
+        //         topRight: const Radius.circular(16.0),
+        //         bottomRight: const Radius.circular(16.0),
+        //       )),
+        //       child: Text(
+        //         AppLocalizations.of(context).profile_screen_check_balance,
+        //         style: TextStyle(
+        //             color: Colors.white,
+        //             fontSize: 11,
+        //             fontWeight: FontWeight.w600),
+        //       ),
+        //       onPressed: () {
+        //         Navigator.push(context, MaterialPageRoute(builder: (context) {
+        //           return Wallet();
+        //         }));
+        //       },
+        //     ),
+        //   ),
+        // ),
       ],
     );
   }

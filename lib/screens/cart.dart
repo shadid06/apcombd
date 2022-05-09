@@ -39,7 +39,11 @@ class _CartState extends State<Cart> {
   var previousTotoal;
   var totalPriceDIfferenceCounter = 0;
   bool isQuotationReceived = false;
-  String quantityByTextFeind;
+  String quantityByTextField;
+  String hintText = 'hint';
+  List<String> hintList = [];
+  FocusNode focusNode = FocusNode();
+  var _qntyController = <TextEditingController>[];
 
   @override
   void initState() {
@@ -58,6 +62,15 @@ class _CartState extends State<Cart> {
     if (is_logged_in.$ == true) {
       fetchData();
     }
+
+    focusNode.addListener(() {
+      if (focusNode.hasFocus) {
+        hintText = '';
+      } else {
+        hintText = '';
+      }
+      setState(() {});
+    });
   }
 
   @override
@@ -74,6 +87,7 @@ class _CartState extends State<Cart> {
       _shopList = cartResponseList;
     }
     _isInitial = false;
+
     getSetCartTotal();
     // if (askQuotationCounter_saved.$ == "1") {
     //   if (previousTotalSaved.$ != _cartTotal) {
@@ -118,6 +132,9 @@ class _CartState extends State<Cart> {
             _cartTotal +=
                 (cart_item.price + cart_item.tax) * cart_item.quantity;
             _cartTotalString = "${cart_item.currency_symbol}${_cartTotal}";
+            // _qntyController[].text = cart_item.quantity.toString();
+            // _qntyController.addAll(cart_item.quantity.text);
+            print(quatityController.text);
           });
         }
       });
@@ -134,10 +151,27 @@ class _CartState extends State<Cart> {
       _shopList[index].cart_items.forEach((cart_item) {
         partialTotal += (cart_item.price + cart_item.tax) * cart_item.quantity;
         partialTotalString = "${cart_item.currency_symbol}${partialTotal}";
+        hintList.add(cart_item.quantity.toString());
       });
     }
 
     return partialTotalString;
+  }
+
+  onField(seller_index, item_index) {
+    if (_shopList[seller_index].cart_items[item_index].quantity <
+        _shopList[seller_index].cart_items[item_index].upper_limit) {
+      _shopList[seller_index].cart_items[item_index].quantity =
+          quatityController;
+      getSetCartTotal();
+      setState(() {});
+    } else {
+      ToastComponent.showDialog(
+          "${AppLocalizations.of(context).cart_screen_cannot_order_more_than} ${_shopList[seller_index].cart_items[item_index].upper_limit} ${AppLocalizations.of(context).cart_screen_items_of_this}",
+          context,
+          gravity: Toast.CENTER,
+          duration: Toast.LENGTH_LONG);
+    }
   }
 
   onQuantityIncrease(seller_index, item_index) {
@@ -340,6 +374,8 @@ class _CartState extends State<Cart> {
   @override
   Widget build(BuildContext context) {
     //print(widget.has_bottomnav);
+    //  return Directionality(
+    //   textDirection: app_language_rtl.$ ? TextDirection.rtl : TextDirection.ltr,
     return Directionality(
       textDirection: app_language_rtl.$ ? TextDirection.rtl : TextDirection.ltr,
       child: Scaffold(
@@ -431,7 +467,7 @@ class _CartState extends State<Cart> {
                                   : askQuotationCounter_saved.$ == 1 &&
                                           isQuotationReceived == true
                                       ? _cartTotalString
-                                      : "Successfully Asked",
+                                      : "Quotation asked successfully",
                               style: TextStyle(
                                   color: MyTheme.accent_color,
                                   fontSize: 14,
@@ -706,6 +742,9 @@ class _CartState extends State<Cart> {
     cartIndexPrice = (_shopList[seller_index].cart_items[item_index].price *
         _shopList[seller_index].cart_items[item_index].quantity);
     print("$cartIndexPrice " "!=" "${previousTotalSaved.$}");
+    if (_qntyController.length <= item_index) {
+      _qntyController.add(TextEditingController());
+    }
     return Card(
       shape: RoundedRectangleBorder(
         side: BorderSide(color: MyTheme.light_grey, width: 1.0),
@@ -764,15 +803,17 @@ class _CartState extends State<Cart> {
                                                   .cart_items[item_index]
                                                   .currency_symbol +
                                               (_shopList[seller_index]
-                                                          .cart_items[
-                                                              item_index]
-                                                          .price *
-                                                      _shopList[seller_index]
-                                                          .cart_items[
-                                                              item_index]
-                                                          .quantity)
+                                                      .cart_items[item_index]
+                                                      .price
+                                                  //     *
+                                                  // _shopList[seller_index]
+                                                  //     .cart_items[
+                                                  //         item_index]
+                                                  //     .quantity
+
+                                                  )
                                                   .toString()
-                                          : "Successfully Asked")
+                                          : "Successfully asked")
                                   : Text(
                                       _shopList[seller_index]
                                               .cart_items[item_index]
@@ -803,7 +844,7 @@ class _CartState extends State<Cart> {
                                   onPressed: isQuotationReceived == false
                                       ? () {
                                           ToastComponent.showDialog(
-                                              "you can delete after receving quotation",
+                                              "You can delete after receving quotation",
                                               context,
                                               gravity: Toast.CENTER,
                                               duration: Toast.LENGTH_LONG);
@@ -857,7 +898,7 @@ class _CartState extends State<Cart> {
                       onPressed: askQuotationCounter_saved.$ == 1
                           ? () {
                               ToastComponent.showDialog(
-                                  "quotation is asked already, you can not perform",
+                                  "Quotation is asked already, you can not perform",
                                   context,
                                   gravity: Toast.CENTER,
                                   duration: Toast.LENGTH_LONG);
@@ -881,8 +922,10 @@ class _CartState extends State<Cart> {
                   child: is_wholesale.$ == 1 && askQuotationCounter_saved.$ != 1
                       ? Container(
                           width: 46,
+                          // color: Colors.redAccent,
                           child: TextFormField(
-                            controller: quatityController,
+                            controller: _qntyController[item_index],
+                            keyboardType: TextInputType.number,
                             decoration: InputDecoration(
                               border: InputBorder.none,
                               contentPadding: EdgeInsets.only(left: 16),
@@ -890,16 +933,20 @@ class _CartState extends State<Cart> {
                                   .cart_items[item_index]
                                   .quantity
                                   .toString(),
+                              // hintText: hintList[item_index],
                             ),
                             onChanged: (value) {
-                              quatityController.text = value;
-                              print(quatityController.text);
-                              quantityByTextFeind = quatityController.text;
-                              print(quantityByTextFeind);
+                              // value = _qntyController[item_index].text;
+
+                              print(_qntyController[item_index].text);
+                              quantityByTextField =
+                                  _qntyController[item_index].text;
+                              print(quantityByTextField);
 
                               setState(() {});
                               onQuantityTextFeild(seller_index, item_index,
-                                  quantityByTextFeind);
+                                  quantityByTextField);
+                              // onField(seller_index, item_index);
                               setState(() {});
                               // _shopList[seller_index]
                               //     .cart_items[item_index]
@@ -999,7 +1046,7 @@ class _CartState extends State<Cart> {
                       : askQuotationCounter_saved.$ == 1 &&
                               isQuotationReceived == true
                           ? _cartTotalString
-                          : "Successfully Asked",
+                          : "Quotation asked successfully",
                   style: TextStyle(
                       color: MyTheme.accent_color,
                       fontWeight: FontWeight.w500,

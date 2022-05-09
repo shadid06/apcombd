@@ -110,7 +110,8 @@ class PaymentRepository {
       "user_id": "${user_id.$}",
       "payment_type": "${payment_method}",
       "referrer": "$id",
-      // "shipping_type": "pickup_points" //pickup_points //home_delivery
+      "shipping_type": "home_delivery"
+      //pickup_points //home_delivery
     });
 
     Uri url = Uri.parse("${AppConfig.BASE_URL}/$endPoint/pay/cod");
@@ -122,8 +123,9 @@ class PaymentRepository {
           "Authorization": "Bearer ${access_token.$}"
         },
         body: post_body);
-
+    print(url);
     print(response.body);
+    print(response.statusCode);
     return orderCreateResponseFromJson(response.body);
   }
 

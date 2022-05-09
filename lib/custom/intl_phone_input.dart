@@ -389,6 +389,7 @@ class _InputWidgetView
           Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
+              //shamim1
               CustomSelectorButton(
                 country: state.country,
                 countries: state.countries,
@@ -504,10 +505,7 @@ class CustomSelectorButton extends StatelessWidget {
             height: 36,
             decoration: BoxDecoration(
                 color: Colors.white,
-                border: Border.all(
-                    color: MyTheme.textfield_grey,
-                    width: .5
-                ),
+                border: Border.all(color: MyTheme.textfield_grey, width: .5),
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(5.0),
                     bottomLeft: Radius.circular(5.0))),

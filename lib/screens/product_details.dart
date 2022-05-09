@@ -1859,7 +1859,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   borderRadius: BorderRadius.circular(0.0),
                 ),
                 child: Text(
-                  is_wholesale.$ == "1"
+                  is_wholesale.$ == 1
                       ? "Add to W.Cart"
                       : AppLocalizations.of(context)
                           .product_details_screen_button_add_to_cart,

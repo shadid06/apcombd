@@ -29,7 +29,7 @@ class UserByTokenResponse {
   String avatar;
   String avatar_original;
   String phone;
-  String isWholesale;
+  int isWholesale; //string silo
 
   factory UserByTokenResponse.fromJson(Map<String, dynamic> json) =>
       UserByTokenResponse(

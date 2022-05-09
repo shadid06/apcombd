@@ -819,7 +819,7 @@ class _ShippingInfoState extends State<ShippingInfo> {
                                   alignment: Alignment.center,
                                   child: Text(
                                     is_wholesale.$ == 1
-                                        ? "Home Delivery"
+                                        ? "Hand Delivery"
                                         : AppLocalizations.of(context)
                                             .address_screen_address,
                                     style: TextStyle(
@@ -841,7 +841,7 @@ class _ShippingInfoState extends State<ShippingInfo> {
                               onPressed: is_wholesale.$ == 1
                                   ? () {
                                       ToastComponent.showDialog(
-                                          "Hand Pick Up is not available",
+                                          "Local Pick Up is not available",
                                           context,
                                           gravity: Toast.CENTER,
                                           duration: Toast.LENGTH_LONG);
@@ -858,7 +858,7 @@ class _ShippingInfoState extends State<ShippingInfo> {
                                   width: (mWidth / 2) - 1,
                                   child: Text(
                                     is_wholesale.$ == 1
-                                        ? "Hand Pickup"
+                                        ? "Local Pickup"
                                         : AppLocalizations.of(context)
                                             .pickup_point,
                                     style: TextStyle(

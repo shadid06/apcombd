@@ -258,6 +258,7 @@ class _RegistrationState extends State<Registration> {
                                   height: 36,
                                   child: CustomInternationalPhoneNumberInput(
                                     onInputChanged: (PhoneNumber number) {
+                                      print("kjs");
                                       print(number.phoneNumber);
                                       setState(() {
                                         _phone = number.phoneNumber;
@@ -282,7 +283,7 @@ class _RegistrationState extends State<Registration> {
                                             signed: true, decimal: true),
                                     inputDecoration: InputDecorations
                                         .buildInputDecoration_phone(
-                                            hint_text: "01710 333 558"),
+                                            hint_text: "01710 3X3 XXX"),
                                     onSaved: (PhoneNumber number) {
                                       //print('On Saved: $number');
                                     },
