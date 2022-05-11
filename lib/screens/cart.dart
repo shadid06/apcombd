@@ -841,7 +841,8 @@ class _CartState extends State<Cart> {
                               child: InkWell(
                                 onTap: () {},
                                 child: IconButton(
-                                  onPressed: isQuotationReceived == false
+                                  onPressed: is_wholesale.$ == 1 &&
+                                          isQuotationReceived == false
                                       ? () {
                                           ToastComponent.showDialog(
                                               "You can delete after receving quotation",

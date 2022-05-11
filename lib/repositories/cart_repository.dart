@@ -41,22 +41,37 @@ class CartRepository {
   Future<CartDeleteResponse> getCartDeleteResponse(
     @required int cart_id,
   ) async {
+    http.Response response;
     if (is_wholesale.$ == 1) {
       endPoint = "wholesalecart_remove";
     } else {
       endPoint = "carts";
     }
     Uri url = Uri.parse("${AppConfig.BASE_URL}/$endPoint/$cart_id"); //carts
-    final response = await http.get(
-      //http.delete
-      url,
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-        "Authorization": "Bearer ${access_token.$}",
-        "App-Language": app_language.$
-      },
-    );
+    if (is_wholesale.$ == 1) {
+      response = await http.get(
+        //http.delete // http.get o dite hoi
+        url,
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Authorization": "Bearer ${access_token.$}",
+          "App-Language": app_language.$
+        },
+      );
+    } else {
+      response = await http.delete(
+        //http.delete // http.get o dite hoi
+        url,
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Authorization": "Bearer ${access_token.$}",
+          "App-Language": app_language.$
+        },
+      );
+    }
+
     print(url);
     print(response.body);
     return cartDeleteResponseFromJson(response.body);
