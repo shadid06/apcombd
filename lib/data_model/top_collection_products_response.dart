@@ -498,58 +498,58 @@ class Datum {
   int id;
   String name;
   String addedBy;
-  String userId;
-  String categoryId;
-  String brandId;
+  int userId; //string silo
+  int categoryId; //string silo
+  int brandId; //string silo
   String photos;
   String thumbnailImg;
   String videoProvider;
   String videoLink;
   String description;
   String shortDescription;
-  String isShortDescription;
-  String unitPrice;
+  int isShortDescription; //string silo
+  int unitPrice; //string silo
   dynamic purchasePrice;
-  String variantProduct;
+  int variantProduct; //string silo
   String attributes;
   String choiceOptions;
   String colors;
   dynamic variations;
-  String todaysDeal;
-  String published;
-  String approved;
+  int todaysDeal; //string silo
+  int published; ////string silo
+  int approved; //string silo
   String stockVisibilityState;
-  String cashOnDelivery;
-  String sellerFeatured;
-  String currentStock;
+  int cashOnDelivery; //string silo
+  int sellerFeatured; //string silo
+  int currentStock; //string silo
   String unitunit;
-  String minQty;
-  String lowStockQuantity;
-  String discount;
+  int minQty; //string silo
+  int lowStockQuantity; //string silo
+  int discount; //string silo
   String discountType;
-  String discountStartDate;
-  String discountEndDate;
+  int discountStartDate; //string silo
+  int discountEndDate; //string silo
   dynamic tax;
   dynamic taxType;
   dynamic shippingType;
   String shippingCost;
-  String isQuantityMultiplied;
+  int isQuantityMultiplied; //string silo
   dynamic estShippingDays;
-  String numOfSale;
+  int numOfSale; //string silo
   String metaTitle;
   String metaDescription;
   String metaImg;
   String pdf;
   String slug;
-  String rating;
+  int rating; //string silo
   dynamic barcode;
-  String digital;
-  String auctionProduct;
+  int digital; //string silo
+  int auctionProduct; //string silo
   dynamic fileName;
   dynamic filePath;
   dynamic externalLink;
   dynamic externalLinkBtn;
-  String wholesaleProduct;
+  int wholesaleProduct; //string silo
   DateTime createdAt;
   DateTime updatedAt;
 

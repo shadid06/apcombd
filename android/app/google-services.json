@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:947419228938:android:eec2304ed6301844a568f3",
         "android_client_info": {
-          "package_name": "com.apcombd.com.android_app"
+          "package_name": "com.apcom.androidwoo"
         }
       },
       "oauth_client": [
@@ -17,7 +17,7 @@
           "client_id": "947419228938-psl9lbr339n9807ina85h40ptfir67ng.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.apcombd.com.android_app",
+            "package_name": "com.apcom.androidwoo", 
             "certificate_hash": "65d470f98823fc5fb1c7797c6da465218fa6c8bf"
           }
         },

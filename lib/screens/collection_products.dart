@@ -119,7 +119,7 @@ class _CollectionProductsState extends State<CollectionProducts> {
                 id: _productList[index].id,
                 image: _productList[index].thumbnailImg,
                 name: _productList[index].name,
-                main_price: _productList[index].unitPrice,
+                main_price: _productList[index].unitPrice.toString(),
                 stroked_price: _productList[index].purchasePrice,
                 has_discount: _productList[index] = false);
           },
