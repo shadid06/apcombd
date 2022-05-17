@@ -27,9 +27,10 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  bool password = true;
   String _login_by = "email"; //phone or email
-  String initialCountry = 'US';
-  PhoneNumber phoneCode = PhoneNumber(isoCode: 'US', dialCode: "+1");
+  String initialCountry = 'BD';
+  PhoneNumber phoneCode = PhoneNumber(isoCode: 'BD', dialCode: "+88");
   String _phone = "";
 
   //controllers
@@ -433,11 +434,17 @@ class _LoginState extends State<Login> {
                                 child: TextField(
                                   controller: _passwordController,
                                   autofocus: false,
-                                  obscureText: true,
+                                  obscureText: password,
                                   enableSuggestions: false,
                                   autocorrect: false,
                                   decoration:
                                       InputDecorations.buildInputDecoration_1(
+                                          suffixicon: InkWell(
+                                            onTap: showpassword,
+                                            child: Icon(password
+                                                ? Icons.visibility
+                                                : Icons.visibility_off),
+                                          ),
                                           hint_text: "• • • • • • • •"),
                                 ),
                               ),
@@ -611,5 +618,11 @@ class _LoginState extends State<Login> {
         ),
       ),
     );
+  }
+
+  void showpassword() {
+    setState(() {
+      password = !password;
+    });
   }
 }

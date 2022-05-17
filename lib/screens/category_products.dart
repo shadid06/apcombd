@@ -143,8 +143,10 @@ class _CategoryProductsState extends State<CategoryProducts> {
               fetchData();
             },
             autofocus: false,
+            style: TextStyle(color: Colors.white),
             decoration: InputDecoration(
                 // contentPadding: EdgeInsets.symmetric(horizontal: 8),
+
                 hintText:
                     "${AppLocalizations.of(context).category_products_screen_search_products_from} : " +
                         widget.category_name,

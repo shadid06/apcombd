@@ -19,12 +19,15 @@ class Registration extends StatefulWidget {
 }
 
 class _RegistrationState extends State<Registration> {
-  String _register_by = "phone"; //phone or email
-  String initialCountry = 'US';
-  PhoneNumber phoneCode = PhoneNumber(isoCode: 'US', dialCode: "+1");
+  bool password = true;
+  bool conformpassword = true;
+  String _register_by = "email"; //phone or email
+  // String initialCountry = 'US';
+  // PhoneNumber phoneCode = PhoneNumber(isoCode: 'US', dialCode: "+1");
+  String initialCountry = 'BD';
+  PhoneNumber phoneCode = PhoneNumber(isoCode: 'BD', dialCode: "+88");
 
   String _phone = "";
-
   //controllers
   TextEditingController _nameController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
@@ -327,11 +330,17 @@ class _RegistrationState extends State<Registration> {
                                 child: TextField(
                                   controller: _passwordController,
                                   autofocus: false,
-                                  obscureText: true,
+                                  obscureText: password,
                                   enableSuggestions: false,
                                   autocorrect: false,
                                   decoration:
                                       InputDecorations.buildInputDecoration_1(
+                                          suffixicon: InkWell(
+                                            onTap: showpassword,
+                                            child: Icon(password
+                                                ? Icons.visibility
+                                                : Icons.visibility_off),
+                                          ),
                                           hint_text: "• • • • • • • •"),
                                 ),
                               ),
@@ -362,11 +371,17 @@ class _RegistrationState extends State<Registration> {
                             child: TextField(
                               controller: _passwordConfirmController,
                               autofocus: false,
-                              obscureText: true,
+                              obscureText: conformpassword,
                               enableSuggestions: false,
                               autocorrect: false,
                               decoration:
                                   InputDecorations.buildInputDecoration_1(
+                                      suffixicon: InkWell(
+                                        onTap: showConfirmpassword,
+                                        child: Icon(password
+                                            ? Icons.visibility
+                                            : Icons.visibility_off),
+                                      ),
                                       hint_text: "• • • • • • • •"),
                             ),
                           ),
@@ -454,5 +469,17 @@ class _RegistrationState extends State<Registration> {
         ),
       ),
     );
+  }
+
+  void showpassword() {
+    setState(() {
+      password = !password;
+    });
+  }
+
+  void showConfirmpassword() {
+    setState(() {
+      conformpassword = !conformpassword;
+    });
   }
 }

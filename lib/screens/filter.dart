@@ -787,6 +787,7 @@ class _FilterState extends State<Filter> {
                     setState(() {});
                     _onSearchSubmit();
                   },
+                  style: TextStyle(color: Colors.white),
                   decoration: InputDecoration(
                       hintText: AppLocalizations.of(context)
                           .filter_screen_search_here,

@@ -242,7 +242,7 @@ class _MainDrawerState extends State<MainDrawer> {
                               color: Color.fromRGBO(153, 153, 153, 1)),
                           title: Text(
                               // AppLocalizations.of(context).main_drawer_wallet,
-                              "Wholesale Cart",
+                              is_wholesale.$ == 1 ? "Wholesale Cart" : "Cart",
                               style: TextStyle(
                                   // color: Color.fromRGBO(153, 153, 153, 1),
                                   color: Colors.black,
