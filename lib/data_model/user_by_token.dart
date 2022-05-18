@@ -20,6 +20,7 @@ class UserByTokenResponse {
     this.avatar_original,
     this.phone,
     this.isWholesale,
+    this.referredBy,
   });
 
   bool result;
@@ -30,19 +31,19 @@ class UserByTokenResponse {
   String avatar_original;
   String phone;
   int isWholesale; //string silo
-
+  int referredBy;
   factory UserByTokenResponse.fromJson(Map<String, dynamic> json) =>
       UserByTokenResponse(
-        result: json["result"] == null ? null : json["result"],
-        id: json["id"] == null ? null : json["id"],
-        name: json["name"] == null ? null : json["name"],
-        email: json["email"] == null ? null : json["email"],
-        avatar: json["avatar"] == null ? null : json["avatar"],
-        avatar_original:
-            json["avatar_original"] == null ? null : json["avatar_original"],
-        phone: json["phone"] == null ? null : json["phone"],
-        isWholesale: json["is_wholesale"],
-      );
+          result: json["result"] == null ? null : json["result"],
+          id: json["id"] == null ? null : json["id"],
+          name: json["name"] == null ? null : json["name"],
+          email: json["email"] == null ? null : json["email"],
+          avatar: json["avatar"] == null ? null : json["avatar"],
+          avatar_original:
+              json["avatar_original"] == null ? null : json["avatar_original"],
+          phone: json["phone"] == null ? null : json["phone"],
+          isWholesale: json["is_wholesale"],
+          referredBy: json["referred_by"]);
 
   Map<String, dynamic> toJson() => {
         "result": result == null ? null : result,
@@ -53,5 +54,6 @@ class UserByTokenResponse {
         "avatar_original": avatar_original == null ? null : avatar_original,
         "phone": phone == null ? null : phone,
         "is_wholesale": isWholesale,
+        "referred_by": referredBy,
       };
 }

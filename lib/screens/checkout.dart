@@ -68,12 +68,14 @@ class _CheckoutState extends State<Checkout> {
   Datum selectedReferr;
   var selectedReferrId;
   Future referrData;
+  var selectedReferrName;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
+    referred_by.load();
+    print(referred_by.$);
     /*print("user data");
     print(is_logged_in.$);
     print(access_token.value);
@@ -117,6 +119,18 @@ class _CheckoutState extends State<Checkout> {
 
     _isInitial = false;
     setState(() {});
+    setSelectedReferr();
+  }
+
+  setSelectedReferr() {
+    for (int i = 0; i < refferList.length; i++) {
+      if (referred_by.$ == refferList[i].id) {
+        // selectedReferr = refferList[i];
+        selectedReferrName = refferList[i].name;
+        selectedReferrId = refferList[i].id;
+        setState(() {});
+      }
+    }
   }
 
   // fetchDatas() async {
@@ -934,7 +948,7 @@ class _CheckoutState extends State<Checkout> {
             value: selectedReffer,
             // alignment: AlignmentDirectional.center,
             hint: Text(
-              'Select Refferer',
+              selectedReferrName,
               style: TextStyle(
                 color: Colors.grey,
                 fontWeight: FontWeight.w700,

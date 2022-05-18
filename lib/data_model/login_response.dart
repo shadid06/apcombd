@@ -58,6 +58,7 @@ class User {
     this.avatar_original,
     this.phone,
     this.isWholeSale,
+    this.referredBy,
   });
 
   int id;
@@ -68,7 +69,7 @@ class User {
   String avatar_original;
   String phone;
   int isWholeSale; //string silo
-
+  int referredBy;
   factory User.fromJson(Map<String, dynamic> json) => User(
       id: json["id"],
       type: json["type"],
@@ -77,7 +78,8 @@ class User {
       avatar: json["avatar"],
       avatar_original: json["avatar_original"],
       phone: json["phone"],
-      isWholeSale: json['is_wholesale']);
+      isWholeSale: json['is_wholesale'],
+      referredBy: json['referred_by']);
 
   Map<String, dynamic> toJson() => {
         "id": id,
@@ -87,6 +89,7 @@ class User {
         "avatar": avatar,
         "avatar_original": avatar_original,
         "phone": phone,
-        "is_wholesale": isWholeSale
+        "is_wholesale": isWholeSale,
+        "referred_by": referredBy
       };
 }

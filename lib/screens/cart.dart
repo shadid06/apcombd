@@ -76,8 +76,13 @@ class _CartState extends State<Cart> {
   @override
   void dispose() {
     super.dispose();
+    focusNode.dispose();
     _mainScrollController.dispose();
   }
+
+  // void setFocus() {
+  //   FocusScope.of(context).requestFocus(focusNode);
+  // }
 
   fetchData() async {
     var cartResponseList =

@@ -37,6 +37,10 @@ final SharedValue<dynamic> is_wholesale = SharedValue(
   value: 0, // initial value
   key: "is_wholesale", // disk storage key for shared_preferences
 );
+final SharedValue<dynamic> referred_by = SharedValue(
+  value: 0, // initial value
+  key: "referred_by", // disk storage key for shared_preferences
+);
 final SharedValue<String> app_language = SharedValue(
   value: "en", // initial value
   key: "app_language", // disk storage key for shared_preferences

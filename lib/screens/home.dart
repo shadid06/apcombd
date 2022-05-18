@@ -73,7 +73,10 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     //   initPiratedAnimation();
     // }
 
-    fetchAll();
+    fetchCarouselImages();
+    fetchFeaturedCategories();
+    fetchFeaturedProducts();
+    fetchTopCollections();
 
     _mainScrollController.addListener(() {
       //print("position: " + _xcrollController.position.pixels.toString());
@@ -88,13 +91,6 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
         fetchFeaturedProducts();
       }
     });
-  }
-
-  fetchAll() {
-    fetchCarouselImages();
-    fetchFeaturedCategories();
-    fetchFeaturedProducts();
-    fetchTopCollections();
   }
 
   fetchCarouselImages() async {
@@ -146,7 +142,11 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 
   Future<void> _onRefresh() async {
     reset();
-    fetchAll();
+    //fetchAll();
+    fetchCarouselImages();
+    fetchFeaturedCategories();
+    fetchFeaturedProducts();
+    fetchTopCollections();
   }
 
   resetProductList() {
@@ -858,7 +858,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
         //   ),
         // ),
         child: Container(
-          height: 120,
+          height: 130,
           width: double.infinity,
           // color: Colors.white,
           color: MyTheme.sliderBackgroundColor,
@@ -868,7 +868,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
       return CarouselSlider(
         options: CarouselOptions(
             // aspectRatio: 2.67,
-            aspectRatio: 3.5,
+            height: 130,
+            //aspectRatio: 3.5,
             viewportFraction: 1,
             initialPage: 0,
             enableInfiniteScroll: true,
@@ -928,7 +929,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
       );
     } else if (!_isCarouselInitial && _carouselImageList.length == 0) {
       return Container(
-          height: 100,
+          height: 130,
           child: Center(
               child: Text(
             AppLocalizations.of(context).home_screen_no_carousel_image_found,
@@ -937,7 +938,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     } else {
       // should not be happening
       return Container(
-        height: 100,
+        height: 130,
       );
     }
   }

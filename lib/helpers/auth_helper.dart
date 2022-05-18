@@ -20,6 +20,8 @@ class AuthHelper {
       is_wholesale.save();
       avatar_original.$ = loginResponse.user.avatar_original;
       avatar_original.save();
+      referred_by.$ = loginResponse.user.referredBy;
+      referred_by.save();
     }
   }
 
@@ -40,6 +42,8 @@ class AuthHelper {
     is_wholesale.save();
     avatar_original.$ = "";
     avatar_original.save();
+    referred_by.$ = "";
+    referred_by.save();
   }
 
   fetch_and_set() async {
@@ -61,6 +65,8 @@ class AuthHelper {
       avatar_original.save();
       is_wholesale.$ = userByTokenResponse.isWholesale;
       is_wholesale.save();
+      referred_by.$ = userByTokenResponse.referredBy;
+      referred_by.save();
     } else {
       is_logged_in.$ = false;
       is_logged_in.save();
@@ -76,6 +82,8 @@ class AuthHelper {
       avatar_original.save();
       is_wholesale.$ = "";
       is_wholesale.save();
+      referred_by.$ = "";
+      referred_by.save();
     }
   }
 }
