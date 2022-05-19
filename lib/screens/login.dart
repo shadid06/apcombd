@@ -541,8 +541,8 @@ class _LoginState extends State<Login> {
                           ),
                         ),
                         Visibility(
-                          visible: (allow_google_login.$ = true) ||
-                              (allow_facebook_login.$ = true),
+                          visible: (allow_google_login.$ = false) ||
+                              (allow_facebook_login.$ = false),
                           child: Padding(
                             padding: const EdgeInsets.only(top: 20.0),
                             child: Center(
@@ -553,6 +553,48 @@ class _LoginState extends State<Login> {
                                   color: MyTheme.medium_grey, fontSize: 14),
                             )),
                           ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Center(
+                            child: Text(
+                          "Login with",
+                          style: TextStyle(
+                              color: MyTheme.medium_grey, fontSize: 14),
+                        )),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        FlatButton(
+                          minWidth: MediaQuery.of(context).size.width,
+                          height: 45,
+                          color: MyTheme.accent_color,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: const BorderRadius.all(
+                                  Radius.circular(12.0))),
+                          child: Row(
+                            children: [
+                              Image.asset(
+                                "assets/google_logo.png",
+                                height: 25,
+                                width: 25,
+                              ),
+                              SizedBox(
+                                width: 30,
+                              ),
+                              Text(
+                                "Sign In With Google",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                            ],
+                          ),
+                          onPressed: () {
+                            onPressedGoogleLogin();
+                          },
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 30.0),

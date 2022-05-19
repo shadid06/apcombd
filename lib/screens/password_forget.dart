@@ -11,7 +11,6 @@ import 'package:active_ecommerce_flutter/repositories/auth_repository.dart';
 import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 class PasswordForget extends StatefulWidget {
   @override
   _PasswordForgetState createState() => _PasswordForgetState();
@@ -20,7 +19,7 @@ class PasswordForget extends StatefulWidget {
 class _PasswordForgetState extends State<PasswordForget> {
   String _send_code_by = "email"; //phone or email
   String initialCountry = 'US';
-  PhoneNumber phoneCode = PhoneNumber(isoCode: 'US');
+  PhoneNumber phoneCode = PhoneNumber(isoCode: 'BD');
   String _phone = "";
 
   //controllers
@@ -46,12 +45,18 @@ class _PasswordForgetState extends State<PasswordForget> {
     var email = _emailController.text.toString();
 
     if (_send_code_by == 'email' && email == "") {
-      ToastComponent.showDialog(AppLocalizations.of(context).password_forget_screen_email_warning, context,
-          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+      ToastComponent.showDialog(
+          AppLocalizations.of(context).password_forget_screen_email_warning,
+          context,
+          gravity: Toast.CENTER,
+          duration: Toast.LENGTH_LONG);
       return;
     } else if (_send_code_by == 'phone' && _phone == "") {
-      ToastComponent.showDialog(AppLocalizations.of(context).password_forget_screen_phone_warning, context,
-          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+      ToastComponent.showDialog(
+          AppLocalizations.of(context).password_forget_screen_phone_warning,
+          context,
+          gravity: Toast.CENTER,
+          duration: Toast.LENGTH_LONG);
       return;
     }
 
@@ -100,8 +105,8 @@ class _PasswordForgetState extends State<PasswordForget> {
                     child: Container(
                       width: 75,
                       height: 75,
-                      child:
-                          Image.asset('assets/login_registration_form_logo.png'),
+                      child: Image.asset(
+                          'assets/login_registration_form_logo.png'),
                     ),
                   ),
                   Padding(
@@ -122,7 +127,11 @@ class _PasswordForgetState extends State<PasswordForget> {
                         Padding(
                           padding: const EdgeInsets.only(bottom: 4.0),
                           child: Text(
-                            _send_code_by == "email" ? AppLocalizations.of(context).password_forget_screen_email : AppLocalizations.of(context).password_forget_screen_phone,
+                            _send_code_by == "email"
+                                ? AppLocalizations.of(context)
+                                    .password_forget_screen_email
+                                : AppLocalizations.of(context)
+                                    .password_forget_screen_phone,
                             style: TextStyle(
                                 color: MyTheme.accent_color,
                                 fontWeight: FontWeight.w600),
@@ -152,7 +161,8 @@ class _PasswordForgetState extends State<PasswordForget> {
                                           });
                                         },
                                         child: Text(
-                                          AppLocalizations.of(context).password_forget_screen_send_code_via_phone,
+                                          AppLocalizations.of(context)
+                                              .password_forget_screen_send_code_via_phone,
                                           style: TextStyle(
                                               color: MyTheme.accent_color,
                                               fontStyle: FontStyle.italic,
@@ -183,7 +193,8 @@ class _PasswordForgetState extends State<PasswordForget> {
                                       print(value);
                                     },
                                     selectorConfig: SelectorConfig(
-                                      selectorType: PhoneInputSelectorType.DIALOG,
+                                      selectorType:
+                                          PhoneInputSelectorType.DIALOG,
                                     ),
                                     ignoreBlank: false,
                                     autoValidateMode: AutovalidateMode.disabled,
@@ -192,11 +203,12 @@ class _PasswordForgetState extends State<PasswordForget> {
                                     initialValue: phoneCode,
                                     textFieldController: _phoneNumberController,
                                     formatInput: true,
-                                    keyboardType: TextInputType.numberWithOptions(
-                                        signed: true, decimal: true),
+                                    keyboardType:
+                                        TextInputType.numberWithOptions(
+                                            signed: true, decimal: true),
                                     inputDecoration: InputDecorations
                                         .buildInputDecoration_phone(
-                                            hint_text: "01710 333 558"),
+                                            hint_text: "0171X 3X3 5X8"),
                                     onSaved: (PhoneNumber number) {
                                       print('On Saved: $number');
                                     },
@@ -209,7 +221,8 @@ class _PasswordForgetState extends State<PasswordForget> {
                                     });
                                   },
                                   child: Text(
-                                    AppLocalizations.of(context).password_forget_screen_send_code_via_email,
+                                    AppLocalizations.of(context)
+                                        .password_forget_screen_send_code_via_email,
                                     style: TextStyle(
                                         color: MyTheme.accent_color,
                                         fontStyle: FontStyle.italic,

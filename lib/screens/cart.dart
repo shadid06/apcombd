@@ -44,6 +44,7 @@ class _CartState extends State<Cart> {
   List<String> hintList = [];
   FocusNode focusNode = FocusNode();
   var _qntyController = <TextEditingController>[];
+  bool flag = true;
 
   @override
   void initState() {
@@ -348,11 +349,16 @@ class _CartState extends State<Cart> {
         reset();
         fetchData();
       } else if (mode == "proceed_to_shipping") {
-        Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return ShippingInfo();
-        })).then((value) {
-          onPopped(value);
-        });
+        if (flag) {
+          flag = false;
+          // Navigator.pushReplacement(
+          //     context, MaterialPageRoute(builder: (context) => ShippingInfo()));
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return ShippingInfo();
+          })).then((value) {
+            onPopped(value);
+          });
+        }
       }
     }
   }

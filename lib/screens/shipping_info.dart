@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:active_ecommerce_flutter/custom/scroll_to_hide_widget.dart';
 import 'package:active_ecommerce_flutter/data_model/pickup_points_response.dart';
 import 'package:active_ecommerce_flutter/repositories/pickup_points_repository.dart';
+import 'package:active_ecommerce_flutter/screens/cart.dart';
 import 'package:active_ecommerce_flutter/screens/checkout.dart';
 
 import 'package:flutter/material.dart';
@@ -330,6 +331,8 @@ class _ShippingInfoState extends State<ShippingInfo> {
         builder: (context) => IconButton(
           icon: Icon(Icons.arrow_back, color: MyTheme.dark_grey),
           onPressed: () => Navigator.of(context).pop(),
+          // onPressed: () => Navigator.push(
+          //     context, MaterialPageRoute(builder: (context) => Cart())),
         ),
       ),
       title: Text(

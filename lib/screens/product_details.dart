@@ -75,6 +75,10 @@ class _ProductDetailsState extends State<ProductDetails> {
   List<dynamic> _topProducts = [];
   bool _topProductInit = false;
 
+  int _totalProductData = 0;
+  int _productPage = 1;
+  bool _showProductLoadingContainer = false;
+
   @override
   void initState() {
     fetchAll();
@@ -128,8 +132,8 @@ class _ProductDetailsState extends State<ProductDetails> {
   }
 
   fetchTopProducts() async {
-    var topProductResponse =
-        await ProductRepository().getTopFromThisSellerProducts(id: widget.id);
+    var topProductResponse = await ProductRepository()
+        .getTopFromThisSellerProducts(id: widget.id, page: _productPage);
     _topProducts.addAll(topProductResponse.products);
     _topProductInit = true;
   }
