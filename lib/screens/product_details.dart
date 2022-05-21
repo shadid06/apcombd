@@ -1177,51 +1177,51 @@ class _ProductDetailsState extends State<ProductDetails> {
                         ),
                       ),
                     ),
-                    Divider(
-                      height: 1,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return CommonWebviewScreen(
-                            url:
-                                "${AppConfig.RAW_BASE_URL}/support-policy-page",
-                            page_name: AppLocalizations.of(context)
-                                .product_details_screen_support_policy,
-                          );
-                        }));
-                      },
-                      child: Container(
-                        height: 40,
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(
-                            16.0,
-                            0.0,
-                            8.0,
-                            0.0,
-                          ),
-                          child: Row(
-                            children: [
-                              Text(
-                                AppLocalizations.of(context)
-                                    .product_details_screen_support_policy,
-                                style: TextStyle(
-                                    color: MyTheme.font_grey,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600),
-                              ),
-                              Spacer(),
-                              Icon(
-                                Ionicons.ios_add,
-                                color: MyTheme.font_grey,
-                                size: 24,
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
+                    // Divider(
+                    //   height: 1,
+                    // ),
+                    // InkWell(
+                    //   onTap: () {
+                    //     Navigator.push(context,
+                    //         MaterialPageRoute(builder: (context) {
+                    //       return CommonWebviewScreen(
+                    //         url:
+                    //             "${AppConfig.RAW_BASE_URL}/support-policy-page",
+                    //         page_name: AppLocalizations.of(context)
+                    //             .product_details_screen_support_policy,
+                    //       );
+                    //     }));
+                    //   },
+                    //   child: Container(
+                    //     height: 40,
+                    //     child: Padding(
+                    //       padding: const EdgeInsets.fromLTRB(
+                    //         16.0,
+                    //         0.0,
+                    //         8.0,
+                    //         0.0,
+                    //       ),
+                    //       child: Row(
+                    //         children: [
+                    //           Text(
+                    //             AppLocalizations.of(context)
+                    //                 .product_details_screen_support_policy,
+                    //             style: TextStyle(
+                    //                 color: MyTheme.font_grey,
+                    //                 fontSize: 14,
+                    //                 fontWeight: FontWeight.w600),
+                    //           ),
+                    //           Spacer(),
+                    //           Icon(
+                    //             Ionicons.ios_add,
+                    //             color: MyTheme.font_grey,
+                    //             size: 24,
+                    //           )
+                    //         ],
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
                     Divider(
                       height: 1,
                     ),
@@ -2248,7 +2248,8 @@ class _ProductDetailsState extends State<ProductDetails> {
         child: SizedBox(
           height: 180,
           child: ListView.builder(
-            itemCount: _relatedProducts.length,
+            // itemCount: _relatedProducts.length,
+            itemCount: 5,
             scrollDirection: Axis.horizontal,
             itemExtent: 125,
             itemBuilder: (context, index) {

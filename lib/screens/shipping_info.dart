@@ -821,10 +821,11 @@ class _ShippingInfoState extends State<ShippingInfo> {
                                   width: (mWidth / 2) - 1,
                                   alignment: Alignment.center,
                                   child: Text(
-                                    is_wholesale.$ == 1
-                                        ? "Hand Delivery"
-                                        : AppLocalizations.of(context)
-                                            .address_screen_address,
+                                    // is_wholesale.$ == 1
+                                    //     ?
+                                    "Hand Delivery",
+                                    // : AppLocalizations.of(context)
+                                    //     .address_screen_address,
                                     style: TextStyle(
                                         color: _shippingOptionIsAddress
                                             ? MyTheme.dark_grey
@@ -860,10 +861,11 @@ class _ShippingInfoState extends State<ShippingInfo> {
                                   height: 50,
                                   width: (mWidth / 2) - 1,
                                   child: Text(
-                                    is_wholesale.$ == 1
-                                        ? "Local Pickup"
-                                        : AppLocalizations.of(context)
-                                            .pickup_point,
+                                    //is_wholesale.$ == 1
+
+                                    "Local Pickup",
+                                    // : AppLocalizations.of(context)
+                                    //     .pickup_point,
                                     style: TextStyle(
                                         color: _shippingOptionIsAddress
                                             ? MyTheme.medium_grey_50

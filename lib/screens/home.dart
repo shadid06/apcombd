@@ -453,8 +453,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  AppLocalizations.of(context)
-                                      .home_screen_featured_products,
+                                  // AppLocalizations.of(context)
+                                  //     .home_screen_featured_products,
+                                  "All Products",
                                   style: TextStyle(fontSize: 16),
                                 ),
                               ],

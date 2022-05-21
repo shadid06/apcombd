@@ -45,6 +45,7 @@ class _CartState extends State<Cart> {
   FocusNode focusNode = FocusNode();
   var _qntyController = <TextEditingController>[];
   bool flag = true;
+  int buttonCounter = 0;
 
   @override
   void initState() {
@@ -58,6 +59,8 @@ class _CartState extends State<Cart> {
     print(user_name.$);*/
     // cartIndexPriceBeforeAskQuotation.load();
     // print(cartIndexPriceBeforeAskQuotation.$);
+    buttonCounter = 0;
+
     askQuotationCounter_saved.load();
     print(askQuotationCounter_saved.$);
     if (is_logged_in.$ == true) {
@@ -84,6 +87,9 @@ class _CartState extends State<Cart> {
   // void setFocus() {
   //   FocusScope.of(context).requestFocus(focusNode);
   // }
+  void nothing() {
+    print("Nothing");
+  }
 
   fetchData() async {
     var cartResponseList =
@@ -93,7 +99,8 @@ class _CartState extends State<Cart> {
       _shopList = cartResponseList;
     }
     _isInitial = false;
-
+    flag = true;
+    print(flag);
     getSetCartTotal();
     // if (askQuotationCounter_saved.$ == "1") {
     //   if (previousTotalSaved.$ != _cartTotal) {
@@ -349,16 +356,20 @@ class _CartState extends State<Cart> {
         reset();
         fetchData();
       } else if (mode == "proceed_to_shipping") {
-        if (flag) {
-          flag = false;
-          // Navigator.pushReplacement(
-          //     context, MaterialPageRoute(builder: (context) => ShippingInfo()));
-          Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return ShippingInfo();
-          })).then((value) {
-            onPopped(value);
-          });
-        }
+        buttonCounter++;
+        setState(() {});
+
+        // Navigator.pushReplacement(
+        //     context, MaterialPageRoute(builder: (context) => ShippingInfo()));
+        // buttonCounter == 1
+        //     ?
+
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return ShippingInfo();
+        })).then((value) {
+          onPopped(value);
+        });
+        // : nothing();
       }
     }
   }
@@ -608,7 +619,10 @@ class _CartState extends State<Cart> {
                                       duration: Toast.LENGTH_LONG);
                                 }
                               : () {
-                                  onPressProceedToShipping();
+                                  if (flag) {
+                                    flag = false;
+                                    onPressProceedToShipping();
+                                  }
                                 },
                     ),
                   ),
