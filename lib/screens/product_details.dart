@@ -100,7 +100,7 @@ class _ProductDetailsState extends State<ProductDetails> {
       fetchWishListCheckInfo();
     }
     fetchRelatedProducts();
-    fetchTopProducts();
+    // fetchTopProducts();
   }
 
   fetchProductDetails() async {
@@ -131,12 +131,12 @@ class _ProductDetailsState extends State<ProductDetails> {
     setState(() {});
   }
 
-  fetchTopProducts() async {
-    var topProductResponse = await ProductRepository()
-        .getTopFromThisSellerProducts(id: widget.id, page: _productPage);
-    _topProducts.addAll(topProductResponse.products);
-    _topProductInit = true;
-  }
+  // fetchTopProducts() async {
+  //   var topProductResponse = await ProductRepository()
+  //       .getTopFromThisSellerProducts(id: widget.id, page: _productPage);
+  //   _topProducts.addAll(topProductResponse.products);
+  //   _topProductInit = true;
+  // }
 
   setProductDetailValues() {
     if (_productDetails != null) {
@@ -1256,37 +1256,37 @@ class _ProductDetailsState extends State<ProductDetails> {
                     )
                   ]),
                 ),
-                SliverList(
-                  delegate: SliverChildListDelegate([
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(
-                        16.0,
-                        16.0,
-                        16.0,
-                        0.0,
-                      ),
-                      child: Text(
-                        AppLocalizations.of(context)
-                            .top_selling_products_screen_top_selling_products,
-                        style: TextStyle(
-                            color: MyTheme.font_grey,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(
-                        16.0,
-                        2.0,
-                        2.0,
-                        0.0,
-                      ),
-                      //shamim
-                      // child: buildTopSellingProductList(),
-                      child: buildTopSellingProductList(context),
-                    )
-                  ]),
-                ),
+                // SliverList(
+                //   delegate: SliverChildListDelegate([
+                //     Padding(
+                //       padding: const EdgeInsets.fromLTRB(
+                //         16.0,
+                //         16.0,
+                //         16.0,
+                //         0.0,
+                //       ),
+                //       child: Text(
+                //         AppLocalizations.of(context)
+                //             .top_selling_products_screen_top_selling_products,
+                //         style: TextStyle(
+                //             color: MyTheme.font_grey,
+                //             fontSize: 16,
+                //             fontWeight: FontWeight.w600),
+                //       ),
+                //     ),
+                //     Padding(
+                //       padding: const EdgeInsets.fromLTRB(
+                //         16.0,
+                //         2.0,
+                //         2.0,
+                //         0.0,
+                //       ),
+                //       //shamim
+                //       // child: buildTopSellingProductList(),
+                //       child: buildTopSellingProductList(context),
+                //     )
+                //   ]),
+                // ),
               ],
             ),
           )),
@@ -2111,59 +2111,59 @@ class _ProductDetailsState extends State<ProductDetails> {
     ));
   }
 
-  buildTopSellingProductList(context) {
-    return SizedBox(
-      height: 200,
-      child: FutureBuilder(
-          future: ProductRepository().getBestSellingProducts(),
-          builder: (context, snapshot) {
-            if (snapshot.hasError) {
-              //snapshot.hasError
-              print("product error");
-              print(snapshot.error.toString());
-              return Container();
-            } else if (snapshot.hasData) {
-              var productResponse = snapshot.data;
-              print(productResponse.toString());
-              return SizedBox(
-                height: 150,
-                child: ListView.builder(
-                  // 2
-                  //addAutomaticKeepAlives: true,
-                  itemCount: productResponse.products.length,
-                  controller: _scrollController,
-                  // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  //     crossAxisCount: 2,
-                  //     crossAxisSpacing: 10,
-                  //     mainAxisSpacing: 10,
-                  //     childAspectRatio: 0.618),
-                  itemExtent: 120,
-                  padding: EdgeInsets.all(2),
-                  //physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    // 3
-                    return MiniProductCard(
-                      id: productResponse.products[index].id,
-                      image: productResponse.products[index].thumbnail_image,
-                      name: productResponse.products[index].name,
-                      main_price: productResponse.products[index].main_price,
-                      stroked_price:
-                          productResponse.products[index].stroked_price,
-                      has_discount:
-                          productResponse.products[index].has_discount,
-                    );
-                  },
-                ),
-              );
-            } else {
-              return ShimmerHelper()
-                  .buildProductGridShimmer(scontroller: _scrollController);
-            }
-          }),
-    );
-  }
+  // buildTopSellingProductList(context) {
+  //   return SizedBox(
+  //     height: 200,
+  //     child: FutureBuilder(
+  //         future: ProductRepository().getBestSellingProducts(),
+  //         builder: (context, snapshot) {
+  //           if (snapshot.hasError) {
+  //             //snapshot.hasError
+  //             print("product error");
+  //             print(snapshot.error.toString());
+  //             return Container();
+  //           } else if (snapshot.hasData) {
+  //             var productResponse = snapshot.data;
+  //             print(productResponse.toString());
+  //             return SizedBox(
+  //               height: 150,
+  //               child: ListView.builder(
+  //                 // 2
+  //                 //addAutomaticKeepAlives: true,
+  //                 itemCount: productResponse.products.length,
+  //                 controller: _scrollController,
+  //                 // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+  //                 //     crossAxisCount: 2,
+  //                 //     crossAxisSpacing: 10,
+  //                 //     mainAxisSpacing: 10,
+  //                 //     childAspectRatio: 0.618),
+  //                 itemExtent: 120,
+  //                 padding: EdgeInsets.all(2),
+  //                 //physics: NeverScrollableScrollPhysics(),
+  //                 shrinkWrap: true,
+  //                 scrollDirection: Axis.horizontal,
+  //                 itemBuilder: (context, index) {
+  //                   // 3
+  //                   return MiniProductCard(
+  //                     id: productResponse.products[index].id,
+  //                     image: productResponse.products[index].thumbnail_image,
+  //                     name: productResponse.products[index].name,
+  //                     main_price: productResponse.products[index].main_price,
+  //                     stroked_price:
+  //                         productResponse.products[index].stroked_price,
+  //                     has_discount:
+  //                         productResponse.products[index].has_discount,
+  //                   );
+  //                 },
+  //               ),
+  //             );
+  //           } else {
+  //             return ShimmerHelper()
+  //                 .buildProductGridShimmer(scontroller: _scrollController);
+  //           }
+  //         }),
+  //   );
+  // }
 
   // buildTopSellingProductList() {
   //   if (_topProductInit == false && _topProducts.length == 0) {

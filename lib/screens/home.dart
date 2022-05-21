@@ -60,6 +60,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   var lastFeatureHalfCategoryList = [];
   var _featuredProductList = [];
   var _topCollectionList = [];
+  var _topCollectionListCopy = [];
+  var _firstHalfTopCollectionList = [];
+  var _lastHalfTopCollectionList = [];
   bool _isProductInitial = true;
   bool _isCategoryInitial = true;
   bool _isCarouselInitial = true;
@@ -140,6 +143,11 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     var topCollectionResponse =
         await TopCollectionRepository().getTopCollectionResponseList();
     _topCollectionList.addAll(topCollectionResponse.data);
+    _topCollectionListCopy = _topCollectionList.toList()..shuffle();
+    _firstHalfTopCollectionList =
+        _topCollectionListCopy.sublist(0, _topCollectionListCopy.length ~/ 2);
+    _lastHalfTopCollectionList =
+        _topCollectionListCopy.sublist(_topCollectionListCopy.length ~/ 2);
     _isTopCollectionInitial = false;
     setState(() {});
   }
@@ -409,6 +417,20 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                           padding: const EdgeInsets.fromLTRB(
                             16.0,
                             16.0,
+                            0.0,
+                            0.0,
+                          ),
+                          child: Container(
+                            height: 105,
+                            child: buildTopCollection2(context),
+                          ),
+                        ),
+                      ),
+                      SliverToBoxAdapter(
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(
+                            16.0,
+                            16.0,
                             16.0,
                             0.0,
                           ),
@@ -512,9 +534,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   }
 
   buildTopCollection(context) {
-    return _topCollectionList.length > 0
+    return _firstHalfTopCollectionList.length > 0
         ? ListView.builder(
-            itemCount: _topCollectionList.length,
+            itemCount: _firstHalfTopCollectionList.length,
             shrinkWrap: true,
             physics: ScrollPhysics(),
             scrollDirection: Axis.horizontal,
@@ -525,7 +547,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                       context,
                       MaterialPageRoute(
                           builder: (context) => CollectionProducts(
-                                collectionId: _topCollectionList[index].id,
+                                collectionId:
+                                    _firstHalfTopCollectionList[index].id,
                               )));
                 },
                 child: Card(
@@ -540,11 +563,11 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                       padding: const EdgeInsets.symmetric(vertical: 8),
                       child: Column(
                         children: [
-                          Text(_topCollectionList[index].name,
+                          Text(_firstHalfTopCollectionList[index].name,
                               style: TextStyle(
                                   fontSize: 14, fontWeight: FontWeight.w700)),
                           Text(
-                              _topCollectionList[index]
+                              _firstHalfTopCollectionList[index]
                                   .collectionCount
                                   .toString(),
                               style: TextStyle(
@@ -564,7 +587,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                 child: FadeInImage.assetNetwork(
                                   placeholder: 'assets/placeholder.png',
                                   image: AppConfig.BASE_PATH +
-                                      _topCollectionList[index].iconOne,
+                                      _firstHalfTopCollectionList[index]
+                                          .iconOne,
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -581,7 +605,113 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                 child: FadeInImage.assetNetwork(
                                   placeholder: 'assets/placeholder.png',
                                   image: AppConfig.BASE_PATH +
-                                      _topCollectionList[index].iconTwo,
+                                      _firstHalfTopCollectionList[index]
+                                          .iconTwo,
+                                ),
+                              )
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          )
+        : Row(
+            children: [
+              Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: ShimmerHelper().buildBasicShimmer(
+                      height: 120.0,
+                      width: (MediaQuery.of(context).size.width - 32) / 3)),
+              Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: ShimmerHelper().buildBasicShimmer(
+                      height: 120.0,
+                      width: (MediaQuery.of(context).size.width - 32) / 3)),
+              // Padding(
+              //     padding: const EdgeInsets.only(right: 0.0),
+              //     child: ShimmerHelper().buildBasicShimmer(
+              //         height: 120.0,
+              //         width: (MediaQuery.of(context).size.width - 32) / 3)),
+            ],
+          );
+  }
+
+  buildTopCollection2(context) {
+    return _lastHalfTopCollectionList.length > 0
+        ? ListView.builder(
+            itemCount: _lastHalfTopCollectionList.length,
+            shrinkWrap: true,
+            physics: ScrollPhysics(),
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (context, index) {
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => CollectionProducts(
+                                collectionId:
+                                    _lastHalfTopCollectionList[index].id,
+                              )));
+                },
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: Container(
+                    // height: 60,
+                    width: 200,
+                    // color: Colors.redAccent,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child: Column(
+                        children: [
+                          Text(_lastHalfTopCollectionList[index].name,
+                              style: TextStyle(
+                                  fontSize: 14, fontWeight: FontWeight.w700)),
+                          Text(
+                              _lastHalfTopCollectionList[index]
+                                  .collectionCount
+                                  .toString(),
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.grey)),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Container(
+                                height: 40,
+                                width: 70,
+                                // color: Colors.redAccent,
+                                child: FadeInImage.assetNetwork(
+                                  placeholder: 'assets/placeholder.png',
+                                  image: AppConfig.BASE_PATH +
+                                      _lastHalfTopCollectionList[index].iconOne,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              Container(
+                                height: 40,
+                                width: 70,
+                                // color: Colors.redAccent,
+                                // child: Image.network(
+
+                                //   "https://www.apcombd.com/public/" +
+                                //       _topCollectionList[index].iconTwo,
+                                //   fit: BoxFit.cover,
+                                // ),
+                                child: FadeInImage.assetNetwork(
+                                  placeholder: 'assets/placeholder.png',
+                                  image: AppConfig.BASE_PATH +
+                                      _lastHalfTopCollectionList[index].iconTwo,
                                 ),
                               )
                             ],
