@@ -69,6 +69,7 @@ class _CheckoutState extends State<Checkout> {
   var selectedReferrId;
   Future referrData;
   var selectedReferrName;
+  bool flag = true;
 
   @override
   void initState() {
@@ -116,7 +117,7 @@ class _CheckoutState extends State<Checkout> {
     var refferResponse = await RefferRepository().getRefferList();
     refferList.addAll(refferResponse.data);
     referrs.addAll(refferResponse.data);
-
+    flag = true;
     _isInitial = false;
     setState(() {});
     setSelectedReferr();
@@ -455,6 +456,8 @@ class _CheckoutState extends State<Checkout> {
       Navigator.of(context).pop();
       return;
     } else {
+      ToastComponent.showDialog(orderCreateResponse.message, context,
+          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
       ValueCheckerHelper().clearAskQuotationCounter();
     }
 
@@ -1136,7 +1139,10 @@ class _CheckoutState extends State<Checkout> {
               ),
               onPressed: () {
                 // ValueCheckerHelper().clearAskQuotationCounter();
-                onPressPlaceOrderOrProceed();
+                if (flag) {
+                  flag = false;
+                  onPressPlaceOrderOrProceed();
+                }
               },
             )
           ],

@@ -51,6 +51,7 @@ class _ShippingInfoState extends State<ShippingInfo> {
   //double variables
   double mWidth = 0;
   double mHeight = 0;
+  bool flag = true;
 
   @override
   void initState() {
@@ -92,6 +93,7 @@ class _ShippingInfoState extends State<ShippingInfo> {
         }
       });
     }
+    flag = true;
     _isInitial = false;
     setState(() {});
 
@@ -753,7 +755,10 @@ class _ShippingInfoState extends State<ShippingInfo> {
                     fontWeight: FontWeight.w600),
               ),
               onPressed: () {
-                onPressProceed(context);
+                if (flag) {
+                  flag = false;
+                  onPressProceed(context);
+                }
               },
             )
           ],

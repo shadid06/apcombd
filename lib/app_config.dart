@@ -4,8 +4,8 @@ var this_year = DateTime.now().year.toString();
 
 class AppConfig {
   static String copyright_text =
-      "@ Apcombd " + this_year; //this shows in the splash screen
-  static String app_name = "Apcombd"; //this shows in the splash screen
+      "@ Apcom " + this_year; //this shows in the splash screen
+  static String app_name = "Apcom"; //this shows in the splash screen
   static String purchase_code = "b2c6fc47-1fb7-47d2-9532-d2843f680f42";
   // "b2c6fc47-1fb7-47d2-9532-d2843f680f42"; //enter your purchase code for the app from codecanyon
 

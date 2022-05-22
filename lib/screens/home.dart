@@ -123,11 +123,19 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   fetchFeaturedCategories() async {
     var categoryResponse = await CategoryRepository().getFeturedCategories();
     _featuredCategoryList.addAll(categoryResponse.categories);
+    // int half = (_featuredCategoryList.length / 2).floor();
+    // print(half);
+    // for (int i = 0; i < half; i++) {
+    //   firstHalfFeatureCategoryList.add(_featuredCategoryList[i]);
+    // }
+    // for (int i = half + 1; i < _featuredCategoryList.length; i++) {
+    //   lastFeatureHalfCategoryList.add(_featuredCategoryList[i]);
+    // }
     _featureCategoryListCopy = _featuredCategoryList.toList()..shuffle();
     firstHalfFeatureCategoryList =
-        _featuredCategoryList.sublist(0, _featureCategoryListCopy.length ~/ 2);
+        _featuredCategoryList.sublist(0, _featuredCategoryList.length ~/ 2);
     lastFeatureHalfCategoryList =
-        _featureCategoryListCopy.sublist(_featureCategoryListCopy.length ~/ 2);
+        _featureCategoryListCopy.sublist(_featuredCategoryList.length ~/ 2);
     // for (int i = 0; i < firstHalfFeatureCategoryList.length; i++) {
     //   print(firstHalfFeatureCategoryList[i].id);
     // }
@@ -143,11 +151,19 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     var topCollectionResponse =
         await TopCollectionRepository().getTopCollectionResponseList();
     _topCollectionList.addAll(topCollectionResponse.data);
+    // int half = (_topCollectionList.length / 2).floor();
+    // print(half);
+    // for (int i = 0; i < half; i++) {
+    //   _firstHalfTopCollectionList.add(_topCollectionList[i]);
+    // }
+    // for (int i = half; i < _topCollectionList.length; i++) {
+    //   _lastHalfTopCollectionList.add(_topCollectionList[i]);
+    // }
     _topCollectionListCopy = _topCollectionList.toList()..shuffle();
     _firstHalfTopCollectionList =
-        _topCollectionListCopy.sublist(0, _topCollectionListCopy.length ~/ 2);
+        _topCollectionListCopy.sublist(0, _topCollectionList.length ~/ 2);
     _lastHalfTopCollectionList =
-        _topCollectionListCopy.sublist(_topCollectionListCopy.length ~/ 2);
+        _topCollectionListCopy.sublist(_topCollectionList.length ~/ 2);
     _isTopCollectionInitial = false;
     setState(() {});
   }
@@ -167,6 +183,13 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   reset() {
     _carouselImageList.clear();
     _featuredCategoryList.clear();
+    _featureCategoryListCopy.clear();
+    _topCollectionList.clear();
+    _topCollectionListCopy.clear();
+    firstHalfFeatureCategoryList.clear();
+    lastFeatureHalfCategoryList.clear();
+    _firstHalfTopCollectionList.clear();
+    _lastHalfTopCollectionList.clear();
     _isCarouselInitial = true;
     _isCategoryInitial = true;
 
