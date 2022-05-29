@@ -96,7 +96,7 @@ class _BkashScreenState extends State<BkashScreen> {
   }
 
   void getData() {
-    var payment_details = '';
+    var paymentDetails = '';
     _webViewController
         .evaluateJavascript("document.body.innerText")
         .then((data) {
@@ -108,16 +108,16 @@ class _BkashScreenState extends State<BkashScreen> {
             duration: Toast.LENGTH_LONG, gravity: Toast.CENTER);
         Navigator.pop(context);
       } else if (responseJSON["result"] == true) {
-        payment_details = responseJSON['payment_details'];
-        onPaymentSuccess(payment_details);
+        paymentDetails = responseJSON['payment_details'];
+        onPaymentSuccess(paymentDetails);
       }
     });
   }
 
-  onPaymentSuccess(payment_details) async {
+  onPaymentSuccess(paymentDetails) async {
     var bkashPaymentProcessResponse = await PaymentRepository()
         .getBkashPaymentProcessResponse(widget.payment_type, widget.amount,
-            _combined_order_id, payment_details);
+            _combined_order_id, paymentDetails);
 
     if (bkashPaymentProcessResponse.result == false) {
       Toast.show(bkashPaymentProcessResponse.message, context,

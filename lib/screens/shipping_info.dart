@@ -338,7 +338,7 @@ class _ShippingInfoState extends State<ShippingInfo> {
         ),
       ),
       title: Text(
-        "${AppLocalizations.of(context).shipping_info_screen_shipping_cost} ${_shipping_cost_string}",
+        "${AppLocalizations.of(context).shipping_info_screen_shipping_cost} $_shipping_cost_string",
         style: TextStyle(
           fontSize: 16,
           // color: MyTheme.accent_color
@@ -790,7 +790,7 @@ class _ShippingInfoState extends State<ShippingInfo> {
                   Container(
                     width: MediaQuery.of(context).size.width - 40,
                     child: Text(
-                      "${AppLocalizations.of(context).shipping_info_screen_shipping_cost} ${_shipping_cost_string}",
+                      "${AppLocalizations.of(context).shipping_info_screen_shipping_cost} $_shipping_cost_string",
                       style:
                           TextStyle(fontSize: 16, color: MyTheme.accent_color),
                     ),

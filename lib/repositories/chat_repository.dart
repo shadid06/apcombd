@@ -12,7 +12,7 @@ class ChatRepository {
   Future<ConversationResponse> getConversationResponse(
       {@required page = 1}) async {
     Uri url = Uri.parse(
-        "${AppConfig.BASE_URL}/chat/conversations/${user_id.$}?page=${page}");
+        "${AppConfig.BASE_URL}/chat/conversations/${user_id.$}?page=$page");
     final response = await http.get(
       url,
       headers: {
@@ -26,7 +26,7 @@ class ChatRepository {
   Future<MessageResponse> getMessageResponse(
       {@required conversation_id, @required page = 1}) async {
     Uri url = Uri.parse(
-        "${AppConfig.BASE_URL}/chat/messages/${conversation_id}?page=${page}");
+        "${AppConfig.BASE_URL}/chat/messages/$conversation_id?page=$page");
     final response = await http.get(
       url,
       headers: {
@@ -39,10 +39,10 @@ class ChatRepository {
 
   Future<MessageResponse> getInserMessageResponse(
       {@required conversation_id, @required String message}) async {
-    var post_body = jsonEncode({
+    var postBody = jsonEncode({
       "user_id": "${user_id.$}",
-      "conversation_id": "${conversation_id}",
-      "message": "${message}"
+      "conversation_id": "$conversation_id",
+      "message": "$message"
     });
 
     Uri url = Uri.parse("${AppConfig.BASE_URL}/chat/insert-message");
@@ -52,14 +52,14 @@ class ChatRepository {
           "Authorization": "Bearer ${access_token.$}",
           "App-Language": app_language.$
         },
-        body: post_body);
+        body: postBody);
     return messageResponseFromJson(response.body);
   }
 
   Future<MessageResponse> getNewMessageResponse(
       {@required conversation_id, @required last_message_id}) async {
     Uri url = Uri.parse(
-        "${AppConfig.BASE_URL}/chat/get-new-messages/${conversation_id}/${last_message_id}");
+        "${AppConfig.BASE_URL}/chat/get-new-messages/$conversation_id/$last_message_id");
     final response = await http.get(
       url,
       headers: {
@@ -76,11 +76,11 @@ class ChatRepository {
       {@required product_id,
       @required String title,
       @required String message}) async {
-    var post_body = jsonEncode({
+    var postBody = jsonEncode({
       "user_id": "${user_id.$}",
-      "product_id": "${product_id}",
-      "title": "${title}",
-      "message": "${message}"
+      "product_id": "$product_id",
+      "title": "$title",
+      "message": "$message"
     });
 
     Uri url = Uri.parse("${AppConfig.BASE_URL}/chat/create-conversation");
@@ -90,7 +90,7 @@ class ChatRepository {
           "Authorization": "Bearer ${access_token.$}",
           "App-Language": app_language.$
         },
-        body: post_body);
+        body: postBody);
     return conversationCreateResponseFromJson(response.body);
   }
 }

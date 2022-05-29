@@ -191,8 +191,8 @@ class _CheckoutState extends State<Checkout> {
   }
 
   onCouponApply() async {
-    var coupon_code = _couponController.text.toString();
-    if (coupon_code == "") {
+    var couponCode = _couponController.text.toString();
+    if (couponCode == "") {
       ToastComponent.showDialog(
           AppLocalizations.of(context).checkout_screen_coupon_code_warning,
           context,
@@ -202,7 +202,7 @@ class _CheckoutState extends State<Checkout> {
     }
 
     var couponApplyResponse =
-        await CouponRepository().getCouponApplyResponse(coupon_code);
+        await CouponRepository().getCouponApplyResponse(couponCode);
     if (couponApplyResponse.result == false) {
       ToastComponent.showDialog(couponApplyResponse.message, context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
@@ -269,7 +269,6 @@ class _CheckoutState extends State<Checkout> {
       })).then((value) {
         onPopped(value);
       });
-      ;
     } else if (_selected_payment_method == "razorpay") {
       if (_grandTotalValue == 0.00) {
         ToastComponent.showDialog(

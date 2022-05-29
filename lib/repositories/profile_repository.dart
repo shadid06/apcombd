@@ -27,8 +27,8 @@ class ProfileRepository {
 
   Future<ProfileUpdateResponse> getProfileUpdateResponse(
       @required String name, @required String password) async {
-    var post_body = jsonEncode(
-        {"id": "${user_id.$}", "name": "${name}", "password": "$password"});
+    var postBody = jsonEncode(
+        {"id": "${user_id.$}", "name": "$name", "password": "$password"});
 
     Uri url = Uri.parse("${AppConfig.BASE_URL}/profile/update");
     final response = await http.post(url,
@@ -37,16 +37,16 @@ class ProfileRepository {
           "Authorization": "Bearer ${access_token.$}",
           "App-Language": app_language.$,
         },
-        body: post_body);
+        body: postBody);
 
     //print(response.body.toString());
     return profileUpdateResponseFromJson(response.body);
   }
 
   Future<DeviceTokenUpdateResponse> getDeviceTokenUpdateResponse(
-      @required String device_token) async {
-    var post_body =
-        jsonEncode({"id": "${user_id.$}", "device_token": "${device_token}"});
+      @required String deviceToken) async {
+    var postBody =
+        jsonEncode({"id": "${user_id.$}", "device_token": "$deviceToken"});
 
     Uri url = Uri.parse("${AppConfig.BASE_URL}/profile/update-device-token");
     final response = await http.post(url,
@@ -55,7 +55,7 @@ class ProfileRepository {
           "Authorization": "Bearer ${access_token.$}",
           "App-Language": app_language.$,
         },
-        body: post_body);
+        body: postBody);
 
     print(response.body.toString());
     return deviceTokenUpdateResponseFromJson(response.body);
@@ -63,8 +63,8 @@ class ProfileRepository {
 
   Future<ProfileImageUpdateResponse> getProfileImageUpdateResponse(
       @required String image, @required String filename) async {
-    var post_body = jsonEncode(
-        {"id": "${user_id.$}", "image": "${image}", "filename": "$filename"});
+    var postBody = jsonEncode(
+        {"id": "${user_id.$}", "image": "$image", "filename": "$filename"});
     //print(post_body.toString());
 
     Uri url = Uri.parse("${AppConfig.BASE_URL}/profile/update-image");
@@ -74,7 +74,7 @@ class ProfileRepository {
           "Authorization": "Bearer ${access_token.$}",
           "App-Language": app_language.$,
         },
-        body: post_body);
+        body: postBody);
 
     //print(response.body.toString());
     return profileImageUpdateResponseFromJson(response.body);
@@ -82,7 +82,7 @@ class ProfileRepository {
 
   Future<PhoneEmailAvailabilityResponse>
       getPhoneEmailAvailabilityResponse() async {
-    var post_body = jsonEncode({"user_id": "${user_id.$}"});
+    var postBody = jsonEncode({"user_id": "${user_id.$}"});
 
     Uri url = Uri.parse("${AppConfig.BASE_URL}/profile/check-phone-and-email");
     final response = await http.post(url,
@@ -91,7 +91,7 @@ class ProfileRepository {
           "Authorization": "Bearer ${access_token.$}",
           "App-Language": app_language.$,
         },
-        body: post_body);
+        body: postBody);
 
     print(response.body.toString());
     return phoneEmailAvailabilityResponseFromJson(response.body);

@@ -9,9 +9,9 @@ import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
 import 'package:flutter/foundation.dart';
 
 class ReviewRepository {
-  Future<ReviewResponse> getReviewResponse(@required int product_id,{page = 1}) async {
+  Future<ReviewResponse> getReviewResponse(@required int productId,{page = 1}) async {
 
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/reviews/product/${product_id}?page=${page}");
+    Uri url = Uri.parse("${AppConfig.BASE_URL}/reviews/product/$productId?page=$page");
     final response = await http.get(
       url,
       headers: {
@@ -23,12 +23,12 @@ class ReviewRepository {
   }
 
   Future<ReviewSubmitResponse> getReviewSubmitResponse(
-      @required int product_id,
+      @required int productId,
       @required int rating,
       @required String comment,
       ) async {
-    var post_body = jsonEncode({
-      "product_id": "${product_id}",
+    var postBody = jsonEncode({
+      "product_id": "$productId",
       "user_id": "${user_id.$}",
       "rating": "$rating",
       "comment": "$comment"
@@ -41,7 +41,7 @@ class ReviewRepository {
           "Content-Type": "application/json",
           "Authorization": "Bearer ${access_token.$}","App-Language": app_language.$,
         },
-        body: post_body);
+        body: postBody);
 
     return reviewSubmitResponseFromJson(response.body);
   }

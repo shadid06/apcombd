@@ -8,7 +8,7 @@ import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
 
 class ProductRepository {
   Future<ProductMiniResponse> getFeaturedProducts({page = 1}) async {
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/products/featured?page=${page}");
+    Uri url = Uri.parse("${AppConfig.BASE_URL}/products/featured?page=$page");
     final response = await http.get(url, headers: {
       "App-Language": app_language.$,
     });
@@ -45,7 +45,7 @@ class ProductRepository {
       {@required int id = 0, name = "", page = 1}) async {
     Uri url = Uri.parse("${AppConfig.BASE_URL}/products/category/" +
         id.toString() +
-        "?page=${page}&name=${name}");
+        "?page=$page&name=$name");
     final response = await http.get(url, headers: {
       "App-Language": app_language.$,
     });
@@ -56,7 +56,7 @@ class ProductRepository {
       {@required int id = 0, name = "", page = 1}) async {
     Uri url = Uri.parse("${AppConfig.BASE_URL}/products/seller/" +
         id.toString() +
-        "?page=${page}&name=${name}");
+        "?page=$page&name=$name");
 
     final response = await http.get(url, headers: {
       "App-Language": app_language.$,
@@ -68,7 +68,7 @@ class ProductRepository {
       {@required int id = 0, name = "", page = 1}) async {
     Uri url = Uri.parse("${AppConfig.BASE_URL}/products/brand/" +
         id.toString() +
-        "?page=${page}&name=${name}");
+        "?page=$page&name=$name");
     final response = await http.get(url, headers: {
       "App-Language": app_language.$,
     });
@@ -84,7 +84,7 @@ class ProductRepository {
       min = "",
       max = ""}) async {
     Uri url = Uri.parse("${AppConfig.BASE_URL}/products/search" +
-        "?page=${page}&name=${name}&sort_key=${sort_key}&brands=${brands}&categories=${categories}&min=${min}&max=${max}");
+        "?page=$page&name=$name&sort_key=$sort_key&brands=$brands&categories=$categories&min=$min&max=$max");
 
     final response = await http.get(url, headers: {
       "App-Language": app_language.$,
@@ -117,7 +117,7 @@ class ProductRepository {
   Future<ProductMiniResponse> getTopFromThisSellerProducts(
       {@required int id = 0, page = 1}) async {
     Uri url = Uri.parse(
-        "${AppConfig.BASE_URL}/products/top-from-seller?page=${page}/" +
+        "${AppConfig.BASE_URL}/products/top-from-seller?page=$page/" +
             id.toString());
     final response = await http.get(url, headers: {
       "App-Language": app_language.$,
@@ -128,7 +128,7 @@ class ProductRepository {
   Future<VariantResponse> getVariantWiseInfo(
       {int id = 0, color = '', variants = ''}) async {
     Uri url = Uri.parse(
-        "${AppConfig.BASE_URL}/products/variant/price?id=${id.toString()}&color=${color}&variants=${variants}");
+        "${AppConfig.BASE_URL}/products/variant/price?id=${id.toString()}&color=$color&variants=$variants");
     final response = await http.get(url, headers: {
       "App-Language": app_language.$,
     });

@@ -40,7 +40,7 @@ class AddressRepository {
       @required int city_id,
       @required String postal_code,
       @required String phone}) async {
-    var post_body = jsonEncode({
+    var postBody = jsonEncode({
       "user_id": "${user_id.$}",
       "address": "$address",
       "country_id": "$country_id",
@@ -57,7 +57,7 @@ class AddressRepository {
           "Authorization": "Bearer ${access_token.$}",
           "App-Language": app_language.$
         },
-        body: post_body);
+        body: postBody);
 
     return addressAddResponseFromJson(response.body);
   }
@@ -70,8 +70,8 @@ class AddressRepository {
       @required int city_id,
       @required String postal_code,
       @required String phone}) async {
-    var post_body = jsonEncode({
-      "id": "${id}",
+    var postBody = jsonEncode({
+      "id": "$id",
       "user_id": "${user_id.$}",
       "address": "$address",
       "country_id": "$country_id",
@@ -88,7 +88,7 @@ class AddressRepository {
           "Authorization": "Bearer ${access_token.$}",
           "App-Language": app_language.$
         },
-        body: post_body);
+        body: postBody);
 
     return addressUpdateResponseFromJson(response.body);
   }
@@ -98,8 +98,8 @@ class AddressRepository {
     @required double latitude,
     @required double longitude,
   ) async {
-    var post_body = jsonEncode({
-      "id": "${id}",
+    var postBody = jsonEncode({
+      "id": "$id",
       "user_id": "${user_id.$}",
       "latitude": "$latitude",
       "longitude": "$longitude"
@@ -112,7 +112,7 @@ class AddressRepository {
           "Authorization": "Bearer ${access_token.$}",
           "App-Language": app_language.$
         },
-        body: post_body);
+        body: postBody);
 
     return addressUpdateLocationResponseFromJson(response.body);
   }
@@ -120,7 +120,7 @@ class AddressRepository {
   Future<AddressMakeDefaultResponse> getAddressMakeDefaultResponse(
     @required int id,
   ) async {
-    var post_body = jsonEncode({
+    var postBody = jsonEncode({
       "user_id": "${user_id.$}",
       "id": "$id",
     });
@@ -131,7 +131,7 @@ class AddressRepository {
           "Content-Type": "application/json",
           "Authorization": "Bearer ${access_token.$}"
         },
-        body: post_body);
+        body: postBody);
 
     return addressMakeDefaultResponseFromJson(response.body);
   }
@@ -153,7 +153,7 @@ class AddressRepository {
 
   Future<CityResponse> getCityListByState({state_id = 0, name = ""}) async {
     Uri url = Uri.parse(
-        "${AppConfig.BASE_URL}/cities-by-state/${state_id}?name=${name}");
+        "${AppConfig.BASE_URL}/cities-by-state/$state_id?name=$name");
     final response = await http.get(url);
 
     print(url.toString());
@@ -165,13 +165,13 @@ class AddressRepository {
   Future<MyStateResponse> getStateListByCountry(
       {country_id = 0, name = ""}) async {
     Uri url = Uri.parse(
-        "${AppConfig.BASE_URL}/states-by-country/${country_id}?name=${name}");
+        "${AppConfig.BASE_URL}/states-by-country/$country_id?name=$name");
     final response = await http.get(url);
     return myStateResponseFromJson(response.body);
   }
 
   Future<CountryResponse> getCountryList({name = ""}) async {
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/countries?name=${name}");
+    Uri url = Uri.parse("${AppConfig.BASE_URL}/countries?name=$name");
     final response = await http.get(url);
     return countryResponseFromJson(response.body);
   }
@@ -181,7 +181,7 @@ class AddressRepository {
       int address_id = 0,
       int pick_up_id = 0,
       shipping_type = "home_delivery"}) async {
-    var post_body = jsonEncode({
+    var postBody = jsonEncode({
       "user_id": "$user_id",
       "address_id": "$address_id",
       "pickup_point_id": "$pick_up_id",
@@ -195,7 +195,7 @@ class AddressRepository {
           "Authorization": "Bearer ${access_token.$}",
           "App-Language": app_language.$
         },
-        body: post_body);
+        body: postBody);
 
     //(post_body.toString());
 
@@ -204,9 +204,9 @@ class AddressRepository {
 
   Future<AddressUpdateInCartResponse> getAddressUpdateInCartResponse(
       {int address_id = 0, int pickup_point_id = 0}) async {
-    var post_body = jsonEncode({
-      "address_id": "${address_id}",
-      "pickup_point_id": "${pickup_point_id}",
+    var postBody = jsonEncode({
+      "address_id": "$address_id",
+      "pickup_point_id": "$pickup_point_id",
       "user_id": "${user_id.$}"
     });
 
@@ -217,7 +217,7 @@ class AddressRepository {
           "Authorization": "Bearer ${access_token.$}",
           "App-Language": app_language.$
         },
-        body: post_body);
+        body: postBody);
 
     return addressUpdateInCartResponseFromJson(response.body);
   }

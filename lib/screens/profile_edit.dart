@@ -96,10 +96,10 @@ class _ProfileEditState extends State<ProfileEdit> {
   onPressUpdate() async {
     var name = _nameController.text.toString();
     var password = _passwordController.text.toString();
-    var password_confirm = _passwordConfirmController.text.toString();
+    var passwordConfirm = _passwordConfirmController.text.toString();
 
-    var change_password = password != "" ||
-        password_confirm !=
+    var changePassword = password != "" ||
+        passwordConfirm !=
             ""; // if both fields are empty we will not change user's password
 
     if (name == "") {
@@ -110,7 +110,7 @@ class _ProfileEditState extends State<ProfileEdit> {
           duration: Toast.LENGTH_LONG);
       return;
     }
-    if (change_password && password == "") {
+    if (changePassword && password == "") {
       ToastComponent.showDialog(
           AppLocalizations.of(context).profile_edit_screen_password_warning,
           context,
@@ -118,7 +118,7 @@ class _ProfileEditState extends State<ProfileEdit> {
           duration: Toast.LENGTH_LONG);
       return;
     }
-    if (change_password && password_confirm == "") {
+    if (changePassword && passwordConfirm == "") {
       ToastComponent.showDialog(
           AppLocalizations.of(context)
               .profile_edit_screen_password_confirm_warning,
@@ -127,7 +127,7 @@ class _ProfileEditState extends State<ProfileEdit> {
           duration: Toast.LENGTH_LONG);
       return;
     }
-    if (change_password && password.length < 6) {
+    if (changePassword && password.length < 6) {
       ToastComponent.showDialog(
           AppLocalizations.of(context)
               .password_otp_screen_password_length_warning,
@@ -136,7 +136,7 @@ class _ProfileEditState extends State<ProfileEdit> {
           duration: Toast.LENGTH_LONG);
       return;
     }
-    if (change_password && password != password_confirm) {
+    if (changePassword && password != passwordConfirm) {
       ToastComponent.showDialog(
           AppLocalizations.of(context)
               .profile_edit_screen_password_match_warning,
@@ -149,7 +149,7 @@ class _ProfileEditState extends State<ProfileEdit> {
     var profileUpdateResponse =
         await ProfileRepository().getProfileUpdateResponse(
       name,
-      change_password ? password : "",
+      changePassword ? password : "",
     );
 
     if (profileUpdateResponse.result == false) {

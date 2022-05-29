@@ -119,10 +119,10 @@ class _PaytmScreenState extends State<PaytmScreen> {
   }
 
   buildBody() {
-    String initial_url =
-        "${AppConfig.BASE_URL}/paytm/payment/pay?payment_type=${widget.payment_type}&combined_order_id=${_combined_order_id}&amount=${widget.amount}&user_id=${user_id.$}";
+    String initialUrl =
+        "${AppConfig.BASE_URL}/paytm/payment/pay?payment_type=${widget.payment_type}&combined_order_id=$_combined_order_id&amount=${widget.amount}&user_id=${user_id.$}";
 
-    print(initial_url);
+    print(initialUrl);
     if (_order_init == false &&
         _combined_order_id == 0 &&
         widget.payment_type == "cart_payment") {
@@ -141,7 +141,7 @@ class _PaytmScreenState extends State<PaytmScreen> {
             javascriptMode: JavascriptMode.unrestricted,
             onWebViewCreated: (controller) {
               _webViewController = controller;
-              _webViewController.loadUrl(initial_url);
+              _webViewController.loadUrl(initialUrl);
             },
             onWebResourceError: (error) {
               //(error.description);

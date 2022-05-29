@@ -38,15 +38,15 @@ class _RegistrationState extends State<Registration> {
   @override
   void initState() {
     //on Splash Screen hide statusbar
-    SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.bottom]);
     super.initState();
   }
 
   @override
   void dispose() {
     //before going to other screen show statusbar
-    SystemChrome.setEnabledSystemUIOverlays(
-        [SystemUiOverlay.top, SystemUiOverlay.bottom]);
+    SystemChrome.setEnabledSystemUIMode(
+        SystemUiMode.manual, overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom]);
     super.dispose();
   }
 
@@ -54,7 +54,7 @@ class _RegistrationState extends State<Registration> {
     var name = _nameController.text.toString();
     var email = _emailController.text.toString();
     var password = _passwordController.text.toString();
-    var password_confirm = _passwordConfirmController.text.toString();
+    var passwordConfirm = _passwordConfirmController.text.toString();
 
     if (name == "") {
       ToastComponent.showDialog(
@@ -84,7 +84,7 @@ class _RegistrationState extends State<Registration> {
           gravity: Toast.CENTER,
           duration: Toast.LENGTH_LONG);
       return;
-    } else if (password_confirm == "") {
+    } else if (passwordConfirm == "") {
       ToastComponent.showDialog(
           AppLocalizations.of(context)
               .registration_screen_password_confirm_warning,
@@ -100,7 +100,7 @@ class _RegistrationState extends State<Registration> {
           gravity: Toast.CENTER,
           duration: Toast.LENGTH_LONG);
       return;
-    } else if (password != password_confirm) {
+    } else if (password != passwordConfirm) {
       ToastComponent.showDialog(
           AppLocalizations.of(context)
               .registration_screen_password_match_warning,
@@ -114,7 +114,7 @@ class _RegistrationState extends State<Registration> {
         name,
         _register_by == 'email' ? email : _phone,
         password,
-        password_confirm,
+        passwordConfirm,
         _register_by);
 
     if (signupResponse.result == false) {
@@ -134,8 +134,8 @@ class _RegistrationState extends State<Registration> {
 
   @override
   Widget build(BuildContext context) {
-    final _screen_height = MediaQuery.of(context).size.height;
-    final _screen_width = MediaQuery.of(context).size.width;
+    final ScreenHeight = MediaQuery.of(context).size.height;
+    final ScreenWidth = MediaQuery.of(context).size.width;
     return Directionality(
       textDirection: app_language_rtl.$ ? TextDirection.rtl : TextDirection.ltr,
       child: Scaffold(
@@ -143,7 +143,7 @@ class _RegistrationState extends State<Registration> {
         body: Stack(
           children: [
             Container(
-              width: _screen_width * (3 / 4),
+              width: ScreenWidth * (3 / 4),
               child: Image.asset(
                   "assets/splash_login_registration_background_image.png"),
             ),
@@ -174,7 +174,7 @@ class _RegistrationState extends State<Registration> {
                     ),
                   ),
                   Container(
-                    width: _screen_width * (3 / 4),
+                    width: ScreenWidth * (3 / 4),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

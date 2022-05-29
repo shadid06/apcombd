@@ -141,10 +141,10 @@ class _CartState extends State<Cart> {
     if (_shopList.length > 0) {
       _shopList.forEach((shop) {
         if (shop.cart_items.length > 0) {
-          shop.cart_items.forEach((cart_item) {
+          shop.cart_items.forEach((cartItem) {
             _cartTotal +=
-                (cart_item.price + cart_item.tax) * cart_item.quantity;
-            _cartTotalString = "${cart_item.currency_symbol}${_cartTotal}";
+                (cartItem.price + cartItem.tax) * cartItem.quantity;
+            _cartTotalString = "${cartItem.currency_symbol}$_cartTotal";
             // _qntyController[].text = cart_item.quantity.toString();
             // _qntyController.addAll(cart_item.quantity.text);
             print(quatityController.text);
@@ -161,80 +161,80 @@ class _CartState extends State<Cart> {
     var partialTotal = 0.00;
     var partialTotalString = "";
     if (_shopList[index].cart_items.length > 0) {
-      _shopList[index].cart_items.forEach((cart_item) {
-        partialTotal += (cart_item.price + cart_item.tax) * cart_item.quantity;
-        partialTotalString = "${cart_item.currency_symbol}${partialTotal}";
-        hintList.add(cart_item.quantity.toString());
+      _shopList[index].cart_items.forEach((cartItem) {
+        partialTotal += (cartItem.price + cartItem.tax) * cartItem.quantity;
+        partialTotalString = "${cartItem.currency_symbol}$partialTotal";
+        hintList.add(cartItem.quantity.toString());
       });
     }
 
     return partialTotalString;
   }
 
-  onField(seller_index, item_index) {
-    if (_shopList[seller_index].cart_items[item_index].quantity <
-        _shopList[seller_index].cart_items[item_index].upper_limit) {
-      _shopList[seller_index].cart_items[item_index].quantity =
+  onField(sellerIndex, itemIndex) {
+    if (_shopList[sellerIndex].cart_items[itemIndex].quantity <
+        _shopList[sellerIndex].cart_items[itemIndex].upper_limit) {
+      _shopList[sellerIndex].cart_items[itemIndex].quantity =
           quatityController;
       getSetCartTotal();
       setState(() {});
     } else {
       ToastComponent.showDialog(
-          "${AppLocalizations.of(context).cart_screen_cannot_order_more_than} ${_shopList[seller_index].cart_items[item_index].upper_limit} ${AppLocalizations.of(context).cart_screen_items_of_this}",
+          "${AppLocalizations.of(context).cart_screen_cannot_order_more_than} ${_shopList[sellerIndex].cart_items[itemIndex].upper_limit} ${AppLocalizations.of(context).cart_screen_items_of_this}",
           context,
           gravity: Toast.CENTER,
           duration: Toast.LENGTH_LONG);
     }
   }
 
-  onQuantityIncrease(seller_index, item_index) {
-    if (_shopList[seller_index].cart_items[item_index].quantity <
-        _shopList[seller_index].cart_items[item_index].upper_limit) {
-      _shopList[seller_index].cart_items[item_index].quantity++;
+  onQuantityIncrease(sellerIndex, itemIndex) {
+    if (_shopList[sellerIndex].cart_items[itemIndex].quantity <
+        _shopList[sellerIndex].cart_items[itemIndex].upper_limit) {
+      _shopList[sellerIndex].cart_items[itemIndex].quantity++;
       getSetCartTotal();
       setState(() {});
     } else {
       ToastComponent.showDialog(
-          "${AppLocalizations.of(context).cart_screen_cannot_order_more_than} ${_shopList[seller_index].cart_items[item_index].upper_limit} ${AppLocalizations.of(context).cart_screen_items_of_this}",
+          "${AppLocalizations.of(context).cart_screen_cannot_order_more_than} ${_shopList[sellerIndex].cart_items[itemIndex].upper_limit} ${AppLocalizations.of(context).cart_screen_items_of_this}",
           context,
           gravity: Toast.CENTER,
           duration: Toast.LENGTH_LONG);
     }
   }
 
-  onQuantityTextFeild(seller_index, item_index, String controller) {
+  onQuantityTextFeild(sellerIndex, itemIndex, String controller) {
     setState(() {});
-    if (_shopList[seller_index].cart_items[item_index].quantity <
-        _shopList[seller_index].cart_items[item_index].upper_limit) {
-      _shopList[seller_index].cart_items[item_index].quantity =
+    if (_shopList[sellerIndex].cart_items[itemIndex].quantity <
+        _shopList[sellerIndex].cart_items[itemIndex].upper_limit) {
+      _shopList[sellerIndex].cart_items[itemIndex].quantity =
           int.parse(controller);
       getSetCartTotal();
       setState(() {});
     } else {
       ToastComponent.showDialog(
-          "${AppLocalizations.of(context).cart_screen_cannot_order_more_than} ${_shopList[seller_index].cart_items[item_index].upper_limit} ${AppLocalizations.of(context).cart_screen_items_of_this}",
+          "${AppLocalizations.of(context).cart_screen_cannot_order_more_than} ${_shopList[sellerIndex].cart_items[itemIndex].upper_limit} ${AppLocalizations.of(context).cart_screen_items_of_this}",
           context,
           gravity: Toast.CENTER,
           duration: Toast.LENGTH_LONG);
     }
   }
 
-  onQuantityDecrease(seller_index, item_index) {
-    if (_shopList[seller_index].cart_items[item_index].quantity >
-        _shopList[seller_index].cart_items[item_index].lower_limit) {
-      _shopList[seller_index].cart_items[item_index].quantity--;
+  onQuantityDecrease(sellerIndex, itemIndex) {
+    if (_shopList[sellerIndex].cart_items[itemIndex].quantity >
+        _shopList[sellerIndex].cart_items[itemIndex].lower_limit) {
+      _shopList[sellerIndex].cart_items[itemIndex].quantity--;
       getSetCartTotal();
       setState(() {});
     } else {
       ToastComponent.showDialog(
-          "${AppLocalizations.of(context).cart_screen_cannot_order_more_than} ${_shopList[seller_index].cart_items[item_index].lower_limit} ${AppLocalizations.of(context).cart_screen_items_of_this}",
+          "${AppLocalizations.of(context).cart_screen_cannot_order_more_than} ${_shopList[sellerIndex].cart_items[itemIndex].lower_limit} ${AppLocalizations.of(context).cart_screen_items_of_this}",
           context,
           gravity: Toast.CENTER,
           duration: Toast.LENGTH_LONG);
     }
   }
 
-  onPressDelete(cart_id) {
+  onPressDelete(cartId) {
     showDialog(
         context: context,
         builder: (_) => AlertDialog(
@@ -267,16 +267,16 @@ class _CartState extends State<Cart> {
                   ),
                   onPressed: () {
                     Navigator.of(context, rootNavigator: true).pop();
-                    confirmDelete(cart_id);
+                    confirmDelete(cartId);
                   },
                 ),
               ],
             ));
   }
 
-  confirmDelete(cart_id) async {
+  confirmDelete(cartId) async {
     var cartDeleteResponse =
-        await CartRepository().getCartDeleteResponse(cart_id);
+        await CartRepository().getCartDeleteResponse(cartId);
 
     if (cartDeleteResponse.result == true) {
       ToastComponent.showDialog(cartDeleteResponse.message, context,
@@ -316,34 +316,34 @@ class _CartState extends State<Cart> {
   }
 
   process({mode}) async {
-    var cart_ids = [];
-    var cart_quantities = [];
+    var cartIds = [];
+    var cartQuantities = [];
     if (_shopList.length > 0) {
       _shopList.forEach((shop) {
         if (shop.cart_items.length > 0) {
-          shop.cart_items.forEach((cart_item) {
-            cart_ids.add(cart_item.id);
-            cart_quantities.add(cart_item.quantity);
+          shop.cart_items.forEach((cartItem) {
+            cartIds.add(cartItem.id);
+            cartQuantities.add(cartItem.quantity);
           });
         }
       });
     }
 
-    if (cart_ids.length == 0) {
+    if (cartIds.length == 0) {
       ToastComponent.showDialog(
           AppLocalizations.of(context).cart_screen_cart_empty, context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
       return;
     }
 
-    var cart_ids_string = cart_ids.join(',').toString();
-    var cart_quantities_string = cart_quantities.join(',').toString();
+    var cartIdsString = cartIds.join(',').toString();
+    var cartQuantitiesString = cartQuantities.join(',').toString();
 
-    print(cart_ids_string);
-    print(cart_quantities_string);
+    print(cartIdsString);
+    print(cartQuantitiesString);
 
     var cartProcessResponse = await CartRepository()
-        .getCartProcessResponse(cart_ids_string, cart_quantities_string);
+        .getCartProcessResponse(cartIdsString, cartQuantitiesString);
 
     if (cartProcessResponse.result == false) {
       ToastComponent.showDialog(cartProcessResponse.message, context,
@@ -742,10 +742,10 @@ class _CartState extends State<Cart> {
     }
   }
 
-  SingleChildScrollView buildCartSellerItemList(seller_index) {
+  SingleChildScrollView buildCartSellerItemList(sellerIndex) {
     return SingleChildScrollView(
       child: ListView.builder(
-        itemCount: _shopList[seller_index].cart_items.length,
+        itemCount: _shopList[sellerIndex].cart_items.length,
         scrollDirection: Axis.vertical,
         physics: NeverScrollableScrollPhysics(),
         shrinkWrap: true,
@@ -754,7 +754,7 @@ class _CartState extends State<Cart> {
             padding: const EdgeInsets.only(bottom: 8.0),
             child: Column(
               children: [
-                buildCartSellerItemCard(seller_index, index),
+                buildCartSellerItemCard(sellerIndex, index),
               ],
             ),
           );
@@ -763,11 +763,11 @@ class _CartState extends State<Cart> {
     );
   }
 
-  buildCartSellerItemCard(seller_index, item_index) {
-    cartIndexPrice = (_shopList[seller_index].cart_items[item_index].price *
-        _shopList[seller_index].cart_items[item_index].quantity);
+  buildCartSellerItemCard(sellerIndex, itemIndex) {
+    cartIndexPrice = (_shopList[sellerIndex].cart_items[itemIndex].price *
+        _shopList[sellerIndex].cart_items[itemIndex].quantity);
     print("$cartIndexPrice " "!=" "${previousTotalSaved.$}");
-    if (_qntyController.length <= item_index) {
+    if (_qntyController.length <= itemIndex) {
       _qntyController.add(TextEditingController());
     }
     return Card(
@@ -787,8 +787,8 @@ class _CartState extends State<Cart> {
                     child: FadeInImage.assetNetwork(
                       placeholder: 'assets/placeholder.png',
                       image: AppConfig.BASE_PATH +
-                          _shopList[seller_index]
-                              .cart_items[item_index]
+                          _shopList[sellerIndex]
+                              .cart_items[itemIndex]
                               .product_thumbnail_image,
                       fit: BoxFit.fitWidth,
                     ))),
@@ -803,8 +803,8 @@ class _CartState extends State<Cart> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          _shopList[seller_index]
-                              .cart_items[item_index]
+                          _shopList[sellerIndex]
+                              .cart_items[itemIndex]
                               .product_name,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 2,
@@ -824,11 +824,11 @@ class _CartState extends State<Cart> {
                                       ? "Ask for Quotation"
                                       : is_wholesale.$ == 1 &&
                                               isQuotationReceived == true
-                                          ? _shopList[seller_index]
-                                                  .cart_items[item_index]
+                                          ? _shopList[sellerIndex]
+                                                  .cart_items[itemIndex]
                                                   .currency_symbol +
-                                              (_shopList[seller_index]
-                                                      .cart_items[item_index]
+                                              (_shopList[sellerIndex]
+                                                      .cart_items[itemIndex]
                                                       .price
                                                   //     *
                                                   // _shopList[seller_index]
@@ -840,14 +840,14 @@ class _CartState extends State<Cart> {
                                                   .toString()
                                           : "Successfully asked")
                                   : Text(
-                                      _shopList[seller_index]
-                                              .cart_items[item_index]
+                                      _shopList[sellerIndex]
+                                              .cart_items[itemIndex]
                                               .currency_symbol +
-                                          (_shopList[seller_index]
-                                                      .cart_items[item_index]
+                                          (_shopList[sellerIndex]
+                                                      .cart_items[itemIndex]
                                                       .price *
-                                                  _shopList[seller_index]
-                                                      .cart_items[item_index]
+                                                  _shopList[sellerIndex]
+                                                      .cart_items[itemIndex]
                                                       .quantity)
                                               .toString(),
                                       textAlign: TextAlign.left,
@@ -877,11 +877,11 @@ class _CartState extends State<Cart> {
                                         }
                                       : () {
                                           print("tap");
-                                          print(_shopList[seller_index]
-                                              .cart_items[item_index]
+                                          print(_shopList[sellerIndex]
+                                              .cart_items[itemIndex]
                                               .id);
-                                          onPressDelete(_shopList[seller_index]
-                                              .cart_items[item_index]
+                                          onPressDelete(_shopList[sellerIndex]
+                                              .cart_items[itemIndex]
                                               .id);
                                         },
                                   icon: Icon(
@@ -930,7 +930,7 @@ class _CartState extends State<Cart> {
                                   duration: Toast.LENGTH_LONG);
                             }
                           : () {
-                              onQuantityIncrease(seller_index, item_index);
+                              onQuantityIncrease(sellerIndex, itemIndex);
                             },
                     ),
                   ),
@@ -950,13 +950,13 @@ class _CartState extends State<Cart> {
                           width: 46,
                           // color: Colors.redAccent,
                           child: TextFormField(
-                            controller: _qntyController[item_index],
+                            controller: _qntyController[itemIndex],
                             keyboardType: TextInputType.number,
                             decoration: InputDecoration(
                               border: InputBorder.none,
                               contentPadding: EdgeInsets.only(left: 16),
-                              hintText: _shopList[seller_index]
-                                  .cart_items[item_index]
+                              hintText: _shopList[sellerIndex]
+                                  .cart_items[itemIndex]
                                   .quantity
                                   .toString(),
                               // hintText: hintList[item_index],
@@ -964,13 +964,13 @@ class _CartState extends State<Cart> {
                             onChanged: (value) {
                               // value = _qntyController[item_index].text;
 
-                              print(_qntyController[item_index].text);
+                              print(_qntyController[itemIndex].text);
                               quantityByTextField =
-                                  _qntyController[item_index].text;
+                                  _qntyController[itemIndex].text;
                               print(quantityByTextField);
 
                               setState(() {});
-                              onQuantityTextFeild(seller_index, item_index,
+                              onQuantityTextFeild(sellerIndex, itemIndex,
                                   quantityByTextField);
                               // onField(seller_index, item_index);
                               setState(() {});
@@ -983,8 +983,8 @@ class _CartState extends State<Cart> {
                           ),
                         )
                       : Text(
-                          _shopList[seller_index]
-                              .cart_items[item_index]
+                          _shopList[sellerIndex]
+                              .cart_items[itemIndex]
                               .quantity
                               .toString(),
                           style: TextStyle(
@@ -1019,7 +1019,7 @@ class _CartState extends State<Cart> {
                                   duration: Toast.LENGTH_LONG);
                             }
                           : () {
-                              onQuantityDecrease(seller_index, item_index);
+                              onQuantityDecrease(sellerIndex, itemIndex);
                             },
                     ),
                   ),

@@ -45,8 +45,8 @@ class _MainState extends State<Main> {
     //re appear statusbar in case it was not there in the previous page
     is_wholesale.load();
     setState(() {});
-    SystemChrome.setEnabledSystemUIOverlays(
-        [SystemUiOverlay.top, SystemUiOverlay.bottom]);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom]);
     super.initState();
   }
 
@@ -132,14 +132,16 @@ class _MainState extends State<Main> {
                             : Color.fromRGBO(153, 153, 153, 1),
                         height: 20,
                       ),
-                      title: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          AppLocalizations.of(context)
-                              .main_screen_bottom_navigation_home,
-                          style: TextStyle(fontSize: 12),
-                        ),
-                      )),
+                      label: "home"
+                      // label: Padding(
+                      //   padding: const EdgeInsets.all(8.0),
+                      //   child: Text(
+                      //     AppLocalizations.of(context)
+                      //         .main_screen_bottom_navigation_home,
+                      //     style: TextStyle(fontSize: 12),
+                      //   ),
+                      // )
+                      ),
                   BottomNavigationBarItem(
                       icon: Image.asset(
                         "assets/categories.png",
@@ -148,20 +150,22 @@ class _MainState extends State<Main> {
                             : Color.fromRGBO(153, 153, 153, 1),
                         height: 20,
                       ),
-                      title: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          AppLocalizations.of(context)
-                              .main_screen_bottom_navigation_categories,
-                          style: TextStyle(fontSize: 12),
-                        ),
-                      )),
+                      label: "categories"
+                      // label: Padding(
+                      //   padding: const EdgeInsets.all(8.0),
+                      //   child: Text(
+                      //     AppLocalizations.of(context)
+                      //         .main_screen_bottom_navigation_categories,
+                      //     style: TextStyle(fontSize: 12),
+                      //   ),
+                      // )
+                      ),
                   BottomNavigationBarItem(
                     icon: Icon(
                       Icons.circle,
                       color: Colors.transparent,
                     ),
-                    title: Text(""),
+                    label: "",
                   ),
                   BottomNavigationBarItem(
                       icon: Image.asset(
@@ -171,16 +175,18 @@ class _MainState extends State<Main> {
                             : Color.fromRGBO(153, 153, 153, 1),
                         height: 20,
                       ),
-                      title: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          is_wholesale.$ == 1
-                              ? "WSale Cart"
-                              : AppLocalizations.of(context)
-                                  .main_screen_bottom_navigation_cart,
-                          style: TextStyle(fontSize: 12),
-                        ),
-                      )),
+                      label: "cart"
+                      // label: Padding(
+                      //   padding: const EdgeInsets.all(8.0),
+                      //   child: Text(
+                      //     is_wholesale.$ == 1
+                      //         ? "WSale Cart"
+                      //         : AppLocalizations.of(context)
+                      //             .main_screen_bottom_navigation_cart,
+                      //     style: TextStyle(fontSize: 12),
+                      //   ),
+                      // )
+                      ),
                   BottomNavigationBarItem(
                       icon: Image.asset(
                         "assets/profile.png",
@@ -189,14 +195,16 @@ class _MainState extends State<Main> {
                             : Color.fromRGBO(153, 153, 153, 1),
                         height: 20,
                       ),
-                      title: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          AppLocalizations.of(context)
-                              .main_screen_bottom_navigation_profile,
-                          style: TextStyle(fontSize: 12),
-                        ),
-                      )),
+                      label: "Profile"
+                      // label: Padding(
+                      //   padding: const EdgeInsets.all(8.0),
+                      //   child: Text(
+                      //     AppLocalizations.of(context)
+                      //         .main_screen_bottom_navigation_profile,
+                      //     style: TextStyle(fontSize: 12),
+                      //   ),
+                      // )
+                      ),
                 ],
               ),
             ),

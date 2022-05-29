@@ -90,7 +90,6 @@ class _MyAppState extends State<MyApp> {
             theme: ThemeData(
               primaryColor: MyTheme.white,
               visualDensity: VisualDensity.adaptivePlatformDensity,
-              accentColor: MyTheme.accent_color,
               /*textTheme: TextTheme(
               bodyText1: TextStyle(),
               bodyText2: TextStyle(fontSize: 12.0),
@@ -102,7 +101,7 @@ class _MyAppState extends State<MyApp> {
                     GoogleFonts.sourceSansPro(textStyle: textTheme.bodyText1),
                 bodyText2: GoogleFonts.sourceSansPro(
                     textStyle: textTheme.bodyText2, fontSize: 12),
-              ),
+              ), colorScheme: ColorScheme.fromSwatch().copyWith(secondary: MyTheme.accent_color),
             ),
             localizationsDelegates: [
               GlobalMaterialLocalizations.delegate,

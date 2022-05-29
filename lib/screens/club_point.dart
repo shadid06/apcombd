@@ -71,9 +71,9 @@ class _ClubpointState extends State<Clubpoint> {
     fetchData();
   }
 
-  onPressConvert(item_id, _convertedSnackbar) async {
+  onPressConvert(itemId, _convertedSnackbar) async {
     var clubpointToWalletResponse =
-        await ClubpointRepository().getClubpointToWalletResponse(item_id);
+        await ClubpointRepository().getClubpointToWalletResponse(itemId);
 
     if (clubpointToWalletResponse.result == false) {
       ToastComponent.showDialog(clubpointToWalletResponse.message, context,
@@ -83,7 +83,7 @@ class _ClubpointState extends State<Clubpoint> {
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);*/
       Scaffold.of(context).showSnackBar(_convertedSnackbar);
 
-      _converted_ids.add(item_id);
+      _converted_ids.add(itemId);
       setState(() {});
     }
   }

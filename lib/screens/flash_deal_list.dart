@@ -119,27 +119,27 @@ class _FlashDealListState extends State<FlashDealList> {
   }
 
   String timeText(String txt, {default_length = 3}) {
-    var blank_zeros = default_length == 3 ? "000" : "00";
-    var leading_zeros = "";
+    var blankZeros = default_length == 3 ? "000" : "00";
+    var leadingZeros = "";
     if (txt != null) {
       if (default_length == 3 && txt.length == 1) {
-        leading_zeros = "00";
+        leadingZeros = "00";
       } else if (default_length == 3 && txt.length == 2) {
-        leading_zeros = "0";
+        leadingZeros = "0";
       } else if (default_length == 2 && txt.length == 1) {
-        leading_zeros = "0";
+        leadingZeros = "0";
       }
     }
 
     var newtxt = (txt == null || txt == "" || txt == null.toString())
-        ? blank_zeros
+        ? blankZeros
         : txt;
 
     // print(txt + " " + default_length.toString());
     // print(newtxt);
 
     if (default_length > txt.length) {
-      newtxt = leading_zeros + newtxt;
+      newtxt = leadingZeros + newtxt;
     }
     //print(newtxt);
 
@@ -155,9 +155,9 @@ class _FlashDealListState extends State<FlashDealList> {
 
     void onEnd() {}
 
-    CountdownTimerController time_controller =
+    CountdownTimerController timeController =
         CountdownTimerController(endTime: endTime, onEnd: onEnd);
-    _timerControllerList.add(time_controller);
+    _timerControllerList.add(timeController);
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0),

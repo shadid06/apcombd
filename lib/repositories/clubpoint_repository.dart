@@ -25,8 +25,8 @@ class ClubpointRepository {
 
   Future<ClubpointToWalletResponse> getClubpointToWalletResponse(
       @required int id) async {
-    var post_body = jsonEncode({
-      "id": "${id}",
+    var postBody = jsonEncode({
+      "id": "$id",
       "user_id": "${user_id.$}",
     });
     Uri url = Uri.parse("${AppConfig.BASE_URL}/clubpoint/convert-into-wallet");
@@ -36,7 +36,7 @@ class ClubpointRepository {
           "Authorization": "Bearer ${access_token.$}",
           "App-Language": app_language.$
         },
-        body: post_body);
+        body: postBody);
 
     return clubpointToWalletResponseFromJson(response.body);
   }

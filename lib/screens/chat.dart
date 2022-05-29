@@ -96,10 +96,10 @@ class _ChatState extends State<Chat> {
     //print(chatText);
     if (chatText != "") {
       final DateTime now = DateTime.now();
-      final intl.DateFormat date_formatter = intl.DateFormat('yyyy-MM-dd');
-      final intl.DateFormat time_formatter = intl.DateFormat('hh:ss');
-      final String formatted_date = date_formatter.format(now);
-      final String formatted_time = time_formatter.format(now);
+      final intl.DateFormat dateFormatter = intl.DateFormat('yyyy-MM-dd');
+      final intl.DateFormat timeFormatter = intl.DateFormat('hh:ss');
+      final String formattedDate = dateFormatter.format(now);
+      final String formattedTime = timeFormatter.format(now);
 
       var messageResponse = await ChatRepository().getInserMessageResponse(
           conversation_id: widget.conversation_id, message: chatText);

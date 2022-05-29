@@ -14,7 +14,7 @@ class OfflinePaymentRepository {
       @required String name,
       @required String trx_id,
       @required int photo}) async {
-    var post_body = jsonEncode({
+    var postBody = jsonEncode({
       "order_id": "$order_id",
       "amount": "$amount",
       "name": "$name",
@@ -29,7 +29,7 @@ class OfflinePaymentRepository {
           "Authorization": "Bearer ${access_token.$}",
           "App-Language": app_language.$
         },
-        body: post_body);
+        body: postBody);
 
     print("hello" + response.body.toString());
     return offlinePaymentSubmitResponseFromJson(response.body);

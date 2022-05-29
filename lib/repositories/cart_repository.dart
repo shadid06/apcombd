@@ -13,14 +13,14 @@ import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
 class CartRepository {
   String endPoint;
   Future<List<CartResponse>> getCartResponseList(
-    @required int user_id,
+    @required int userId,
   ) async {
     if (is_wholesale.$ == 1) {
       endPoint = "wholesalecart";
     } else {
       endPoint = "carts";
     }
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/$endPoint/$user_id"); //carts ?1
+    Uri url = Uri.parse("${AppConfig.BASE_URL}/$endPoint/$userId"); //carts ?1
     final response = await http.post(
       url,
       headers: {
@@ -32,14 +32,14 @@ class CartRepository {
     );
     print(url);
 
-    print(user_id);
+    print(userId);
     print(access_token.$);
     print('cart get response: ${response.body}');
     return cartResponseFromJson(response.body);
   }
 
   Future<CartDeleteResponse> getCartDeleteResponse(
-    @required int cart_id,
+    @required int cartId,
   ) async {
     http.Response response;
     if (is_wholesale.$ == 1) {
@@ -47,7 +47,7 @@ class CartRepository {
     } else {
       endPoint = "carts";
     }
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/$endPoint/$cart_id"); //carts
+    Uri url = Uri.parse("${AppConfig.BASE_URL}/$endPoint/$cartId"); //carts
     if (is_wholesale.$ == 1) {
       response = await http.get(
         //http.delete // http.get o dite hoi
@@ -116,14 +116,14 @@ class CartRepository {
   }
 
   Future<CartProcessResponse> getCartProcessResponse(
-      @required String cart_ids, @required String cart_quantities) async {
+      @required String cartIds, @required String cartQuantities) async {
     if (is_wholesale.$ == 1) {
       endPoint = "wholesalecart/process";
     } else {
       endPoint = "carts/process";
     }
-    var post_body = jsonEncode(
-        {"cart_ids": "${cart_ids}", "cart_quantities": "$cart_quantities"});
+    var postBody = jsonEncode(
+        {"cart_ids": "$cartIds", "cart_quantities": "$cartQuantities"});
 
     Uri url = Uri.parse("${AppConfig.BASE_URL}/$endPoint");
     final response = await http.post(url,
@@ -132,7 +132,7 @@ class CartRepository {
           "Authorization": "Bearer ${access_token.$}",
           "App-Language": app_language.$
         },
-        body: post_body);
+        body: postBody);
 
     return cartProcessResponseFromJson(response.body);
   }
@@ -140,7 +140,7 @@ class CartRepository {
   Future<CartAddResponse> getCartAddResponse(
       @required int id,
       @required String variant,
-      @required int user_id,
+      @required int userId,
       @required int quantity) async {
     if (is_wholesale.$ == 1) {
       endPoint = "wholesalecart-addtowholesalecart";
@@ -148,15 +148,15 @@ class CartRepository {
       endPoint = "carts/add";
     }
 
-    var post_body = jsonEncode({
-      "id": "${id}",
+    var postBody = jsonEncode({
+      "id": "$id",
       "variant": "$variant",
-      "user_id": "$user_id",
+      "user_id": "$userId",
       "quantity": "$quantity",
       "cost_matrix": AppConfig.purchase_code
     });
 
-    print('post body: ${post_body.toString()}');
+    print('post body: ${postBody.toString()}');
 
     Uri url = Uri.parse("${AppConfig.BASE_URL}/$endPoint"); // /carts/add
     final response = await http.post(url,
@@ -166,7 +166,7 @@ class CartRepository {
           "Authorization": "Bearer ${access_token.$}",
           "App-Language": app_language.$
         },
-        body: post_body);
+        body: postBody);
 
     print('response body: ${response.body.toString()}');
     return cartAddResponseFromJson(response.body);

@@ -24,10 +24,10 @@ class RefundRequestRepository {
 
   Future<RefundRequestSendResponse> getRefundRequestSendResponse({@required int id,@required String reason}
       ) async {
-    var post_body = jsonEncode({
-      "id": "${id}",
+    var postBody = jsonEncode({
+      "id": "$id",
       "user_id": "${user_id.$}",
-      "reason": "${reason}",
+      "reason": "$reason",
     });
 
     Uri url = Uri.parse("${AppConfig.BASE_URL}/refund-request/send");
@@ -37,7 +37,7 @@ class RefundRequestRepository {
           "Content-Type": "application/json",
           "Authorization": "Bearer ${access_token.$}","App-Language": app_language.$,
         },
-        body: post_body);
+        body: postBody);
 
     return refundRequestSendResponseFromJson(response.body);
   }

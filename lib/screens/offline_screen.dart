@@ -60,9 +60,9 @@ class _OfflineState extends State<OfflineScreen> {
   onPressSubmit() async {
     var amount = _amountController.text.toString();
     var name = _nameController.text.toString();
-    var trx_id = _trxIdController.text.toString();
+    var trxId = _trxIdController.text.toString();
 
-    if (amount == "" || name == "" || trx_id == "") {
+    if (amount == "" || name == "" || trxId == "") {
       ToastComponent.showDialog(
           AppLocalizations.of(context).offline_screen_amount_name_trxid_warning,
           context,
@@ -83,7 +83,7 @@ class _OfflineState extends State<OfflineScreen> {
             order_id: widget.order_id,
             amount: amount,
             name: name,
-            trx_id: trx_id,
+            trx_id: trxId,
             photo: _photo_upload_id);
 
     if (submitResponse.result == false) {

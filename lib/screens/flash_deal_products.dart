@@ -36,18 +36,18 @@ class _FlashDealProductsState extends State<FlashDealProducts> {
     super.initState();
   }
 
-  _buildSearchList(search_key) async {
+  _buildSearchList(searchKey) async {
     _searchList.clear();
     print(_fullList.length);
 
-    if (search_key.isEmpty) {
+    if (searchKey.isEmpty) {
       _searchList.addAll(_fullList);
       setState(() {});
       //print("_searchList.length on empty " + _searchList.length.toString());
       //print("_fullList.length on empty " + _fullList.length.toString());
     } else {
       for (var i = 0; i < _fullList.length; i++) {
-        if (StringHelper().stringContains(_fullList[i].name, search_key)) {
+        if (StringHelper().stringContains(_fullList[i].name, searchKey)) {
           _searchList.add(_fullList[i]);
           setState(() {});
         }
@@ -70,11 +70,11 @@ class _FlashDealProductsState extends State<FlashDealProducts> {
     );
   }
 
-  bool shouldProductBoxBeVisible(product_name, search_key) {
-    if (search_key == "") {
+  bool shouldProductBoxBeVisible(productName, searchKey) {
+    if (searchKey == "") {
       return true; //do not check if the search key is empty
     }
-    return StringHelper().stringContains(product_name, search_key);
+    return StringHelper().stringContains(productName, searchKey);
   }
 
   AppBar buildAppBar(BuildContext context) {

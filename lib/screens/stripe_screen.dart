@@ -99,8 +99,8 @@ class _StripeScreenState extends State<StripeScreen> {
   }
 
   buildBody() {
-    String initial_url =
-        "${AppConfig.BASE_URL}/stripe?payment_type=${widget.payment_type}&combined_order_id=${_combined_order_id}&amount=${widget.amount}&user_id=${user_id.$}";
+    String initialUrl =
+        "${AppConfig.BASE_URL}/stripe?payment_type=${widget.payment_type}&combined_order_id=$_combined_order_id&amount=${widget.amount}&user_id=${user_id.$}";
 
     //print("init url");
     //print(initial_url);
@@ -123,7 +123,7 @@ class _StripeScreenState extends State<StripeScreen> {
             javascriptMode: JavascriptMode.unrestricted,
             onWebViewCreated: (controller) {
               _webViewController = controller;
-              _webViewController.loadUrl(initial_url);
+              _webViewController.loadUrl(initialUrl);
             },
             onWebResourceError: (error) {},
             onPageFinished: (page) {

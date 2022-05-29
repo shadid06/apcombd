@@ -66,7 +66,8 @@ class DetailedProduct {
       this.link,
       this.brand,
       this.shortDescription,
-      this.isShortDescription});
+      this.isShortDescription,
+      this.pdf});
 
   int id;
   String name;
@@ -98,6 +99,7 @@ class DetailedProduct {
   String shortDescription;
   // String isShortDescription;
   int isShortDescription;
+  String pdf;
 
   factory DetailedProduct.fromJson(Map<String, dynamic> json) =>
       DetailedProduct(
@@ -133,7 +135,8 @@ class DetailedProduct {
           link: json["link"],
           brand: Brand.fromJson(json["brand"]),
           shortDescription: json["short_description"],
-          isShortDescription: json["is_short_description"]);
+          isShortDescription: json["is_short_description"],
+          pdf: json["pdf"]);
 
   Map<String, dynamic> toJson() => {
         "id": id,
@@ -165,7 +168,8 @@ class DetailedProduct {
         "link": link,
         "brand": brand.toJson(),
         "short_description": shortDescription,
-        "is_short_description": isShortDescription
+        "is_short_description": isShortDescription,
+        "pdf": pdf
       };
 }
 

@@ -330,13 +330,13 @@ class _FilterState extends State<Filter> {
   }
 
   List<DropdownMenuItem<WhichFilter>> buildDropdownWhichFilterItems(
-      List which_filter_list) {
+      List whichFilterList) {
     List<DropdownMenuItem<WhichFilter>> items = List();
-    for (WhichFilter which_filter_item in which_filter_list) {
+    for (WhichFilter whichFilterItem in whichFilterList) {
       items.add(
         DropdownMenuItem(
-          value: which_filter_item,
-          child: Text(which_filter_item.name),
+          value: whichFilterItem,
+          child: Text(whichFilterItem.name),
         ),
       );
     }
@@ -395,7 +395,7 @@ class _FilterState extends State<Filter> {
         endDrawer: buildFilterDrawer(),
         key: _scaffoldKey,
         backgroundColor: Colors.white,
-        body: Stack(overflow: Overflow.visible, children: [
+        body: Stack(clipBehavior: Clip.none, children: [
           _selectedFilter.option_key == 'product'
               ? buildProductList()
               : (_selectedFilter.option_key == 'brands'
@@ -485,7 +485,6 @@ class _FilterState extends State<Filter> {
                     context,
                     gravity: Toast.CENTER,
                     duration: Toast.LENGTH_LONG);
-            ;
           },
           child: Container(
             decoration: BoxDecoration(

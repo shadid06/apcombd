@@ -96,7 +96,7 @@ class _NagadScreenState extends State<NagadScreen> {
   }
 
   void getData() {
-    var payment_details = '';
+    var paymentDetails = '';
     _webViewController
         .evaluateJavascript("document.body.innerText")
         .then((data) {
@@ -108,16 +108,16 @@ class _NagadScreenState extends State<NagadScreen> {
             duration: Toast.LENGTH_LONG, gravity: Toast.CENTER);
         Navigator.pop(context);
       } else if (responseJSON["result"] == true) {
-        payment_details = responseJSON['payment_details'];
-        onPaymentSuccess(payment_details);
+        paymentDetails = responseJSON['payment_details'];
+        onPaymentSuccess(paymentDetails);
       }
     });
   }
 
-  onPaymentSuccess(payment_details) async {
+  onPaymentSuccess(paymentDetails) async {
     var nagadPaymentProcessResponse = await PaymentRepository()
         .getNagadPaymentProcessResponse(widget.payment_type, widget.amount,
-            _combined_order_id, payment_details);
+            _combined_order_id, paymentDetails);
 
     if (nagadPaymentProcessResponse.result == false) {
       Toast.show(nagadPaymentProcessResponse.message, context,

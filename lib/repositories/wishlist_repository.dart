@@ -22,7 +22,7 @@ class WishListRepository {
   Future<WishlistDeleteResponse> delete({
     @required int wishlist_id = 0,
   }) async {
-    Uri url = Uri.parse("${AppConfig.BASE_URL}/wishlists/${wishlist_id}");
+    Uri url = Uri.parse("${AppConfig.BASE_URL}/wishlists/$wishlist_id");
     final response = await http.delete(
       url,
       headers: {
@@ -36,7 +36,7 @@ class WishListRepository {
   Future<WishListChekResponse> isProductInUserWishList(
       {@required product_id = 0}) async {
     Uri url = Uri.parse(
-        "${AppConfig.BASE_URL}/wishlists-check-product?product_id=${product_id}&user_id=${user_id.$}");
+        "${AppConfig.BASE_URL}/wishlists-check-product?product_id=$product_id&user_id=${user_id.$}");
     final response = await http.get(
       url,
       headers: {
@@ -49,7 +49,7 @@ class WishListRepository {
 
   Future<WishListChekResponse> add({@required product_id = 0}) async {
     Uri url = Uri.parse(
-        "${AppConfig.BASE_URL}/wishlists-add-product?product_id=${product_id}&user_id=${user_id.$}");
+        "${AppConfig.BASE_URL}/wishlists-add-product?product_id=$product_id&user_id=${user_id.$}");
 
     print(url.toString());
     final response = await http.get(
@@ -65,7 +65,7 @@ class WishListRepository {
 
   Future<WishListChekResponse> remove({@required product_id = 0}) async {
     Uri url = Uri.parse(
-        "${AppConfig.BASE_URL}/wishlists-remove-product?product_id=${product_id}&user_id=${user_id.$}");
+        "${AppConfig.BASE_URL}/wishlists-remove-product?product_id=$product_id&user_id=${user_id.$}");
     final response = await http.get(
       url,
       headers: {

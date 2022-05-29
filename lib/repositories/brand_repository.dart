@@ -16,7 +16,7 @@ class BrandRepository {
 
   Future<BrandResponse> getBrands({name = "", page = 1}) async {
     Uri url = Uri.parse("${AppConfig.BASE_URL}/brands"+
-        "?page=${page}&name=${name}");
+        "?page=$page&name=$name");
     final response =
     await http.get(url,headers: {
       "App-Language": app_language.$,

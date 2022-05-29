@@ -22,7 +22,7 @@ class WalletRepository {
 
   Future<WalletRechargeResponse> getRechargeList({int page = 1}) async {
     Uri url = Uri.parse(
-        "${AppConfig.BASE_URL}/wallet/history/${user_id.$}?page=${page}");
+        "${AppConfig.BASE_URL}/wallet/history/${user_id.$}?page=$page");
 
     final response = await http.get(
       url,

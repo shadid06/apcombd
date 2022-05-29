@@ -2,6 +2,7 @@ import 'package:active_ecommerce_flutter/data_model/product_details_response.dar
 import 'package:active_ecommerce_flutter/screens/cart.dart';
 import 'package:active_ecommerce_flutter/screens/common_webview_screen.dart';
 import 'package:active_ecommerce_flutter/screens/login.dart';
+import 'package:active_ecommerce_flutter/screens/pdf_view.dart';
 import 'package:active_ecommerce_flutter/screens/product_reviews.dart';
 import 'package:active_ecommerce_flutter/ui_elements/list_product_card.dart';
 import 'package:active_ecommerce_flutter/ui_elements/mini_product_card.dart';
@@ -24,6 +25,8 @@ import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
 import 'package:active_ecommerce_flutter/custom/toast_component.dart';
 import 'package:active_ecommerce_flutter/repositories/chat_repository.dart';
 import 'package:active_ecommerce_flutter/screens/chat.dart';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
+
 import 'package:toast/toast.dart';
 import 'package:social_share/social_share.dart';
 import 'dart:async';
@@ -31,6 +34,7 @@ import 'package:active_ecommerce_flutter/screens/video_description_screen.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:active_ecommerce_flutter/screens/brand_products.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
 
 class ProductDetails extends StatefulWidget {
   int id;
@@ -56,7 +60,7 @@ class _ProductDetailsState extends State<ProductDetails> {
   //init values
   bool _isInWishList = false;
   var _productDetailsFetched = false;
-  var _productDetails = null;
+  var _productDetails;
   var _productImageList = [];
   var _colorList = [];
   int _selectedColorIndex = 0;
@@ -69,11 +73,14 @@ class _ProductDetailsState extends State<ProductDetails> {
   int _quantity = 1;
   int _stock = 0;
   String shortDescription;
-
+  var pdfLink;
+  PDFDocument document;
   List<dynamic> _relatedProducts = [];
   bool _relatedProductInit = false;
   List<dynamic> _topProducts = [];
   bool _topProductInit = false;
+  PdfViewerController _pdfViewerController;
+  final GlobalKey<SfPdfViewerState> _PdfViewerSateKey = GlobalKey();
 
   int _totalProductData = 0;
   int _productPage = 1;
@@ -106,11 +113,12 @@ class _ProductDetailsState extends State<ProductDetails> {
   fetchProductDetails() async {
     var productDetailsResponse =
         await ProductRepository().getProductDetails(id: widget.id);
-    productDetailsResponse =
-        await ProductRepository().getProductDetails(id: widget.id);
+    // productDetailsResponse =
+    //     await ProductRepository().getProductDetails(id: widget.id);
+    // pdfLink = productDetailsResponse.detailed_products[0].pdf;
     shortDescription =
         productDetailsResponse.detailed_products[0].shortDescription;
-    print("short description: ${shortDescription}");
+    print("short description: $shortDescription");
     if (productDetailsResponse.detailed_products.length > 0) {
       _productDetails = productDetailsResponse.detailed_products[0];
       sellerChatTitleController.text =
@@ -143,14 +151,16 @@ class _ProductDetailsState extends State<ProductDetails> {
       _appbarPriceString = _productDetails.price_high_low;
       _singlePrice = _productDetails.calculable_price;
       _singlePriceString = _productDetails.main_price;
+      pdfLink = _productDetails.pdf;
+
       calculateTotalPrice();
       _stock = _productDetails.current_stock;
       _productDetails.photos.forEach((photo) {
         _productImageList.add(photo.path);
       });
 
-      _productDetails.choice_options.forEach((choice_opiton) {
-        _selectedChoices.add(choice_opiton.options[0]);
+      _productDetails.choice_options.forEach((choiceOpiton) {
+        _selectedChoices.add(choiceOpiton.options[0]);
       });
       _productDetails.colors.forEach((color) {
         _colorList.add(color);
@@ -163,6 +173,7 @@ class _ProductDetailsState extends State<ProductDetails> {
         fetchAndSetVariantWiseInfo(change_appbar_string: true);
       }
       _productDetailsFetched = true;
+      pdfShow();
 
       setState(() {});
     }
@@ -223,7 +234,7 @@ class _ProductDetailsState extends State<ProductDetails> {
   }
 
   fetchAndSetVariantWiseInfo({bool change_appbar_string = true}) async {
-    var color_string = _colorList.length > 0
+    var colorString = _colorList.length > 0
         ? _colorList[_selectedColorIndex].toString().replaceAll("#", "")
         : "";
 
@@ -231,7 +242,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     return;*/
 
     var variantResponse = await ProductRepository().getVariantWiseInfo(
-        id: widget.id, color: color_string, variants: _choiceString);
+        id: widget.id, color: colorString, variants: _choiceString);
 
     /*print("vr"+variantResponse.toJson().toString());
     return;*/
@@ -250,7 +261,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     _singlePriceString = variantResponse.price_string;
 
     if (change_appbar_string) {
-      _appbarPriceString = "${variantResponse.variant} ${_singlePriceString}";
+      _appbarPriceString = "${variantResponse.variant} $_singlePriceString";
     }
 
     int pindex = 0;
@@ -300,8 +311,8 @@ class _ProductDetailsState extends State<ProductDetails> {
     setState(() {});
   }
 
-  _onVariantChange(_choice_options_index, value) {
-    _selectedChoices[_choice_options_index] = value;
+  _onVariantChange(ChoiceOptionsIndex, value) {
+    _selectedChoices[ChoiceOptionsIndex] = value;
     setChoiceString();
     setState(() {});
     fetchAndSetVariantWiseInfo();
@@ -321,7 +332,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     addToCart(mode: "buy_now", context: context);
   }
 
-  addToCart({mode, context = null, snackbar = null}) async {
+  addToCart({mode, context, snackbar}) async {
     if (is_logged_in.$ == false) {
       ToastComponent.showDialog(
           AppLocalizations.of(context).common_login_warning, context,
@@ -374,6 +385,11 @@ class _ProductDetailsState extends State<ProductDetails> {
         _showCopied = false;
       });
     });
+  }
+
+  pdfShow() async {
+    document = await PDFDocument.fromURL(pdfLink);
+    setState(() {});
   }
 
   onPressShare(context) {
@@ -693,7 +709,6 @@ class _ProductDetailsState extends State<ProductDetails> {
         messenger_title: conversationCreateResponse.title,
         messenger_image: conversationCreateResponse.shop_logo,
       );
-      ;
     })).then((value) {
       onPopped(value);
     });
@@ -1236,6 +1251,78 @@ class _ProductDetailsState extends State<ProductDetails> {
                         16.0,
                         0.0,
                       ),
+                      child: pdfLink == null
+                          ? Text("")
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "PDF",
+                                  style: TextStyle(
+                                      color: MyTheme.font_grey,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ViewPdf(link: pdfLink)));
+                                    },
+                                    child: Text("view"))
+                              ],
+                            ),
+                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.fromLTRB(
+                    //     8.0,
+                    //     16.0,
+                    //     0.0,
+                    //     0.0,
+                    //   ),
+                    //   // child: document == null
+                    //   //     ? Text('')
+                    //   //     : Container(
+                    //   //         height: 200,
+                    //   //         width: double.infinity,
+                    //   //         color: Colors.redAccent,
+                    //   //         child: PDFViewer(
+                    //   //           scrollDirection: Axis.horizontal,
+                    //   //           showNavigation: false,
+                    //   //           document: document,
+                    //   //           zoomSteps: 1,
+                    //   //           showIndicator: false,
+                    //   //           showPicker: false,
+                    //   //         ),
+                    //   //       ),
+                    //   child: pdfLink == null
+                    //       ? Container()
+                    //       : Container(
+                    //           height: 200,
+                    //           width: double.infinity,
+                    //           child: SfPdfViewer.network(
+                    //             pdfLink,
+                    //             scrollDirection: PdfScrollDirection.horizontal,
+                    //             pageSpacing: 4,
+                    //             pageLayoutMode: PdfPageLayoutMode.single,
+                    //             controller: _pdfViewerController,
+                    //             key: _PdfViewerSateKey,
+                    //             initialZoomLevel: 1,
+                    //           )),
+                    // )
+                  ]),
+                ),
+                SliverList(
+                  delegate: SliverChildListDelegate([
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(
+                        16.0,
+                        16.0,
+                        16.0,
+                        0.0,
+                      ),
                       child: Text(
                         AppLocalizations.of(context)
                             .product_details_screen_products_may_like,
@@ -1555,7 +1642,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     );
   }
 
-  buildChoiceOpiton(choice_options, choice_options_index) {
+  buildChoiceOpiton(choiceOptions, choiceOptionsIndex) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(
         16.0,
@@ -1572,7 +1659,7 @@ class _ProductDetailsState extends State<ProductDetails> {
             child: Container(
               width: 75,
               child: Text(
-                choice_options[choice_options_index].title,
+                choiceOptions[choiceOptionsIndex].title,
                 style: TextStyle(color: Color.fromRGBO(153, 153, 153, 1)),
               ),
             ),
@@ -1584,15 +1671,15 @@ class _ProductDetailsState extends State<ProductDetails> {
               controller: _variantScrollController,
               isAlwaysShown: false,
               child: ListView.builder(
-                itemCount: choice_options[choice_options_index].options.length,
+                itemCount: choiceOptions[choiceOptionsIndex].options.length,
                 scrollDirection: Axis.horizontal,
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
                     child: buildChoiceItem(
-                        choice_options[choice_options_index].options[index],
-                        choice_options_index,
+                        choiceOptions[choiceOptionsIndex].options[index],
+                        choiceOptionsIndex,
                         index),
                   );
                 },
@@ -1604,19 +1691,19 @@ class _ProductDetailsState extends State<ProductDetails> {
     );
   }
 
-  buildChoiceItem(option, choice_options_index, index) {
+  buildChoiceItem(option, choiceOptionsIndex, index) {
     return Padding(
       padding: app_language_rtl.$
           ? EdgeInsets.only(left: 8.0)
           : EdgeInsets.only(right: 8.0),
       child: InkWell(
         onTap: () {
-          _onVariantChange(choice_options_index, option);
+          _onVariantChange(choiceOptionsIndex, option);
         },
         child: Container(
           decoration: BoxDecoration(
             border: Border.all(
-                color: _selectedChoices[choice_options_index] == option
+                color: _selectedChoices[choiceOptionsIndex] == option
                     ? MyTheme.accent_color
                     : Color.fromRGBO(224, 224, 225, 1),
                 width: 1.5),
@@ -1629,7 +1716,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               child: Text(
                 option,
                 style: TextStyle(
-                    color: _selectedChoices[choice_options_index] == option
+                    color: _selectedChoices[choiceOptionsIndex] == option
                         ? MyTheme.accent_color
                         : Color.fromRGBO(224, 224, 225, 1),
                     fontSize: 12.0,

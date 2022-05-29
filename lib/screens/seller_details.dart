@@ -30,7 +30,7 @@ class _SellerDetailsState extends State<SellerDetails> {
   int _current_slider = 0;
   List<dynamic> _carouselImageList = [];
   bool _carouselInit = false;
-  var _shopDetails = null;
+  var _shopDetails;
 
   List<dynamic> _newArrivalProducts = [];
   bool _newArrivalProductInit = false;

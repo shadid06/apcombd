@@ -11,7 +11,7 @@ class OrderRepository {
       {page = 1, payment_status = "", delivery_status = ""}) async {
     Uri url = Uri.parse("${AppConfig.BASE_URL}/purchase-history/" +
         "${user_id.$}" +
-        "?page=${page}&payment_status=${payment_status}&delivery_status=${delivery_status}");
+        "?page=$page&payment_status=$payment_status&delivery_status=$delivery_status");
 
     final response = await http.get(url, headers: {
       "App-Language": app_language.$,

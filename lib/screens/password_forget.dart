@@ -29,15 +29,15 @@ class _PasswordForgetState extends State<PasswordForget> {
   @override
   void initState() {
     //on Splash Screen hide statusbar
-    SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.bottom]);
     super.initState();
   }
 
   @override
   void dispose() {
     //before going to other screen show statusbar
-    SystemChrome.setEnabledSystemUIOverlays(
-        [SystemUiOverlay.top, SystemUiOverlay.bottom]);
+    SystemChrome.setEnabledSystemUIMode(
+        SystemUiMode.manual, overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom]);
     super.dispose();
   }
 
@@ -81,8 +81,8 @@ class _PasswordForgetState extends State<PasswordForget> {
 
   @override
   Widget build(BuildContext context) {
-    final _screen_height = MediaQuery.of(context).size.height;
-    final _screen_width = MediaQuery.of(context).size.width;
+    final ScreenHeight = MediaQuery.of(context).size.height;
+    final ScreenWidth = MediaQuery.of(context).size.width;
     return Directionality(
       textDirection: app_language_rtl.$ ? TextDirection.rtl : TextDirection.ltr,
       child: Scaffold(
@@ -90,7 +90,7 @@ class _PasswordForgetState extends State<PasswordForget> {
         body: Stack(
           children: [
             Container(
-              width: _screen_width * (3 / 4),
+              width: ScreenWidth * (3 / 4),
               child: Image.asset(
                   "assets/splash_login_registration_background_image.png"),
             ),
@@ -120,7 +120,7 @@ class _PasswordForgetState extends State<PasswordForget> {
                     ),
                   ),
                   Container(
-                    width: _screen_width * (3 / 4),
+                    width: ScreenWidth * (3 / 4),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

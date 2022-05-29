@@ -9,7 +9,7 @@ import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
 class ShopRepository {
   Future<ShopResponse> getShops({name = "", page = 1}) async {
     Uri url =
-        Uri.parse("${AppConfig.BASE_URL}/shops" + "?page=${page}&name=${name}");
+        Uri.parse("${AppConfig.BASE_URL}/shops" + "?page=$page&name=$name");
 
     final response = await http.get(url,
       headers: {
@@ -20,7 +20,7 @@ class ShopRepository {
 
   Future<ShopDetailsResponse> getShopInfo({@required id = 0}) async {
 
-    Uri url =  Uri.parse("${AppConfig.BASE_URL}/shops/details/${id}");
+    Uri url =  Uri.parse("${AppConfig.BASE_URL}/shops/details/$id");
     final response =
         await http.get(url,
           headers: {

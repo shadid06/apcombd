@@ -29,22 +29,22 @@ class _PasswordOtpState extends State<PasswordOtp> {
   @override
   void initState() {
     //on Splash Screen hide statusbar
-    SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.bottom]);
     super.initState();
   }
 
   @override
   void dispose() {
     //before going to other screen show statusbar
-    SystemChrome.setEnabledSystemUIOverlays(
-        [SystemUiOverlay.top, SystemUiOverlay.bottom]);
+    SystemChrome.setEnabledSystemUIMode(
+        SystemUiMode.manual, overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom]);
     super.dispose();
   }
 
   onPressConfirm() async {
     var code = _codeController.text.toString();
     var password = _passwordController.text.toString();
-    var password_confirm = _passwordConfirmController.text.toString();
+    var passwordConfirm = _passwordConfirmController.text.toString();
 
     if (code == "") {
       ToastComponent.showDialog(AppLocalizations.of(context).password_otp_screen_code_warning, context,
@@ -54,7 +54,7 @@ class _PasswordOtpState extends State<PasswordOtp> {
       ToastComponent.showDialog(AppLocalizations.of(context).password_otp_screen_password_warning, context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
       return;
-    } else if (password_confirm == "") {
+    } else if (passwordConfirm == "") {
       ToastComponent.showDialog(AppLocalizations.of(context).password_otp_screen_password_confirm_warning, context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
       return;
@@ -63,7 +63,7 @@ class _PasswordOtpState extends State<PasswordOtp> {
           AppLocalizations.of(context).password_otp_screen_password_length_warning, context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
       return;
-    } else if (password != password_confirm) {
+    } else if (password != passwordConfirm) {
       ToastComponent.showDialog(AppLocalizations.of(context).password_otp_screen_password_match_warning, context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
       return;
@@ -100,9 +100,9 @@ class _PasswordOtpState extends State<PasswordOtp> {
 
   @override
   Widget build(BuildContext context) {
-    String _verify_by = widget.verify_by; //phone or email
-    final _screen_height = MediaQuery.of(context).size.height;
-    final _screen_width = MediaQuery.of(context).size.width;
+    String VerifyBy = widget.verify_by; //phone or email
+    final ScreenHeight = MediaQuery.of(context).size.height;
+    final ScreenWidth = MediaQuery.of(context).size.width;
     return Directionality(
       textDirection: app_language_rtl.$ ? TextDirection.rtl : TextDirection.ltr,
       child: Scaffold(
@@ -110,7 +110,7 @@ class _PasswordOtpState extends State<PasswordOtp> {
         body: Stack(
           children: [
             Container(
-              width: _screen_width * (3 / 4),
+              width: ScreenWidth * (3 / 4),
               child: Image.asset(
                   "assets/splash_login_registration_background_image.png"),
             ),
@@ -142,8 +142,8 @@ class _PasswordOtpState extends State<PasswordOtp> {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 16.0),
                     child: Container(
-                        width: _screen_width * (3 / 4),
-                        child: _verify_by == "email"
+                        width: ScreenWidth * (3 / 4),
+                        child: VerifyBy == "email"
                             ? Text(
                             AppLocalizations.of(context).password_otp_screen_enter_verification_code_to_email,
                                 textAlign: TextAlign.center,
@@ -156,7 +156,7 @@ class _PasswordOtpState extends State<PasswordOtp> {
                                     color: MyTheme.dark_grey, fontSize: 14))),
                   ),
                   Container(
-                    width: _screen_width * (3 / 4),
+                    width: ScreenWidth * (3 / 4),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

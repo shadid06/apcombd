@@ -28,7 +28,7 @@ class _WalletState extends State<Wallet> {
   ScrollController _scrollController = ScrollController();
   TextEditingController _amountController = TextEditingController();
 
-  var _balanceDetails = null;
+  var _balanceDetails;
 
   List<dynamic> _rechargeList = [];
   bool _rechargeListInit = true;
@@ -99,16 +99,16 @@ class _WalletState extends State<Wallet> {
   }
 
   onPressProceed() {
-    var amount_String = _amountController.text.toString();
+    var amountString = _amountController.text.toString();
 
-    if (amount_String == "") {
+    if (amountString == "") {
       ToastComponent.showDialog(
           AppLocalizations.of(context).wallet_screen_amount_warning, context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
       return;
     }
 
-    var amount = double.parse(amount_String);
+    var amount = double.parse(amountString);
 
     Navigator.of(context, rootNavigator: true).pop();
     Navigator.push(context, MaterialPageRoute(builder: (context) {

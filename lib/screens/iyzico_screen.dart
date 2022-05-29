@@ -74,7 +74,7 @@ class _IyzicoScreenState extends State<IyzicoScreen> {
 
   void getData() {
     print('called.........');
-    var payment_details = '';
+    var paymentDetails = '';
     _webViewController
         .evaluateJavascript("document.body.innerText")
         .then((data) {
@@ -88,18 +88,18 @@ class _IyzicoScreenState extends State<IyzicoScreen> {
         Navigator.pop(context);
       } else if (responseJSON["result"] == true) {
         print("a");
-        payment_details = responseJSON['payment_details'];
-        onPaymentSuccess(payment_details);
+        paymentDetails = responseJSON['payment_details'];
+        onPaymentSuccess(paymentDetails);
       }
     });
   }
 
-  onPaymentSuccess(payment_details) async {
+  onPaymentSuccess(paymentDetails) async {
     print("b");
 
     var iyzicoPaymentSuccessResponse = await PaymentRepository()
         .getIyzicoPaymentSuccessResponse(widget.payment_type, widget.amount,
-            _combined_order_id, payment_details);
+            _combined_order_id, paymentDetails);
 
     if (iyzicoPaymentSuccessResponse.result == false) {
       print("c");
@@ -124,8 +124,8 @@ class _IyzicoScreenState extends State<IyzicoScreen> {
   }
 
   buildBody() {
-    String initial_url =
-        "${AppConfig.BASE_URL}/iyzico/init?payment_type=${widget.payment_type}&combined_order_id=${_combined_order_id}&amount=${widget.amount}&user_id=${user_id.$}";
+    String initialUrl =
+        "${AppConfig.BASE_URL}/iyzico/init?payment_type=${widget.payment_type}&combined_order_id=$_combined_order_id&amount=${widget.amount}&user_id=${user_id.$}";
 
     //print("init url");
     //print(initial_url);
@@ -146,7 +146,7 @@ class _IyzicoScreenState extends State<IyzicoScreen> {
             javascriptMode: JavascriptMode.unrestricted,
             onWebViewCreated: (controller) {
               _webViewController = controller;
-              _webViewController.loadUrl(initial_url);
+              _webViewController.loadUrl(initialUrl);
             },
             onWebResourceError: (error) {},
             onPageFinished: (page) {
