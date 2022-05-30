@@ -339,6 +339,52 @@ class _MainDrawerState extends State<MainDrawer> {
                             MaterialPageRoute(
                                 builder: (context) => TermsAndConditions()));
                       }),
+                  ListTile(
+                      visualDensity:
+                          VisualDensity(horizontal: -4, vertical: -4),
+                      leading: Image.asset("assets/product-return.png",
+                          height: 16, color: Color.fromRGBO(153, 153, 153, 1)),
+                      title: Text(
+                          AppLocalizations.of(context)
+                              .product_details_screen_return_policy,
+                          style: TextStyle(
+                              // color: Color.fromRGBO(153, 153, 153, 1),
+                              color: Colors.black,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14)),
+                      onTap: () {
+                        // onTapLogout(context);
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return CommonWebviewScreen(
+                            url: "${AppConfig.RAW_BASE_URL}/return-refund-page",
+                            page_name: AppLocalizations.of(context)
+                                .product_details_screen_return_policy,
+                          );
+                        }));
+                      }),
+                  ListTile(
+                      visualDensity:
+                          VisualDensity(horizontal: -4, vertical: -4),
+                      leading: Image.asset("assets/livechat.png",
+                          height: 16, color: Color.fromRGBO(153, 153, 153, 1)),
+                      title: Text("Live Chat",
+                          style: TextStyle(
+                              // color: Color.fromRGBO(153, 153, 153, 1),
+                              color: Colors.black,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14)),
+                      onTap: () {
+                        // onTapLogout(context);
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return CommonWebviewScreen(
+                            url:
+                                "https://tawk.to/chat/6279dce87b967b11798e8f24/1g2m0drql",
+                            page_name: "Live Chat",
+                          );
+                        }));
+                      }),
                   is_logged_in.$ == true
                       ? ListTile(
                           visualDensity:

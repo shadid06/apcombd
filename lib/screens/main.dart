@@ -121,18 +121,19 @@ class _MainState extends State<Main> {
                 onTap: onTapped,
                 currentIndex: _currentIndex,
                 backgroundColor: Colors.white.withOpacity(0.7),
-                fixedColor: Theme.of(context).accentColor,
+                fixedColor: MyTheme.accent_color,
                 unselectedItemColor: Color.fromRGBO(153, 153, 153, 1),
+                // selectedItemColor: Theme.of(context).accentColor,
                 items: [
                   BottomNavigationBarItem(
                       icon: Image.asset(
                         "assets/home.png",
                         color: _currentIndex == 0
-                            ? Theme.of(context).accentColor
+                            ? MyTheme.accent_color
                             : Color.fromRGBO(153, 153, 153, 1),
                         height: 20,
                       ),
-                      label: "home"
+                      label: "Home"
                       // label: Padding(
                       //   padding: const EdgeInsets.all(8.0),
                       //   child: Text(
@@ -146,11 +147,11 @@ class _MainState extends State<Main> {
                       icon: Image.asset(
                         "assets/categories.png",
                         color: _currentIndex == 1
-                            ? Theme.of(context).accentColor
+                            ? MyTheme.accent_color
                             : Color.fromRGBO(153, 153, 153, 1),
                         height: 20,
                       ),
-                      label: "categories"
+                      label: "Categories"
                       // label: Padding(
                       //   padding: const EdgeInsets.all(8.0),
                       //   child: Text(
@@ -171,11 +172,11 @@ class _MainState extends State<Main> {
                       icon: Image.asset(
                         "assets/cart.png",
                         color: _currentIndex == 3
-                            ? Theme.of(context).accentColor
+                            ? MyTheme.accent_color
                             : Color.fromRGBO(153, 153, 153, 1),
                         height: 20,
                       ),
-                      label: "cart"
+                      label: "Cart"
                       // label: Padding(
                       //   padding: const EdgeInsets.all(8.0),
                       //   child: Text(
@@ -191,7 +192,7 @@ class _MainState extends State<Main> {
                       icon: Image.asset(
                         "assets/profile.png",
                         color: _currentIndex == 4
-                            ? Theme.of(context).accentColor
+                            ? MyTheme.accent_color
                             : Color.fromRGBO(153, 153, 153, 1),
                         height: 20,
                       ),

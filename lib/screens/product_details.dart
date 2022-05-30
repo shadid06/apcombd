@@ -1151,50 +1151,94 @@ class _ProductDetailsState extends State<ProductDetails> {
                     Divider(
                       height: 1,
                     ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return CommonWebviewScreen(
-                            url: "${AppConfig.RAW_BASE_URL}/return-refund-page",
-                            page_name: AppLocalizations.of(context)
-                                .product_details_screen_return_policy,
-                          );
-                        }));
-                      },
-                      child: Container(
-                        height: 40,
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(
-                            16.0,
-                            0.0,
-                            8.0,
-                            0.0,
-                          ),
-                          child: Row(
-                            children: [
-                              Text(
-                                AppLocalizations.of(context)
-                                    .product_details_screen_return_policy,
-                                style: TextStyle(
-                                    color: MyTheme.font_grey,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600),
-                              ),
-                              Spacer(),
-                              Icon(
-                                Ionicons.ios_add,
-                                color: MyTheme.font_grey,
-                                size: 24,
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
+                    // InkWell(
+                    //   onTap: () {
+                    //     Navigator.push(context,
+                    //         MaterialPageRoute(builder: (context) {
+                    //       return CommonWebviewScreen(
+                    //         url: "${AppConfig.RAW_BASE_URL}/return-refund-page",
+                    //         page_name: AppLocalizations.of(context)
+                    //             .product_details_screen_return_policy,
+                    //       );
+                    //     }));
+                    //   },
+                    //   child: Container(
+                    //     height: 40,
+                    //     child: Padding(
+                    //       padding: const EdgeInsets.fromLTRB(
+                    //         16.0,
+                    //         0.0,
+                    //         8.0,
+                    //         0.0,
+                    //       ),
+                    //       child: Row(
+                    //         children: [
+                    //           Text(
+                    //             AppLocalizations.of(context)
+                    //                 .product_details_screen_return_policy,
+                    //             style: TextStyle(
+                    //                 color: MyTheme.font_grey,
+                    //                 fontSize: 14,
+                    //                 fontWeight: FontWeight.w600),
+                    //           ),
+                    //           Spacer(),
+                    //           Icon(
+                    //             Ionicons.ios_add,
+                    //             color: MyTheme.font_grey,
+                    //             size: 24,
+                    //           )
+                    //         ],
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
                     // Divider(
                     //   height: 1,
                     // ),
+                    pdfLink == null
+                        ? Text("")
+                        : InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          ViewPdf(link: pdfLink)));
+                            },
+                            child: Container(
+                              height: 40,
+                              child: Padding(
+                                padding: const EdgeInsets.fromLTRB(
+                                  16.0,
+                                  0.0,
+                                  8.0,
+                                  0.0,
+                                ),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "PDF",
+                                      style: TextStyle(
+                                          color: MyTheme.font_grey,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                    Spacer(),
+                                    Icon(
+                                      Ionicons.ios_add,
+                                      color: MyTheme.font_grey,
+                                      size: 24,
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                    pdfLink == null
+                        ? Text("")
+                        : Divider(
+                            height: 1,
+                          ),
                     // InkWell(
                     //   onTap: () {
                     //     Navigator.push(context,
@@ -1237,83 +1281,96 @@ class _ProductDetailsState extends State<ProductDetails> {
                     //     ),
                     //   ),
                     // ),
-                    Divider(
-                      height: 1,
-                    ),
                   ]),
                 ),
-                SliverList(
-                  delegate: SliverChildListDelegate([
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(
-                        16.0,
-                        16.0,
-                        16.0,
-                        0.0,
-                      ),
-                      child: pdfLink == null
-                          ? Text("")
-                          : Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "PDF",
-                                  style: TextStyle(
-                                      color: MyTheme.font_grey,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600),
-                                ),
-                                ElevatedButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  ViewPdf(link: pdfLink)));
-                                    },
-                                    child: Text("view"))
-                              ],
-                            ),
-                    ),
-                    // Padding(
-                    //   padding: const EdgeInsets.fromLTRB(
-                    //     8.0,
-                    //     16.0,
-                    //     0.0,
-                    //     0.0,
-                    //   ),
-                    //   // child: document == null
-                    //   //     ? Text('')
-                    //   //     : Container(
-                    //   //         height: 200,
-                    //   //         width: double.infinity,
-                    //   //         color: Colors.redAccent,
-                    //   //         child: PDFViewer(
-                    //   //           scrollDirection: Axis.horizontal,
-                    //   //           showNavigation: false,
-                    //   //           document: document,
-                    //   //           zoomSteps: 1,
-                    //   //           showIndicator: false,
-                    //   //           showPicker: false,
-                    //   //         ),
-                    //   //       ),
-                    //   child: pdfLink == null
-                    //       ? Container()
-                    //       : Container(
-                    //           height: 200,
-                    //           width: double.infinity,
-                    //           child: SfPdfViewer.network(
-                    //             pdfLink,
-                    //             scrollDirection: PdfScrollDirection.horizontal,
-                    //             pageSpacing: 4,
-                    //             pageLayoutMode: PdfPageLayoutMode.single,
-                    //             controller: _pdfViewerController,
-                    //             key: _PdfViewerSateKey,
-                    //             initialZoomLevel: 1,
-                    //           )),
-                    // )
-                  ]),
-                ),
+                // SliverList(
+                //   delegate: SliverChildListDelegate([
+                //     Padding(
+                //       padding: const EdgeInsets.fromLTRB(
+                //         16.0,
+                //         16.0,
+                //         8.0,
+                //         0.0,
+                //       ),
+                //       child: pdfLink == null
+                //           ? Text("")
+                //           : Row(
+                //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //               children: [
+                //                 Text(
+                //                   "PDF",
+                //                   style: TextStyle(
+                //                       color: MyTheme.font_grey,
+                //                       fontSize: 16,
+                //                       fontWeight: FontWeight.w600),
+                //                 ),
+                //                 GestureDetector(
+                //                   onTap: () {
+                //                     Navigator.push(
+                //                         context,
+                //                         MaterialPageRoute(
+                //                             builder: (context) =>
+                //                                 ViewPdf(link: pdfLink)));
+                //                   },
+                //                   child: Container(
+                //                     decoration: BoxDecoration(
+                //                         color: MyTheme.accent_color,
+                //                         borderRadius: BorderRadius.circular(5)),
+                //                     child: Center(
+                //                       child: Padding(
+                //                           padding: const EdgeInsets.all(4.0),
+                //                           child: Text(
+                //                             "View",
+                //                             style: TextStyle(
+                //                                 color: Colors.white,
+                //                                 fontSize: 12,
+                //                                 fontWeight: FontWeight.w700),
+                //                           )),
+                //                     ),
+                //                   ),
+                //                 )
+                //               ],
+                //             ),
+                //     ),
+                //     // Padding(
+                //     //   padding: const EdgeInsets.fromLTRB(
+                //     //     8.0,
+                //     //     16.0,
+                //     //     0.0,
+                //     //     0.0,
+                //     //   ),
+                //     //   // child: document == null
+                //     //   //     ? Text('')
+                //     //   //     : Container(
+                //     //   //         height: 200,
+                //     //   //         width: double.infinity,
+                //     //   //         color: Colors.redAccent,
+                //     //   //         child: PDFViewer(
+                //     //   //           scrollDirection: Axis.horizontal,
+                //     //   //           showNavigation: false,
+                //     //   //           document: document,
+                //     //   //           zoomSteps: 1,
+                //     //   //           showIndicator: false,
+                //     //   //           showPicker: false,
+                //     //   //         ),
+                //     //   //       ),
+                //     //   child: pdfLink == null
+                //     //       ? Container()
+                //     //       : Container(
+                //     //           height: 200,
+                //     //           width: double.infinity,
+                //     //           child: SfPdfViewer.network(
+                //     //             pdfLink,
+                //     //             scrollDirection: PdfScrollDirection.horizontal,
+                //     //             pageSpacing: 4,
+                //     //             pageLayoutMode: PdfPageLayoutMode.single,
+                //     //             controller: _pdfViewerController,
+                //     //             key: _PdfViewerSateKey,
+                //     //             initialZoomLevel: 1,
+                //     //           )),
+                //     // )
+                //   ]),
+                // ),
                 SliverList(
                   delegate: SliverChildListDelegate([
                     Padding(

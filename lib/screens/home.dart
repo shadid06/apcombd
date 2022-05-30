@@ -1,9 +1,12 @@
+import 'package:active_ecommerce_flutter/custom/live_chat.dart';
 import 'package:active_ecommerce_flutter/my_theme.dart';
 import 'package:active_ecommerce_flutter/repositories/app_banner_repository.dart';
 import 'package:active_ecommerce_flutter/repositories/top_collection_repository.dart';
 import 'package:active_ecommerce_flutter/screens/collection_products.dart';
 import 'package:active_ecommerce_flutter/screens/filter.dart';
 import 'package:active_ecommerce_flutter/screens/flash_deal_list.dart';
+import 'package:active_ecommerce_flutter/screens/login.dart';
+import 'package:active_ecommerce_flutter/screens/messenger_list.dart';
 import 'package:active_ecommerce_flutter/screens/todays_deal_products.dart';
 import 'package:active_ecommerce_flutter/screens/top_selling_products.dart';
 import 'package:active_ecommerce_flutter/screens/category_products.dart';
@@ -509,7 +512,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                 ),
                 Align(
                     alignment: Alignment.center,
-                    child: buildProductLoadingContainer())
+                    child: buildProductLoadingContainer()),
+                // LiveChat(),
               ],
             )),
       ),
@@ -1372,6 +1376,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
         }));
       },
       autofocus: false,
+      style: TextStyle(color: Colors.white),
       decoration: InputDecoration(
           hintText: AppLocalizations.of(context).home_screen_search,
           hintStyle: TextStyle(fontSize: 12.0, color: MyTheme.textfield_grey),
