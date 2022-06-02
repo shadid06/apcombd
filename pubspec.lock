@@ -8,13 +8,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "28.0.0"
-  advance_pdf_viewer:
-    dependency: "direct main"
-    description:
-      name: advance_pdf_viewer
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.1"
   after_init:
     dependency: "direct main"
     description:
@@ -728,13 +721,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.4.1"
-  infinite_listview:
-    dependency: transitive
-    description:
-      name: infinite_listview
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.1.0"
   intl:
     dependency: "direct main"
     description:
@@ -854,13 +840,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
-  numberpicker:
-    dependency: transitive
-    description:
-      name: numberpicker
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.1.1"
   numerus:
     dependency: transitive
     description:
