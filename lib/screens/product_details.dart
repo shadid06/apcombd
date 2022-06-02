@@ -34,7 +34,6 @@ import 'package:active_ecommerce_flutter/screens/video_description_screen.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:active_ecommerce_flutter/screens/brand_products.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
 
 class ProductDetails extends StatefulWidget {
   int id;
@@ -74,7 +73,7 @@ class _ProductDetailsState extends State<ProductDetails> {
   int _stock = 0;
   String shortDescription;
   var pdfLink;
-  PDFDocument document;
+
   List<dynamic> _relatedProducts = [];
   bool _relatedProductInit = false;
   List<dynamic> _topProducts = [];
@@ -173,7 +172,6 @@ class _ProductDetailsState extends State<ProductDetails> {
         fetchAndSetVariantWiseInfo(change_appbar_string: true);
       }
       _productDetailsFetched = true;
-      pdfShow();
 
       setState(() {});
     }
@@ -387,10 +385,10 @@ class _ProductDetailsState extends State<ProductDetails> {
     });
   }
 
-  pdfShow() async {
-    document = await PDFDocument.fromURL(pdfLink);
-    setState(() {});
-  }
+  // pdfShow() async {
+  //   document = await PDFDocument.fromURL(pdfLink);
+  //   setState(() {});
+  // }
 
   onPressShare(context) {
     return showDialog(
