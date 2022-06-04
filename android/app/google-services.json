@@ -14,10 +14,18 @@
       },
       "oauth_client": [
         {
+          "client_id": "947419228938-4cvv6p8nce4udd267dqh636pu52ghf51.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.apcombd.com.android_app",
+            "certificate_hash": "06c64d0acf35c9d3f46448008e99fc6f27176c65"
+          }
+        },
+        {
           "client_id": "947419228938-psl9lbr339n9807ina85h40ptfir67ng.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.apcombd.com.android_app", 
+            "package_name": "com.apcombd.com.android_app",
             "certificate_hash": "65d470f98823fc5fb1c7797c6da465218fa6c8bf"
           }
         },

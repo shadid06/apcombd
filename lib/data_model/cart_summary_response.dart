@@ -83,7 +83,7 @@ class CartSummaryResponse {
   String shippingCost;
   String discount;
   String grandTotal;
-  dynamic grandTotalValue;
+  dynamic grandTotalValue; //dynamic silo
   dynamic couponCode;
   bool couponApplied;
   String message;

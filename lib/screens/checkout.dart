@@ -168,7 +168,7 @@ class _CheckoutState extends State<Checkout> {
 
   reset_summary() {
     _totalString = ". . .";
-    _grandTotalValue = 0.00;
+    _grandTotalValue = 0;
     _subTotalString = ". . .";
     _taxString = ". . .";
     _shippingCostString = ". . .";

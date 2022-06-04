@@ -11,13 +11,13 @@ import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SslCommerzScreen extends StatefulWidget {
-  double amount;
+  var amount;
   String payment_type;
   String payment_method_key;
 
   SslCommerzScreen(
       {Key key,
-      this.amount = 0.00,
+      this.amount = 0.00, //0.00 silo
       this.payment_type = "",
       this.payment_method_key = ""})
       : super(key: key);

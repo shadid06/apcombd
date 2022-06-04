@@ -21,8 +21,8 @@ class PaymentRepository {
   String endPoint;
   Future<List<PaymentTypeResponse>> getPaymentResponseList(
       {mode = "", list = "both"}) async {
-    Uri url = Uri.parse(
-        "${AppConfig.BASE_URL}/payment-types?mode=$mode&list=$list");
+    Uri url =
+        Uri.parse("${AppConfig.BASE_URL}/payment-types?mode=$mode&list=$list");
     final response = await http.get(url, headers: {
       "App-Language": app_language.$,
     });
@@ -228,10 +228,8 @@ class PaymentRepository {
     return iyzicoPaymentSuccessResponseFromJson(response.body);
   }
 
-  Future<BkashBeginResponse> getBkashBeginResponse(
-      @required String paymentType,
-      @required int combinedOrderId,
-      @required double amount) async {
+  Future<BkashBeginResponse> getBkashBeginResponse(@required String paymentType,
+      @required int combinedOrderId, @required double amount) async {
     Uri url = Uri.parse(
         "${AppConfig.BASE_URL}/bkash/begin?payment_type=$paymentType&combined_order_id=$combinedOrderId&amount=$amount&user_id=${user_id.$}");
 
@@ -273,7 +271,7 @@ class PaymentRepository {
   Future<SslcommerzBeginResponse> getSslcommerzBeginResponse(
       @required String paymentType,
       @required int combinedOrderId,
-      @required double amount) async {
+      @required var amount) async {
     Uri url = Uri.parse(
         "${AppConfig.BASE_URL}/sslcommerz/begin?payment_type=$paymentType&combined_order_id=$combinedOrderId&amount=$amount&user_id=${user_id.$}");
 
@@ -285,14 +283,12 @@ class PaymentRepository {
       },
     );
 
-    print(response.body.toString());
+    print('ssl: ${response.body.toString()}');
     return sslcommerzBeginResponseFromJson(response.body);
   }
 
-  Future<NagadBeginResponse> getNagadBeginResponse(
-      @required String paymentType,
-      @required int combinedOrderId,
-      @required double amount) async {
+  Future<NagadBeginResponse> getNagadBeginResponse(@required String paymentType,
+      @required int combinedOrderId, @required double amount) async {
     Uri url = Uri.parse(
         "${AppConfig.BASE_URL}/nagad/begin?payment_type=$paymentType&combined_order_id=$combinedOrderId&amount=$amount&user_id=${user_id.$}");
 
