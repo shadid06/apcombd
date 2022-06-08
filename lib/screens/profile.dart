@@ -97,9 +97,8 @@ class _ProfileState extends State<Profile> {
       }
     }
 
-    var newtxt = (txt == null || txt == "" || txt == null.toString())
-        ? blankZeros
-        : txt;
+    var newtxt =
+        (txt == null || txt == "" || txt == null.toString()) ? blankZeros : txt;
 
     // print(txt + " " + default_length.toString());
     // print(newtxt);
@@ -517,7 +516,7 @@ class _ProfileState extends State<Profile> {
                 padding: const EdgeInsets.only(top: 4.0),
                 child: Text(
                   is_wholesale.$ == 1
-                      ? "In W.Cart"
+                      ? "In H.Cart"
                       : AppLocalizations.of(context)
                           .profile_screen_in_your_cart,
                   style: TextStyle(

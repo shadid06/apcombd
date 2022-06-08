@@ -1994,62 +1994,92 @@ class _ProductDetailsState extends State<ProductDetails> {
         child: Container(
           color: Colors.transparent,
           height: 50,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              FlatButton(
-                minWidth: MediaQuery.of(context).size.width / 2 - .5,
-                height: 50,
-                color: MyTheme.golden,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(0.0),
-                ),
-                child: Text(
-                  is_wholesale.$ == 1
-                      ? "Add to W.Cart"
-                      : AppLocalizations.of(context)
-                          .product_details_screen_button_add_to_cart,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600),
-                ),
-                onPressed: askQuotationCounter_saved.$ == "1"
-                    ? () {
-                        ToastComponent.showDialog(
-                            "After Asking for Quotation you can not add product to cart",
-                            context,
-                            gravity: Toast.CENTER,
-                            duration: Toast.LENGTH_LONG);
-                      }
-                    : () {
-                        onPressAddToCart(context, _addedToCartSnackbar);
+          child: is_wholesale.$ == 1
+              ? FlatButton(
+                  minWidth: double.infinity,
+                  height: 50,
+                  color: MyTheme.golden,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(0.0),
+                  ),
+                  child: Text(
+                    is_wholesale.$ == 1
+                        ? "Add to Hospital Cart"
+                        : AppLocalizations.of(context)
+                            .product_details_screen_button_add_to_cart,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600),
+                  ),
+                  onPressed: askQuotationCounter_saved.$ == "1"
+                      ? () {
+                          ToastComponent.showDialog(
+                              "After Asking for Quotation you can not add product to cart",
+                              context,
+                              gravity: Toast.CENTER,
+                              duration: Toast.LENGTH_LONG);
+                        }
+                      : () {
+                          onPressAddToCart(context, _addedToCartSnackbar);
+                        },
+                )
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    FlatButton(
+                      minWidth: MediaQuery.of(context).size.width / 2 - .5,
+                      height: 50,
+                      color: MyTheme.golden,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(0.0),
+                      ),
+                      child: Text(
+                        is_wholesale.$ == 1
+                            ? "Add to W.Cart"
+                            : AppLocalizations.of(context)
+                                .product_details_screen_button_add_to_cart,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600),
+                      ),
+                      onPressed: askQuotationCounter_saved.$ == "1"
+                          ? () {
+                              ToastComponent.showDialog(
+                                  "After Asking for Quotation you can not add product to cart",
+                                  context,
+                                  gravity: Toast.CENTER,
+                                  duration: Toast.LENGTH_LONG);
+                            }
+                          : () {
+                              onPressAddToCart(context, _addedToCartSnackbar);
+                            },
+                    ),
+                    SizedBox(
+                      width: 1,
+                    ),
+                    FlatButton(
+                      minWidth: MediaQuery.of(context).size.width / 2 - .5,
+                      height: 50,
+                      color: MyTheme.accent_color,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(0.0),
+                      ),
+                      child: Text(
+                        AppLocalizations.of(context)
+                            .product_details_screen_button_buy_now,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600),
+                      ),
+                      onPressed: () {
+                        onPressBuyNow(context);
                       },
-              ),
-              SizedBox(
-                width: 1,
-              ),
-              FlatButton(
-                minWidth: MediaQuery.of(context).size.width / 2 - .5,
-                height: 50,
-                color: MyTheme.accent_color,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(0.0),
+                    )
+                  ],
                 ),
-                child: Text(
-                  AppLocalizations.of(context)
-                      .product_details_screen_button_buy_now,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600),
-                ),
-                onPressed: () {
-                  onPressBuyNow(context);
-                },
-              )
-            ],
-          ),
         ),
       );
     });

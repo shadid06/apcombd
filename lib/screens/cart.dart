@@ -46,6 +46,7 @@ class _CartState extends State<Cart> {
   var _qntyController = <TextEditingController>[];
   bool flag = true;
   int buttonCounter = 0;
+  int quantityCounter = 0;
 
   @override
   void initState() {
@@ -100,6 +101,8 @@ class _CartState extends State<Cart> {
     }
     _isInitial = false;
     flag = true;
+
+    print('qntyc: $quantityCounter');
     print(flag);
     getSetCartTotal();
     // if (askQuotationCounter_saved.$ == "1") {
@@ -142,8 +145,7 @@ class _CartState extends State<Cart> {
       _shopList.forEach((shop) {
         if (shop.cart_items.length > 0) {
           shop.cart_items.forEach((cartItem) {
-            _cartTotal +=
-                (cartItem.price + cartItem.tax) * cartItem.quantity;
+            _cartTotal += (cartItem.price + cartItem.tax) * cartItem.quantity;
             _cartTotalString = "${cartItem.currency_symbol}$_cartTotal";
             // _qntyController[].text = cart_item.quantity.toString();
             // _qntyController.addAll(cart_item.quantity.text);
@@ -174,8 +176,7 @@ class _CartState extends State<Cart> {
   onField(sellerIndex, itemIndex) {
     if (_shopList[sellerIndex].cart_items[itemIndex].quantity <
         _shopList[sellerIndex].cart_items[itemIndex].upper_limit) {
-      _shopList[sellerIndex].cart_items[itemIndex].quantity =
-          quatityController;
+      _shopList[sellerIndex].cart_items[itemIndex].quantity = quatityController;
       getSetCartTotal();
       setState(() {});
     } else {
@@ -191,6 +192,7 @@ class _CartState extends State<Cart> {
     if (_shopList[sellerIndex].cart_items[itemIndex].quantity <
         _shopList[sellerIndex].cart_items[itemIndex].upper_limit) {
       _shopList[sellerIndex].cart_items[itemIndex].quantity++;
+
       getSetCartTotal();
       setState(() {});
     } else {
@@ -223,6 +225,7 @@ class _CartState extends State<Cart> {
     if (_shopList[sellerIndex].cart_items[itemIndex].quantity >
         _shopList[sellerIndex].cart_items[itemIndex].lower_limit) {
       _shopList[sellerIndex].cart_items[itemIndex].quantity--;
+
       getSetCartTotal();
       setState(() {});
     } else {
@@ -621,6 +624,7 @@ class _CartState extends State<Cart> {
                               : () {
                                   if (flag) {
                                     flag = false;
+
                                     onPressProceedToShipping();
                                   }
                                 },
@@ -860,34 +864,38 @@ class _CartState extends State<Cart> {
                                           fontWeight: FontWeight.w600),
                                     ),
                             ),
-                            Spacer(),
-                            SizedBox(
-                              height: 28,
-                              child: InkWell(
-                                onTap: () {},
-                                child: IconButton(
-                                  onPressed: is_wholesale.$ == 1 &&
-                                          isQuotationReceived == false
-                                      ? () {
-                                          ToastComponent.showDialog(
-                                              "You can delete after receving quotation",
-                                              context,
-                                              gravity: Toast.CENTER,
-                                              duration: Toast.LENGTH_LONG);
-                                        }
-                                      : () {
-                                          print("tap");
-                                          print(_shopList[sellerIndex]
-                                              .cart_items[itemIndex]
-                                              .id);
-                                          onPressDelete(_shopList[sellerIndex]
-                                              .cart_items[itemIndex]
-                                              .id);
-                                        },
-                                  icon: Icon(
-                                    Icons.delete_forever_outlined,
-                                    color: MyTheme.medium_grey,
-                                    size: 24,
+                            // Spacer(),
+
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 8),
+                              child: SizedBox(
+                                height: 28,
+                                child: InkWell(
+                                  onTap: () {},
+                                  child: IconButton(
+                                    onPressed: is_wholesale.$ == 1 &&
+                                            askQuotationCounter_saved.$ == 1
+                                        ? () {
+                                            ToastComponent.showDialog(
+                                                "You can not delete after asking quotation",
+                                                context,
+                                                gravity: Toast.CENTER,
+                                                duration: Toast.LENGTH_LONG);
+                                          }
+                                        : () {
+                                            print("tap");
+                                            print(_shopList[sellerIndex]
+                                                .cart_items[itemIndex]
+                                                .id);
+                                            onPressDelete(_shopList[sellerIndex]
+                                                .cart_items[itemIndex]
+                                                .id);
+                                          },
+                                    icon: Icon(
+                                      Icons.delete_forever_outlined,
+                                      color: MyTheme.medium_grey,
+                                      size: 24,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -900,43 +908,47 @@ class _CartState extends State<Cart> {
                 ],
               ),
             ),
-            Spacer(),
+            // Spacer(),
             Column(
               children: [
+                is_wholesale.$ == 1
+                    ? Container()
+                    : Padding(
+                        padding: const EdgeInsets.only(
+                            left: 16.0, top: 16, right: 16),
+                        child: SizedBox(
+                          width: 28,
+                          height: 28,
+                          child: FlatButton(
+                            padding: EdgeInsets.all(0),
+                            child: Icon(
+                              Icons.add,
+                              color: MyTheme.accent_color,
+                              size: 18,
+                            ),
+                            shape: CircleBorder(
+                              side: new BorderSide(
+                                  color: MyTheme.light_grey, width: 1.0),
+                            ),
+                            color: Colors.white,
+                            onPressed: askQuotationCounter_saved.$ == 1
+                                ? () {
+                                    ToastComponent.showDialog(
+                                        "Quotation is asked already, you can not perform",
+                                        context,
+                                        gravity: Toast.CENTER,
+                                        duration: Toast.LENGTH_LONG);
+                                  }
+                                : () {
+                                    onQuantityIncrease(sellerIndex, itemIndex);
+                                    quantityCounter++;
+                                  },
+                          ),
+                        ),
+                      ),
                 Padding(
                   padding:
-                      const EdgeInsets.only(left: 16.0, top: 16, right: 16),
-                  child: SizedBox(
-                    width: 28,
-                    height: 28,
-                    child: FlatButton(
-                      padding: EdgeInsets.all(0),
-                      child: Icon(
-                        Icons.add,
-                        color: MyTheme.accent_color,
-                        size: 18,
-                      ),
-                      shape: CircleBorder(
-                        side: new BorderSide(
-                            color: MyTheme.light_grey, width: 1.0),
-                      ),
-                      color: Colors.white,
-                      onPressed: askQuotationCounter_saved.$ == 1
-                          ? () {
-                              ToastComponent.showDialog(
-                                  "Quotation is asked already, you can not perform",
-                                  context,
-                                  gravity: Toast.CENTER,
-                                  duration: Toast.LENGTH_LONG);
-                            }
-                          : () {
-                              onQuantityIncrease(sellerIndex, itemIndex);
-                            },
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                      const EdgeInsets.only(top: 8.0, bottom: 8.0, right: 8),
                   // child: Text(
                   // _shopList[seller_index]
                   //     .cart_items[item_index]
@@ -947,39 +959,52 @@ class _CartState extends State<Cart> {
                   // ),
                   child: is_wholesale.$ == 1 && askQuotationCounter_saved.$ != 1
                       ? Container(
-                          width: 46,
+                          height: 30,
+                          width: 52,
                           // color: Colors.redAccent,
-                          child: TextFormField(
-                            controller: _qntyController[itemIndex],
-                            keyboardType: TextInputType.number,
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              contentPadding: EdgeInsets.only(left: 16),
-                              hintText: _shopList[sellerIndex]
-                                  .cart_items[itemIndex]
-                                  .quantity
-                                  .toString(),
-                              // hintText: hintList[item_index],
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: Center(
+                            child: TextFormField(
+                              controller: _qntyController[itemIndex],
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                contentPadding:
+                                    EdgeInsets.only(left: 12, bottom: 12),
+                                hintText: _shopList[sellerIndex]
+                                    .cart_items[itemIndex]
+                                    .quantity
+                                    .toString(),
+                                // hintText: hintList[item_index],
+                              ),
+                              onChanged: (value) {
+                                print(_qntyController[itemIndex].text);
+                                quantityByTextField =
+                                    _qntyController[itemIndex].text;
+                                print(quantityByTextField);
+
+                                setState(() {});
+                                onQuantityTextFeild(sellerIndex, itemIndex,
+                                    quantityByTextField);
+                                // onField(seller_index, item_index);
+                                setState(() {});
+                                // value = _qntyController[item_index].text;
+
+                                // Future.delayed(Duration(seconds: 4), () {
+
+                                //   // onPressUpdate();
+                                //   // setState(() {});
+                                // });
+
+                                // _shopList[seller_index]
+                                //     .cart_items[item_index]
+                                //     .quantity = quatityController.text;
+                                // getSetCartTotal();
+                                // setState(() {});
+                              },
                             ),
-                            onChanged: (value) {
-                              // value = _qntyController[item_index].text;
-
-                              print(_qntyController[itemIndex].text);
-                              quantityByTextField =
-                                  _qntyController[itemIndex].text;
-                              print(quantityByTextField);
-
-                              setState(() {});
-                              onQuantityTextFeild(sellerIndex, itemIndex,
-                                  quantityByTextField);
-                              // onField(seller_index, item_index);
-                              setState(() {});
-                              // _shopList[seller_index]
-                              //     .cart_items[item_index]
-                              //     .quantity = quatityController.text;
-                              // getSetCartTotal();
-                              // setState(() {});
-                            },
                           ),
                         )
                       : Text(
@@ -991,39 +1016,42 @@ class _CartState extends State<Cart> {
                               color: MyTheme.accent_color, fontSize: 16),
                         ),
                 ),
-                Padding(
-                  padding:
-                      const EdgeInsets.only(left: 16.0, bottom: 16, right: 16),
-                  child: SizedBox(
-                    width: 28,
-                    height: 28,
-                    child: FlatButton(
-                      padding: EdgeInsets.all(0),
-                      child: Icon(
-                        Icons.remove,
-                        color: MyTheme.accent_color,
-                        size: 18,
-                      ),
-                      height: 30,
-                      shape: CircleBorder(
-                        side: new BorderSide(
-                            color: MyTheme.light_grey, width: 1.0),
-                      ),
-                      color: Colors.white,
-                      onPressed: askQuotationCounter_saved.$ == 1
-                          ? () {
-                              ToastComponent.showDialog(
-                                  "quotation is asked already, you can not perform",
-                                  context,
-                                  gravity: Toast.CENTER,
-                                  duration: Toast.LENGTH_LONG);
-                            }
-                          : () {
-                              onQuantityDecrease(sellerIndex, itemIndex);
-                            },
-                    ),
-                  ),
-                )
+                is_wholesale.$ == 1
+                    ? Container()
+                    : Padding(
+                        padding: const EdgeInsets.only(
+                            left: 16.0, bottom: 16, right: 16),
+                        child: SizedBox(
+                          width: 28,
+                          height: 28,
+                          child: FlatButton(
+                            padding: EdgeInsets.all(0),
+                            child: Icon(
+                              Icons.remove,
+                              color: MyTheme.accent_color,
+                              size: 18,
+                            ),
+                            height: 30,
+                            shape: CircleBorder(
+                              side: new BorderSide(
+                                  color: MyTheme.light_grey, width: 1.0),
+                            ),
+                            color: Colors.white,
+                            onPressed: askQuotationCounter_saved.$ == 1
+                                ? () {
+                                    ToastComponent.showDialog(
+                                        "quotation is asked already, you can not perform",
+                                        context,
+                                        gravity: Toast.CENTER,
+                                        duration: Toast.LENGTH_LONG);
+                                  }
+                                : () {
+                                    onQuantityDecrease(sellerIndex, itemIndex);
+                                    quantityCounter++;
+                                  },
+                          ),
+                        ),
+                      )
               ],
             )
           ]),
@@ -1094,14 +1122,17 @@ class _CartState extends State<Cart> {
                           // cartIndexPriceBeforeAskQuotation = cartIndexPrice;
                           // ValueCheckerHelper().saveCartPreviousPrice(
                           // cartIndexPriceBeforeAskQuotation);
+                          onPressUpdate();
                           askQuotationCounter++;
-                          // previousTotoal = _cartTotal;
                           setState(() {});
                           ValueCheckerHelper()
                               .saveAskQuotationCounter(askQuotationCounter);
+                          sendQuotation();
+
+                          // previousTotoal = _cartTotal;
+
                           // ValueCheckerHelper()
                           //     .saveCartPreviousTotal(previousTotoal);
-                          sendQuotation();
                         },
                         child: Text(
                           "Ask for Quotation",

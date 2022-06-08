@@ -176,7 +176,7 @@ class _MainState extends State<Main> {
                             : Color.fromRGBO(153, 153, 153, 1),
                         height: 20,
                       ),
-                      label: "Cart"
+                      label: is_wholesale.$ == 1 ? "H.Cart" : "Cart"
                       // label: Padding(
                       //   padding: const EdgeInsets.all(8.0),
                       //   child: Text(
