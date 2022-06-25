@@ -218,6 +218,7 @@ class _ShippingInfoState extends State<ShippingInfo> {
     } else {
       addressUpdateInCartResponse = await AddressRepository()
           .getAddressUpdateInCartResponse(
+              address_id: _seleted_shipping_address,
               pickup_point_id: _seleted_shipping_pickup_point);
     }
 

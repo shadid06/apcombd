@@ -152,8 +152,8 @@ class AddressRepository {
   }
 
   Future<CityResponse> getCityListByState({state_id = 0, name = ""}) async {
-    Uri url = Uri.parse(
-        "${AppConfig.BASE_URL}/cities-by-state/$state_id?name=$name");
+    Uri url =
+        Uri.parse("${AppConfig.BASE_URL}/cities-by-state/$state_id?name=$name");
     final response = await http.get(url);
 
     print(url.toString());
@@ -209,6 +209,7 @@ class AddressRepository {
       "pickup_point_id": "$pickup_point_id",
       "user_id": "${user_id.$}"
     });
+    print("body: add: ${address_id} pick: ${pickup_point_id} uid ${user_id.$}");
 
     Uri url = Uri.parse("${AppConfig.BASE_URL}/update-address-in-cart");
     final response = await http.post(url,

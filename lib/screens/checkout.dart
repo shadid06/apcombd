@@ -1,3 +1,5 @@
+import 'package:active_ecommerce_flutter/data_model/department_response.dart'
+    as department;
 import 'package:active_ecommerce_flutter/data_model/reffer_response.dart';
 import 'package:active_ecommerce_flutter/helpers/value_checker_helper.dart';
 import 'package:active_ecommerce_flutter/repositories/reffer_repository.dart';
@@ -130,10 +132,23 @@ class _CheckoutState extends State<Checkout> {
         selectedReferrName = refferList[i].name;
         selectedReferrId = refferList[i].id;
         setState(() {});
+        fetchDepartment(selectedReferrId);
       }
     }
   }
 
+  department.DepartmentResponse departmentResponse;
+  bool isDepartment = true;
+  var departmentList = [];
+  var selectedDepartment;
+  var selectedDepartmentId;
+  fetchDepartment(id) async {
+    departmentResponse =
+        await RefferRepository().getReferredDepartment(selectedReferrId);
+    departmentList.addAll(departmentResponse.data);
+    isDepartment = false;
+    setState(() {});
+  }
   // fetchDatas() async {
   //   referrsdropList = await Datum();
   // }
@@ -699,7 +714,7 @@ class _CheckoutState extends State<Checkout> {
                       top: BorderSide(color: MyTheme.light_grey,width: 1.0),
                     )*/
                   ),
-                  height: widget.manual_payment_from_order_details ? 80 : 140,
+                  height: widget.manual_payment_from_order_details ? 80 : 204,
                   //color: Colors.white,
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
@@ -711,6 +726,12 @@ class _CheckoutState extends State<Checkout> {
                                 child: is_wholesale.$ == 1
                                     ? buildRefferDropDown()
                                     : buildApplyCouponRow(context),
+                              )
+                            : Container(),
+                        is_wholesale.$ == 1
+                            ? Padding(
+                                padding: const EdgeInsets.only(bottom: 16.0),
+                                child: buildDepartmentDropDown(),
                               )
                             : Container(),
                         Container(
@@ -976,6 +997,9 @@ class _CheckoutState extends State<Checkout> {
               setState(() {
                 selectedReffer = newValue;
                 selectedReferrId = newValue.id;
+                isDepartment = true;
+                departmentList.clear();
+                fetchDepartment(selectedReferrId);
                 print(selectedReferrId);
               });
             },
@@ -983,6 +1007,68 @@ class _CheckoutState extends State<Checkout> {
               return DropdownMenuItem<Datum>(
                 value: value,
                 child: Text(value.name),
+              );
+            }).toList(),
+          ),
+        ),
+      );
+    }
+  }
+
+  buildDepartmentDropDown() {
+    if (isDepartment && departmentList.length == 0) {
+      ShimmerHelper().buildListShimmer(item_count: 1, item_height: 100.0);
+    } else if (departmentList.length > 0) {
+      return Container(
+        // height: 50,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: Colors.grey,
+            width: 1,
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: DropdownButton<department.Datum>(
+            value: selectedDepartment,
+            // alignment: AlignmentDirectional.center,
+            hint: Text(
+              "Department",
+              style: TextStyle(
+                color: Colors.grey,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            isExpanded: true,
+            underline: SizedBox(),
+            // decoration: InputDecoration(
+            //     enabledBorder: OutlineInputBorder(
+            //         borderRadius: BorderRadius.circular(12),
+            //         borderSide:
+            //             BorderSide(width: 2, color: MyTheme.accent_color))),
+            // icon: const Icon(Icons.arrow_downward),
+            // iconSize: 24,
+            // elevation: 16,
+            // style: const TextStyle(color: Colors.black),
+            // underline: Container(
+            //   height: 2,
+            //   width: double.infinity,
+            //   color: Colors.deepPurpleAccent,
+            // ),
+            onChanged: (department.Datum newValue) {
+              setState(() {
+                selectedDepartment = newValue;
+                selectedDepartmentId = newValue.id;
+                print(selectedDepartmentId);
+              });
+            },
+            items: departmentList
+                .map<DropdownMenuItem<department.Datum>>((dynamic value) {
+              return DropdownMenuItem<department.Datum>(
+                value: value,
+                child: Text(value.departmentName),
               );
             }).toList(),
           ),

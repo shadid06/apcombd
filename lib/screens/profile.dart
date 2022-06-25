@@ -617,6 +617,12 @@ class _ProfileState extends State<Profile> {
                 color: MyTheme.medium_grey,
               ),
             )),
+        Text(
+          is_wholesale.$ == 1 ? "Hospital Buyer" : "",
+          style: TextStyle(
+            color: MyTheme.medium_grey,
+          ),
+        )
         // Padding(
         //   padding: const EdgeInsets.only(top: 16.0),
         //   child: Container(

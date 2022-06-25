@@ -488,11 +488,11 @@ class _CartState extends State<Cart> {
                       child: is_wholesale.$ == 1
                           ? Text(
                               askQuotationCounter_saved.$ != 1
-                                  ? "Ask for Quotation"
+                                  ? "Ask for PO"
                                   : askQuotationCounter_saved.$ == 1 &&
                                           isQuotationReceived == true
                                       ? _cartTotalString
-                                      : "Quotation asked successfully",
+                                      : "PO asked successfully",
                               style: TextStyle(
                                   color: MyTheme.accent_color,
                                   fontSize: 14,
@@ -612,22 +612,21 @@ class _CartState extends State<Cart> {
                             fontSize: 13,
                             fontWeight: FontWeight.w600),
                       ),
-                      onPressed:
-                          is_wholesale.$ == 1 && isQuotationReceived == false
-                              ? () {
-                                  ToastComponent.showDialog(
-                                      "you can ship only after getting quotation",
-                                      context,
-                                      gravity: Toast.CENTER,
-                                      duration: Toast.LENGTH_LONG);
-                                }
-                              : () {
-                                  if (flag) {
-                                    flag = false;
+                      onPressed: is_wholesale.$ == 1 &&
+                              isQuotationReceived == false
+                          ? () {
+                              ToastComponent.showDialog(
+                                  "you can ship only after getting PO", context,
+                                  gravity: Toast.CENTER,
+                                  duration: Toast.LENGTH_LONG);
+                            }
+                          : () {
+                              if (flag) {
+                                flag = false;
 
-                                    onPressProceedToShipping();
-                                  }
-                                },
+                                onPressProceedToShipping();
+                              }
+                            },
                     ),
                   ),
                 ),
@@ -825,7 +824,7 @@ class _CartState extends State<Cart> {
                               child: is_wholesale.$ == 1
                                   ? Text(is_wholesale.$ == 1 &&
                                           askQuotationCounter_saved.$ != 1
-                                      ? "Ask for Quotation"
+                                      ? "Ask for PO"
                                       : is_wholesale.$ == 1 &&
                                               isQuotationReceived == true
                                           ? _shopList[sellerIndex]
@@ -877,7 +876,7 @@ class _CartState extends State<Cart> {
                                             askQuotationCounter_saved.$ == 1
                                         ? () {
                                             ToastComponent.showDialog(
-                                                "You can not delete after asking quotation",
+                                                "You can not delete after asking PO",
                                                 context,
                                                 gravity: Toast.CENTER,
                                                 duration: Toast.LENGTH_LONG);
@@ -934,7 +933,7 @@ class _CartState extends State<Cart> {
                             onPressed: askQuotationCounter_saved.$ == 1
                                 ? () {
                                     ToastComponent.showDialog(
-                                        "Quotation is asked already, you can not perform",
+                                        "PO is asked already, you can not perform",
                                         context,
                                         gravity: Toast.CENTER,
                                         duration: Toast.LENGTH_LONG);
@@ -1040,7 +1039,7 @@ class _CartState extends State<Cart> {
                             onPressed: askQuotationCounter_saved.$ == 1
                                 ? () {
                                     ToastComponent.showDialog(
-                                        "quotation is asked already, you can not perform",
+                                        "PO is asked already, you can not perform",
                                         context,
                                         gravity: Toast.CENTER,
                                         duration: Toast.LENGTH_LONG);
@@ -1096,11 +1095,11 @@ class _CartState extends State<Cart> {
                 ),
                 Text(
                   askQuotationCounter_saved.$ != 1
-                      ? "Ask for quotation first"
+                      ? "Ask for PO first"
                       : askQuotationCounter_saved.$ == 1 &&
                               isQuotationReceived == true
                           ? _cartTotalString
-                          : "Quotation asked successfully",
+                          : "PO asked successfully",
                   style: TextStyle(
                       color: MyTheme.accent_color,
                       fontWeight: FontWeight.w500,
@@ -1135,7 +1134,7 @@ class _CartState extends State<Cart> {
                           //     .saveCartPreviousTotal(previousTotoal);
                         },
                         child: Text(
-                          "Ask for Quotation",
+                          "Ask for PO",
                           style: TextStyle(color: Colors.white),
                         ),
                       ),
