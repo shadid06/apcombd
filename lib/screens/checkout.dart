@@ -142,6 +142,7 @@ class _CheckoutState extends State<Checkout> {
   var departmentList = [];
   var selectedDepartment;
   var selectedDepartmentId;
+  var selectedDepartmentName;
   fetchDepartment(id) async {
     departmentResponse =
         await RefferRepository().getReferredDepartment(selectedReferrId);
@@ -461,8 +462,8 @@ class _CheckoutState extends State<Checkout> {
 
   pay_by_cod() async {
     var orderCreateResponse = await PaymentRepository()
-        .getOrderCreateResponseFromCod(
-            _selected_payment_method_key, selectedReferrId);
+        .getOrderCreateResponseFromCod(_selected_payment_method_key,
+            selectedReferrId, selectedDepartmentName);
 
     if (orderCreateResponse.result == false) {
       ToastComponent.showDialog(orderCreateResponse.message, context,
@@ -1060,8 +1061,9 @@ class _CheckoutState extends State<Checkout> {
             onChanged: (department.Datum newValue) {
               setState(() {
                 selectedDepartment = newValue;
-                selectedDepartmentId = newValue.id;
-                print(selectedDepartmentId);
+                // selectedDepartmentId = newValue.id;
+                selectedDepartmentName = newValue.departmentName;
+                print(selectedDepartmentName);
               });
             },
             items: departmentList

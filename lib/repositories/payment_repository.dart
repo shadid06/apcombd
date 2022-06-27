@@ -100,7 +100,7 @@ class PaymentRepository {
   }
 
   Future<OrderCreateResponse> getOrderCreateResponseFromCod(
-      @required paymentMethod, dynamic id) async {
+      @required paymentMethod, dynamic id, dynamic departmentName) async {
     if (is_wholesale.$ == 1) {
       endPoint = "wholesalepayments";
     } else {
@@ -112,8 +112,10 @@ class PaymentRepository {
       "referrer": "$id",
       "shipping_type": "home_delivery",
       //pickup_points //home_delivery
-      "order_from": "App"
+      "order_from": "App",
+      "department_name": "$departmentName"
     });
+    print('depat: $departmentName');
 
     Uri url = Uri.parse("${AppConfig.BASE_URL}/$endPoint/pay/cod");
 
